@@ -1,12 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Shield, Scale, Users, FileText } from 'lucide-react';
+import { GanttChartSquare } from 'lucide-react';
 import ScrollIndicator from '../ScrollIndicator';
 
 const promises = [
   {
-    icon: Shield,
+    icon: GanttChartSquare,
     title: "공익제보자 보호 제도화",
     description: "시민의 목소리를 보호하겠습니다",
     items: [
@@ -17,7 +17,7 @@ const promises = [
     color: "bg-blue-500"
   },
   {
-    icon: Users,
+    icon: ScaleIcon,
     title: "현장 중심 의정활동",
     description: "시민의 옆에 있겠습니다",
     items: [
