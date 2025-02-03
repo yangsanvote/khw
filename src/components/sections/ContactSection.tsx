@@ -24,19 +24,6 @@ const contactInfo = [
   }
 ];
 
-const socialLinks = [
-  {
-    icon: Facebook,
-    label: "Facebook",
-    href: "https://facebook.com/profile"
-  },
-  {
-    icon: Instagram,
-    label: "Instagram",
-    href: "https://instagram.com/profile"
-  }
-];
-
 export default function ContactSection() {
   return (
     <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-gradient-to-br from-emerald-950 via-slate-900 to-emerald-950 px-4 text-white overflow-x-hidden">
