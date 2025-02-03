@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { GanttChartSquare } from 'lucide-react';
+import { GanttChartSquare, Scale as ScaleIcon } from 'lucide-react';
 import ScrollIndicator from '../ScrollIndicator';
 
 const promises = [
