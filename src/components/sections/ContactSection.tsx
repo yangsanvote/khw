@@ -89,22 +89,23 @@ export default function ContactSection() {
             viewport={{ once: true }}
             className="space-y-8"
           >
-            <div className="flex gap-4">
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
-                >
-                  <social.icon className="w-6 h-6 md:w-7 md:h-7" />
-                </motion.a>
-              ))}
+            <div className="flex gap-4 text-white/80">
+              <a 
+                href="https://www.facebook.com/yangsankhw" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                <Facebook className="w-6 h-6" />
+              </a>
+              <a 
+                href="https://www.instagram.com/fuller1107/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                <Instagram className="w-6 h-6" />
+              </a>
             </div>
 
             <div className="bg-white/10 rounded-2xl p-6 md:p-8">
