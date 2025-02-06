@@ -99,7 +99,7 @@ export default function ContactSection() {
               <h3 className="text-xl md:text-2xl font-bold mb-4">실시간 소식받기</h3>
               <p className="text-gray-400 mb-6">카카오톡으로 권현우 후보의 발걸음을 가장 먼저 만나보세요!</p>
               <a
-                href="https://pf.kakao.com/_xxxxx" {/* 실제 카카오톡 채널 URL로 변경 필요 */}
+                href="https://pf.kakao.com/_xxxxx"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full px-4 py-3 bg-[#FEE500] hover:bg-[#FDD700] text-[#3A1D1D] font-bold rounded-lg transition-colors duration-300 text-center mb-4"
