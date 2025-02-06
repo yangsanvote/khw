@@ -7,14 +7,15 @@ import ScrollIndicator from '../ScrollIndicator';
 import Image from 'next/image';
 
 const careers = [
-  { year: "현재", title: "양산부산대학교 치과병원 xx부서 xx근무" },
-  { year: "20xx", title: "둘째 아들 탄생" },
-  { year: "20xx", title: "양산으로 이사" },
-  { year: "20xx", title: "첫째 아들 탄생" },
-  { year: "20xx", title: "결혼" },
-  { year: "20xx", title: "어디어디 전역" },
-  { year: "19xx", title: "고등학교 졸업" },
-  { year: "19xx", title: "어디 출생" }
+  { year: "2019~", title: "양산부산대학교 치과병원 총무인사팀 근무" },
+  { year: "2025", title: "한국방송통신대학교 교육학과/행정학과 졸업" },
+  { year: "2013", title: "오봉도시락 양산점 대표" },
+  { year: "2013", title: "양산으로 이사" },
+  { year: "2012", title: "둘째 아들 탄생" },
+  { year: "2010", title: "첫째 아들 탄생" },
+  { year: "1999", title: "1118 야공단 전역" },
+  { year: "1995", title: "동아공업고등학교 졸업" },
+  { year: "1976", title: "부산 동래 출생" }
 ];
 const activities = [
   { year: "2024~", title: "정의당 양산시위원회 민생상담 소장" },

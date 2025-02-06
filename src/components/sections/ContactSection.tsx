@@ -7,14 +7,14 @@ const contactInfo = [
   {
     icon: Phone,
     label: "전화번호",
-    value: "055-123-4567",
-    href: "tel:055-123-4567"
+    value: "010-4855-5375",
+    href: "tel:010-4855-5375"
   },
   {
     icon: Mail,
     label: "이메일",
-    value: "contact@권현우.kr",
-    href: "mailto:contact@권현우.kr"
+    value: "mobydick1107@naver.com",
+    href: "mailto:mobydick1107@naver.com"
   },
   {
     icon: MapPin,
@@ -96,21 +96,19 @@ export default function ContactSection() {
             </div>
 
             <div className="bg-white/10 rounded-2xl p-6 md:p-8">
-              <h3 className="text-xl md:text-2xl font-bold mb-4">소식 구독하기</h3>
-              <p className="text-gray-400 mb-6">의정활동 소식을 이메일로 받아보세요</p>
-              <form className="space-y-4">
-                <input
-                  type="email"
-                  placeholder="이메일 주소"
-                  className="w-full px-4 py-3 bg-white/5 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white placeholder-gray-500"
-                />
-                <button
-                  type="submit"
-                  className="w-full px-4 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold rounded-lg transition-colors duration-300"
-                >
-                  구독하기
-                </button>
-              </form>
+              <h3 className="text-xl md:text-2xl font-bold mb-4">실시간 소식받기</h3>
+              <p className="text-gray-400 mb-6">카카오톡으로 권현우 후보의 발걸음을 가장 먼저 만나보세요!</p>
+              <a
+                href="https://pf.kakao.com/_xxxxx" {/* 실제 카카오톡 채널 URL로 변경 필요 */}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full px-4 py-3 bg-[#FEE500] hover:bg-[#FDD700] text-[#3A1D1D] font-bold rounded-lg transition-colors duration-300 text-center mb-4"
+              >
+                카카오톡 채널 추가하기
+              </a>
+              <p className="text-sm text-gray-400 text-center">
+                매일 업데이트되는 현장 소식과 주요 활동을 보내드립니다
+              </p>
             </div>
           </motion.div>
         </div>
