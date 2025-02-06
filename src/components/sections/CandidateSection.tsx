@@ -59,7 +59,7 @@ const awards = [
 ];
 
 const profileImages = [
-  '/images/candidate/profile_l.jpg',
+  '/images/candidate/profile-1.jpg',
   ...Array.from({ length: 9 }, (_, i) => `/images/candidate/profile-${i + 2}.jpg`)
 ];
 
