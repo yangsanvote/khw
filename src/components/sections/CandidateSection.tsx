@@ -246,7 +246,27 @@ export default function CandidateSection() {
 
           {/* 모바일 뷰 - 하나의 카드로 통합 */}
           <div className="md:hidden bg-white/60 backdrop-blur-lg rounded-2xl p-6 border border-gray-200 h-[30vh] overflow-y-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 mb-4 shadow-sm">
-            {/* 직업 섹션 */}
+            {/* 수상 섹션 */}
+            <div className="mb-8">
+              <h3 className="text-2xl font-bold mb-6 text-emerald-600">수상</h3>
+              <ul className="space-y-4">
+                {awards.map((award, index) => (
+                  <motion.li
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="flex items-center gap-1"
+                  >
+                    <span className="text-sm text-gray-500 shrink-0 w-14">{award.year}</span>
+                    <span className="text-base text-gray-700">{award.title}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+
+            {/* 삶의 발자취 섹션 */}
             <div className="mb-8">
               <h3 className="text-2xl font-bold mb-6 text-emerald-600">삶의 발자취</h3>
               <ul className="space-y-4">
@@ -267,7 +287,7 @@ export default function CandidateSection() {
             </div>
 
             {/* 사회활동 섹션 */}
-            <div className="mb-8">
+            <div>
               <h3 className="text-2xl font-bold mb-6 text-emerald-600">사회활동</h3>
               <ul className="space-y-4">
                 {activities.map((activity, index) => (
@@ -281,26 +301,6 @@ export default function CandidateSection() {
                   >
                     <span className="text-sm text-gray-500 shrink-0 w-14">{activity.year}</span>
                     <span className="text-base text-gray-700">{activity.title}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-
-            {/* 수상 섹션 */}
-            <div>
-              <h3 className="text-2xl font-bold mb-6 text-emerald-600">수상</h3>
-              <ul className="space-y-4">
-                {awards.map((award, index) => (
-                  <motion.li
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-center gap-1"
-                  >
-                    <span className="text-sm text-gray-500 shrink-0 w-14">{award.year}</span>
-                    <span className="text-base text-gray-700">{award.title}</span>
                   </motion.li>
                 ))}
               </ul>
