@@ -20,7 +20,7 @@ const contactInfo = [
     icon: MapPin,
     label: "사무실 위치",
     value: "경상남도 양산시 중앙로 39",
-    href: "https://maps.google.com/?q=경상남도 양산시 중앙로 39"
+    href: "https://maps.google.com/?q=경상남도 양산시 양주로 94"
   }
 ];
 
