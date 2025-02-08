@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+import Script from 'next/script'
+import { GA_TRACKING_ID } from '@/lib/gtag';
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ["latin"],
@@ -19,6 +21,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className="scroll-smooth overflow-x-hidden" suppressHydrationWarning={true}>
+      <head>
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GA_TRACKING_ID}');
+            `,
+          }}
+        />
+      </head>
       <body className={`${notoSansKr.className} overflow-x-hidden`} suppressHydrationWarning={true}>
         <div className="overflow-x-hidden">
           {children}
