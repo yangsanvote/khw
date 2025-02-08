@@ -13,7 +13,13 @@ declare global {
     gtag: (
       command: string,
       targetId: string,
-      config?: Record<string, any>
+      config?: {
+        page_path?: string;
+        event_category?: string;
+        event_label?: string;
+        value?: number;
+        [key: string]: string | number | undefined;
+      }
     ) => void;
   }
 } 
