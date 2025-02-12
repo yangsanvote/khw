@@ -84,10 +84,10 @@ export default function HeroSection() {
 
             {/* 진짜다 텍스트 */}
             <motion.span
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="absolute right-8 md:right-[15%] top-1/2 text-4xl md:text-7xl font-extrabold z-0"
+              className="absolute right-0 md:right-[15%] top-1/2 text-4xl md:text-7xl font-extrabold z-0"
             >
               진짜다
             </motion.span>
