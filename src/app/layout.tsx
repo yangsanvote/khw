@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_KR } from "next/font/google";
+import { Noto_Sans_KR, East_Sea_Dokdo } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script'
 import { GA_TRACKING_ID } from '@/lib/gtag';
@@ -7,6 +7,11 @@ import { GA_TRACKING_ID } from '@/lib/gtag';
 const notoSansKr = Noto_Sans_KR({
   subsets: ["latin"],
   weight: ["400", "500", "700", "900"],
+});
+
+const eastSeaDokdo = East_Sea_Dokdo({
+  weight: ["400"],
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -37,6 +42,22 @@ export default function RootLayout({
               gtag('config', '${GA_TRACKING_ID}');
             `,
           }}
+        />
+        <Script
+          src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js"
+          integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8"
+          crossOrigin="anonymous"
+        />
+        <Script id="kakao-init">
+          {`
+            if (typeof Kakao !== 'undefined') {
+              Kakao.init('YOUR_KAKAO_APP_KEY');
+            }
+          `}
+        </Script>
+        <link 
+          href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" 
+          rel="stylesheet"
         />
       </head>
       <body className={`${notoSansKr.className} overflow-x-hidden`} suppressHydrationWarning={true}>

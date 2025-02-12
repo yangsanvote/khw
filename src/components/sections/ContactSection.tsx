@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Facebook, Instagram } from 'lucide-react';
+import KakaoShareButton from '../KakaoShareButton';
 
 const contactInfo = [
   {
@@ -97,18 +98,11 @@ export default function ContactSection() {
 
             <div className="bg-white/10 rounded-2xl p-6 md:p-8">
               <h3 className="text-xl md:text-2xl font-bold mb-4">실시간 소식받기</h3>
-              <p className="text-gray-400 mb-6">카카오톡으로 권현우 후보의 발걸음을 가장 먼저 만나보세요!</p>
-              <a
-                href="https://pf.kakao.com/_xxxxx"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full px-4 py-3 bg-[#FEE500] hover:bg-[#FDD700] text-[#3A1D1D] font-bold rounded-lg transition-colors duration-300 text-center mb-4"
-              >
-                카카오톡 채널 추가하기
-              </a>
-              <p className="text-sm text-gray-400 text-center">
-                매일 업데이트되는 현장 소식과 주요 활동을 보내드립니다
-              </p>
+              <KakaoShareButton 
+                title="권현우 후보 - 양산시의회의원"
+                description="1년의 약속, 확실한 변화 - 기강 ON, 특권 OFF"
+                imageUrl="https://권현우.kr/images/candidate/profile-1.jpg"
+              />
             </div>
           </motion.div>
         </div>
