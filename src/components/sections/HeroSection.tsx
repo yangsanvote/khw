@@ -4,12 +4,6 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import CountdownTimer from '../CountdownTimer';
 import ScrollIndicator from '../ScrollIndicator';
-import { Nanum_Brush_Script } from "next/font/google";
-
-const nanumBrushScript = Nanum_Brush_Script({
-  weight: ["400"],
-  subsets: ["latin"],
-});
 
 export default function HeroSection() {
   return (

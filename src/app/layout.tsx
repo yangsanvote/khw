@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_KR, East_Sea_Dokdo } from "next/font/google";
+import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script'
 import { GA_TRACKING_ID } from '@/lib/gtag';
@@ -7,11 +7,6 @@ import { GA_TRACKING_ID } from '@/lib/gtag';
 const notoSansKr = Noto_Sans_KR({
   subsets: ["latin"],
   weight: ["400", "500", "700", "900"],
-});
-
-const eastSeaDokdo = East_Sea_Dokdo({
-  weight: ["400"],
-  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
