@@ -41,7 +41,7 @@ export default function HeroSection() {
       </div>
 
       {/* 메인 컨텐츠 */}
-      <div className="w-full max-w-6xl mx-auto flex flex-col items-center z-10 mt-[0vh] md:mt-[5vh]">
+      <div className="w-full max-w-6xl mx-auto flex flex-col items-center z-10 -mt-[10vh] md:mt-[0vh]">
         {/* 메인 텍스트 */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -61,7 +61,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="absolute left-0 md:left-[15%] top-1/2 text-4xl md:text-7xl font-extrabold z-0"
+              className="absolute left-0 md:left-[15%] top-1/3 text-4xl md:text-7xl font-extrabold z-0"
             >
               다르다
             </motion.span>
@@ -87,7 +87,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="absolute -right-1 md:right-[15%] top-1/2 text-4xl md:text-7xl font-extrabold z-0"
+              className="absolute right-3 md:right-[15%] top-1/3 text-4xl md:text-7xl font-extrabold z-0"
             >
               진짜다
             </motion.span>
