@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Facebook, Instagram } from 'lucide-react';
-import KakaoShareButton from '../KakaoShareButton';
+import Link from 'next/link';
 
 const contactInfo = [
   {
@@ -20,7 +20,7 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "사무실 위치",
-    value: "경상남도 양산시 중앙로 39",
+    value: "경상남도 양산시 양주로 94",
     href: "https://maps.google.com/?q=경상남도 양산시 양주로 94"
   }
 ];
@@ -98,11 +98,20 @@ export default function ContactSection() {
 
             <div className="bg-white/10 rounded-2xl p-6 md:p-8">
               <h3 className="text-xl md:text-2xl font-bold mb-4">실시간 소식받기</h3>
-              <KakaoShareButton 
-                title="권현우 후보 - 양산시의회의원"
-                description="1년의 약속, 확실한 변화 - 기강 ON, 특권 OFF"
-                imageUrl="https://권현우.kr/images/candidate/profile-1.jpg"
-              />
+              <Link 
+                href="https://band.us/@yangsan2018" 
+                target="_blank"
+                className="flex items-center gap-2 px-4 py-2 bg-[#2DB400] hover:bg-[#249c00] text-white rounded-lg transition-colors"
+              >
+                <svg 
+                  viewBox="0 0 24 24" 
+                  className="w-5 h-5"
+                  fill="currentColor"
+                >
+                  <path d="M19.1,4.9C15.2,1,8.8,1,4.9,4.9C1,8.8,1,15.2,4.9,19.1C8.8,23,15.2,23,19.1,19.1C23,15.2,23,8.8,19.1,4.9zM13.8,17.3h-3.6v-4.7H7.5V9h2.7V7.2h3.6V9h2.7v3.6h-2.7V17.3z"/>
+                </svg>
+                <span>네이버 밴드 구경하기</span>
+              </Link>
             </div>
           </motion.div>
         </div>
