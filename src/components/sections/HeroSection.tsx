@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import CountdownTimer from '../CountdownTimer';
 import ScrollIndicator from '../ScrollIndicator';
+import VisitorCounter from '../VisitorCounter';
 
 export default function HeroSection() {
   return (
@@ -117,6 +118,7 @@ export default function HeroSection() {
       </div>
 
       <ScrollIndicator />
+      <VisitorCounter />
     </section>
   );
 }
