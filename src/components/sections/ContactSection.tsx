@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Facebook, Instagram } from 'lucide-react';
 import Link from 'next/link';
+import { event } from '@/lib/gtag';
 
 const contactInfo = [
   {
@@ -24,6 +25,31 @@ const contactInfo = [
     href: "https://maps.google.com/?q=경상남도 양산시 양주로 94"
   }
 ];
+
+const handleBandClick = () => {
+  event({
+    action: 'click_band_link',
+    category: 'outbound',
+    label: '네이버 밴드 방문'
+  });
+};
+
+// 각 링크 클릭 추적
+const handleContactClick = (type: string) => {
+  event({
+    action: 'contact_click',
+    category: 'contact',
+    label: type
+  });
+};
+
+const handleSocialClick = (platform: string) => {
+  event({
+    action: 'social_click',
+    category: 'social',
+    label: platform
+  });
+};
 
 export default function ContactSection() {
   return (
@@ -59,6 +85,7 @@ export default function ContactSection() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 className="flex items-center gap-4 hover:text-yellow-400 transition-colors duration-300"
+                onClick={() => handleContactClick(info.label)}
               >
                 <info.icon className="w-6 h-6 md:w-8 md:h-8 shrink-0" />
                 <div>
@@ -83,6 +110,7 @@ export default function ContactSection() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"
+                onClick={() => handleSocialClick('Facebook')}
               >
                 <Facebook className="w-6 h-6" />
               </a>
@@ -91,6 +119,7 @@ export default function ContactSection() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"
+                onClick={() => handleSocialClick('Instagram')}
               >
                 <Instagram className="w-6 h-6" />
               </a>
@@ -102,6 +131,7 @@ export default function ContactSection() {
                 href="https://band.us/@yangsan2018" 
                 target="_blank"
                 className="flex items-center gap-2 px-4 py-2 bg-[#2DB400] hover:bg-[#249c00] text-white rounded-lg transition-colors"
+                onClick={handleBandClick}
               >
                 <svg 
                   viewBox="0 0 24 24" 

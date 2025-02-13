@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import ScrollIndicator from '../ScrollIndicator';
+import { event } from '@/lib/gtag';
 
 export default function DeclarationSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,6 +28,24 @@ export default function DeclarationSection() {
 실력으로 검증받았고, 현장에서 경험을 쌓았습니다. 이제는 양주동면의 변화를 이끌어낼 때입니다.
 4월 2일, 권현우를 선택 해 주십시오. 양주동면의 새로운 미래, 제가 만들어내겠습니다. 양주 동면을 바꾸고, 양산을 바꾸고, 우리의 삶을 바꾸겠습니다. 
 감사합니다.`;
+
+  const handleOpenModal = () => {
+    event({
+      action: 'view_full_declaration',
+      category: 'engagement',
+      label: '전문보기 클릭'
+    });
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    event({
+      action: 'close_full_declaration',
+      category: 'engagement',
+      label: '전문보기 닫기'
+    });
+    setIsModalOpen(false);
+  };
 
   return (
     <section className="h-screen snap-start relative flex flex-col items-center justify-start pt-8 md:pt-16 bg-gradient-to-br from-yellow-50 to-yellow-100 px-4">
@@ -69,7 +88,7 @@ export default function DeclarationSection() {
 
         <div className="text-center mt-4">
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleOpenModal}
             className="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors"
           >
             전문 보기
@@ -88,7 +107,7 @@ export default function DeclarationSection() {
               ))}
             </div>
             <button
-              onClick={() => setIsModalOpen(false)}
+              onClick={handleCloseModal}
               className="mt-6 px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors"
             >
               닫기
