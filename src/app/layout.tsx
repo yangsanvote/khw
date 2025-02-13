@@ -11,7 +11,7 @@ const notoSansKr = Noto_Sans_KR({
 
 export const metadata: Metadata = {
   title: "권현우 | 양산시의회의원 후보",
-  description: "1년의 약속, 확실한 변화 - 기강 ON, 특권 OFF",
+  description: "사는 곳을 바꿉니다, 삶을 바꿉니다",
 };
 
 export default function RootLayout({
