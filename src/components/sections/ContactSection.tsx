@@ -21,8 +21,8 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "사무실 위치",
-    value: "경상남도 양산시 양주로 94",
-    href: "https://maps.google.com/?q=경상남도 양산시 양주로 94"
+    value: "경상남도 양산시 양주로 62 (lh7단지상가) 2층",
+    href: "https://maps.google.com/?q=경상남도 양산시 양주로 62"
   }
 ];
 
@@ -128,7 +128,7 @@ export default function ContactSection() {
             <div className="bg-white/10 rounded-2xl p-6 md:p-8">
               <h3 className="text-xl md:text-2xl font-bold mb-4">실시간 소식받기</h3>
               <Link 
-                href="https://band.us/@yangsan2018" 
+                href="https://band.us/@khw" 
                 target="_blank"
                 className="flex items-center gap-2 px-4 py-2 bg-[#2DB400] hover:bg-[#249c00] text-white rounded-lg transition-colors"
                 onClick={handleBandClick}

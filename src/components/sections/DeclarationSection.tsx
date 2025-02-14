@@ -58,7 +58,7 @@ export default function DeclarationSection() {
           className="text-center mb-3 md:mb-6"
         >
           <h2 className="text-2xl md:text-4xl font-bold text-yellow-800 mb-1">출마선언문</h2>
-          <p className="text-xl md:text-2xl text-yellow-700">정의당 권현우 양주동면 시의원 후보</p>
+          <p className="text-xl md:text-2xl text-yellow-700">정의당 권현우 양산시의원 출마 기자회견</p>
         </motion.div>
 
         <motion.div
@@ -82,7 +82,7 @@ export default function DeclarationSection() {
 
           <div className="text-right mt-4 md:mt-8">
             <p className="text-lg md:text-xl font-semibold text-yellow-800">2025년 2월 13일</p>
-            <p className="text-lg md:text-xl font-semibold text-yellow-800">정의당 양주동면 시의원 후보 권현우</p>
+            <p className="text-lg md:text-xl font-semibold text-yellow-800">권현우 올림</p>
           </div>
         </motion.div>
 
