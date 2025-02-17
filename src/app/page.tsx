@@ -44,6 +44,16 @@ export default function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    // URL 해시가 있으면 해당 섹션으로 스크롤
+    if (window.location.hash) {
+      const element = document.querySelector(window.location.hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, []);
+
   return (
     <main className="relative snap-y snap-mandatory h-screen overflow-y-scroll overflow-x-hidden">
       <HeroSection />
