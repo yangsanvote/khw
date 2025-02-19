@@ -8,7 +8,7 @@ const careItems = [
   {
     icon: Heart,
     title: "다함께 돌봄센터 유치",
-    description: "석금산에 다함께 돌봄센터를 유치하겠습니다.",
+    description: "석금산과 양주동에 다함께 돌봄센터를 유치하겠습니다.",
     location: "권역별 돌봄센터가 일하는 부모를 돕습니다"
   },
   {

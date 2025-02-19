@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Newspaper } from 'lucide-react';
 import ScrollIndicator from '../ScrollIndicator';
 
+// PressItem 인터페이스를 Article 인터페이스와 통합
 interface PressItem {
   title: string;
   date: string;
@@ -12,18 +13,6 @@ interface PressItem {
 }
 
 const pressItems: PressItem[] = [
-  {
-    title: '권현우 예비후보 "양산시 전국 1등 도시 만들겠다"',
-    date: "2024.02.14",
-    source: "경남도민일보",
-    link: "http://www.idomin.com/news/articleView.html?idxno=834386"
-  },
-  {
-    title: '권현우 양산시의원 예비후보 "청년이 살기 좋은 도시 만들 것"',
-    date: "2024.02.13",
-    source: "경남신문",
-    link: "https://www.knnews.co.kr/news/articleView.php?idxno=1444467"
-  },
   {
     title: '청어람아파트, "국토부 2024 최우수 관리단지" 선정',
     date: "2024.12.18",
@@ -80,6 +69,37 @@ const pressItems: PressItem[] = [
   }
 ];
 
+// pressItems 배열을 날짜순으로 정렬
+const sortedPressItems = [...pressItems].sort((a, b) => {
+  // 날짜 형식을 YYYY.MM.DD에서 YYYY-MM-DD로 변환
+  const dateA = new Date(a.date.replace(/\./g, '-'));
+  const dateB = new Date(b.date.replace(/\./g, '-'));
+  return dateB.getTime() - dateA.getTime();
+});
+
+// 기사 데이터 인터페이스
+interface Article {
+  date: string;  // 'YYYY-MM-DD' 형식
+  title: string;
+  link: string;
+  // ... 기타 필요한 속성들
+}
+
+// 기사 데이터 배열을 날짜순으로 정렬하는 함수
+const sortArticlesByDate = (articles: Article[]) => {
+  return articles.sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+};
+
+// 컴포넌트 내부
+const articles = sortArticlesByDate(pressItems.map((item) => ({
+  date: item.date,
+  title: item.title,
+  link: item.link,
+  source: item.source
+})));
+
 export default function PressSection() {
   return (
     <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4 py-8">
@@ -101,7 +121,7 @@ export default function PressSection() {
           <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-slate-900 to-transparent z-10" />
           
           <div className="space-y-4 max-h-[60vh] overflow-y-auto px-4 hide-scrollbar">
-            {pressItems.map((item, index) => (
+            {sortedPressItems.map((item, index) => (
               <motion.a
                 key={index}
                 href={item.link}
