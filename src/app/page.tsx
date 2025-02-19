@@ -70,20 +70,6 @@ export default function Home() {
       <SupportSection />
       <CandidateSection />
       <ContactSection />
-      {/* 
-      아래 섹션들은 주석 처리
-      <ProblemSection />
-      <SolutionSection />
-      <PromiseSection />
-      <TimelineSection />
-      */}
-      
-      {/* 모바일 전용 스크롤 화살표 */}
-      <div className="fixed top-[85vh] w-full h-6 block md:hidden z-50 pointer-events-none">
-        <div className="pointer-events-auto">
-          <ScrollIndicator isDark={false} color="text-gray-400" />
-        </div>
-      </div>
     </main>
   );
 }

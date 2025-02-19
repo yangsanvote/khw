@@ -202,3 +202,38 @@ section {
 .font-nanum-brush {
   font-family: 'Nanum Brush Script', cursive;
 }
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: light;
+  }
+  
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+
+  /* 섹션별 배경색 유지 */
+  [class*="from-emerald-950"],
+  [class*="from-slate-900"],
+  [class*="from-rose-50"],
+  [class*="from-yellow-50"],
+  [class*="from-\[#623D91\]"],
+  [class*="from-green-50"] {
+    background-color: initial !important;
+  }
+
+  /* 텍스트 색상 유지 */
+  [class*="text-white"],
+  [class*="text-gray-900"],
+  [class*="text-gray-800"],
+  [class*="text-gray-700"],
+  [class*="text-gray-600"] {
+    color: initial !important;
+  }
+
+  /* 그라데이션 배경 유지 */
+  [class*="bg-gradient-to-br"] {
+    background-image: initial !important;
+  }
+}
