@@ -134,7 +134,9 @@ export default function PressSection() {
         </div>
       </div>
 
-      <ScrollIndicator isDark={true} className="bottom-24 md:bottom-16" />
+      <div className="hidden md:block">
+        <ScrollIndicator isDark={false} className="bottom-24 md:bottom-16" />
+      </div>
     </section>
   );
 } 

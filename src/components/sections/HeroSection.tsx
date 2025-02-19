@@ -125,7 +125,9 @@ export default function HeroSection() {
 
         {/* 하단 요소들 */}
         <div className="w-full flex flex-col items-center justify-center relative">
-          <ScrollIndicator isDark={false} className="bottom-0 md:bottom-0" />
+          <div className="hidden md:block">
+          <ScrollIndicator isDark={true} className="bottom-24 md:bottom-16" />
+          </div>
           <VisitorCounter className="px-4" />
         </div>
       </div>

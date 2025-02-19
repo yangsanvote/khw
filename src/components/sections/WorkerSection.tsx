@@ -79,7 +79,9 @@ export default function WorkerSection() {
         </div>
       </div>
 
-      <ScrollIndicator isDark={true} className="bottom-24 md:bottom-16" />
+      <div className="hidden md:block">  {/* 데스크탑에서만 표시 */}
+        <ScrollIndicator isDark={true} className="bottom-24 md:bottom-16" />
+      </div>
     </section>
   );
 } 

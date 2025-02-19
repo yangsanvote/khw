@@ -354,7 +354,7 @@ export default function CandidateSection() {
         </div>
       </div>
 
-      <div className="fixed md:relative top-[85vh] md:top-auto w-full h-6 md:h-20">
+      <div className="hidden md:block">  {/* 데스크탑에서만 표시 */}
         <ScrollIndicator isDark={false} color="text-gray-400" />
       </div>
     </section>

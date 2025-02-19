@@ -11,6 +11,7 @@ import CareSection from '@/components/sections/CareSection';
 import WorkerSection from '@/components/sections/WorkerSection';
 import { useEffect } from 'react';
 import { event } from '@/lib/gtag';
+import ScrollIndicator from '@/components/ScrollIndicator';
 
 export default function Home() {
   useEffect(() => {
@@ -59,7 +60,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="h-screen w-full snap-y snap-mandatory overflow-y-scroll">
+    <main className="h-screen w-full snap-y snap-mandatory overflow-y-scroll relative">
       <HeroSection />
       <DeclarationSection />
       <PressSection />
@@ -76,6 +77,13 @@ export default function Home() {
       <PromiseSection />
       <TimelineSection />
       */}
+      
+      {/* 모바일 전용 스크롤 화살표 */}
+      <div className="fixed top-[85vh] w-full h-6 block md:hidden z-50 pointer-events-none">
+        <div className="pointer-events-auto">
+          <ScrollIndicator isDark={false} color="text-gray-400" />
+        </div>
+      </div>
     </main>
   );
 }

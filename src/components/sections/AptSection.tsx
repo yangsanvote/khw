@@ -82,7 +82,9 @@ export default function AptSection() {
         </div>
       </div>
 
-      <ScrollIndicator isDark={false} className="bottom-24 md:bottom-16" />
+      <div className="hidden md:block">
+        <ScrollIndicator isDark={false} className="bottom-24 md:bottom-16" />
+      </div>
     </section>
   );
 } 
