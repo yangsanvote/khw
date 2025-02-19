@@ -36,7 +36,7 @@ export default function AptSection() {
         />
       </div>
 
-      <div className="w-full max-w-6xl mx-auto relative -mt-20">
+      <div className="w-full max-w-6xl mx-auto relative -mt-8 md:-mt-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

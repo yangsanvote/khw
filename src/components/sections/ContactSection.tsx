@@ -85,7 +85,7 @@ export default function ContactSection() {
 
   return (
     <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-gradient-to-br from-emerald-950 via-slate-900 to-emerald-950 px-4 text-white overflow-x-hidden">
-      <div className="w-full max-w-4xl mx-auto -mt-16">
+      <div className="w-full max-w-4xl mx-auto -mt-8 md:-mt-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -204,13 +204,15 @@ section {
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
+  :root {
     color-scheme: light;
   }
   
-  body {
+  html, body {
     background-color: white !important;
     color: black !important;
+    forced-color-adjust: none !important;
+    -webkit-forced-color-adjust: none !important;
   }
 
   /* 섹션별 배경색 유지 */
@@ -221,19 +223,40 @@ section {
   [class*="from-\[#623D91\]"],
   [class*="from-green-50"] {
     background-color: initial !important;
-  }
-
-  /* 텍스트 색상 유지 */
-  [class*="text-white"],
-  [class*="text-gray-900"],
-  [class*="text-gray-800"],
-  [class*="text-gray-700"],
-  [class*="text-gray-600"] {
-    color: initial !important;
+    color-scheme: none !important;
+    forced-color-adjust: none !important;
+    -webkit-forced-color-adjust: none !important;
   }
 
   /* 그라데이션 배경 유지 */
   [class*="bg-gradient-to-br"] {
     background-image: initial !important;
+    forced-color-adjust: none !important;
+    -webkit-forced-color-adjust: none !important;
+  }
+
+  /* 추가: 모든 배경색과 그라데이션 보존 */
+  .bg-white,
+  .bg-black,
+  [class*="bg-"],
+  [class*="from-"],
+  [class*="via-"],
+  [class*="to-"] {
+    forced-color-adjust: none !important;
+    -webkit-forced-color-adjust: none !important;
+  }
+
+  /* 추가: 모든 텍스트 색상 보존 */
+  [class*="text-"] {
+    color: initial !important;
+    forced-color-adjust: none !important;
+    -webkit-forced-color-adjust: none !important;
+  }
+}
+
+/* 추가: 명시적으로 라이트 모드 강제 */
+@media screen {
+  :root {
+    color-scheme: light;
   }
 }
