@@ -71,34 +71,10 @@ const pressItems: PressItem[] = [
 
 // pressItems 배열을 날짜순으로 정렬
 const sortedPressItems = [...pressItems].sort((a, b) => {
-  // 날짜 형식을 YYYY.MM.DD에서 YYYY-MM-DD로 변환
   const dateA = new Date(a.date.replace(/\./g, '-'));
   const dateB = new Date(b.date.replace(/\./g, '-'));
   return dateB.getTime() - dateA.getTime();
 });
-
-// 기사 데이터 인터페이스
-interface Article {
-  date: string;  // 'YYYY-MM-DD' 형식
-  title: string;
-  link: string;
-  // ... 기타 필요한 속성들
-}
-
-// 기사 데이터 배열을 날짜순으로 정렬하는 함수
-const sortArticlesByDate = (articles: Article[]) => {
-  return articles.sort((a, b) => {
-    return new Date(b.date).getTime() - new Date(a.date).getTime();
-  });
-};
-
-// 컴포넌트 내부
-const articles = sortArticlesByDate(pressItems.map((item) => ({
-  date: item.date,
-  title: item.title,
-  link: item.link,
-  source: item.source
-})));
 
 export default function PressSection() {
   return (

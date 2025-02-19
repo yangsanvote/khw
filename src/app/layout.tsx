@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script'
@@ -51,10 +50,6 @@ export default function RootLayout({
             }
           `}
         </Script>
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" 
-          rel="stylesheet"
-        />
       </head>
       <body className={`${notoSansKr.className} overflow-x-hidden`} suppressHydrationWarning={true}>
         <div className="overflow-x-hidden">
