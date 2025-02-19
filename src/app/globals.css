@@ -206,55 +206,56 @@ section {
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: light;
+    forced-color-adjust: none;
   }
   
   html, body {
     background-color: white !important;
     color: black !important;
-    forced-color-adjust: none !important;
-    -webkit-forced-color-adjust: none !important;
   }
 
-  /* 섹션별 배경색 유지 */
-  [class*="from-emerald-950"],
-  [class*="from-slate-900"],
-  [class*="from-rose-50"],
-  [class*="from-yellow-50"],
-  [class*="from-\[#623D91\]"],
-  [class*="from-green-50"] {
-    background-color: initial !important;
-    color-scheme: none !important;
-    forced-color-adjust: none !important;
-    -webkit-forced-color-adjust: none !important;
+  /* 배경색 보존을 위한 수정된 규칙 */
+  section[class*="from-"] {
+    background: inherit !important;
   }
 
-  /* 그라데이션 배경 유지 */
-  [class*="bg-gradient-to-br"] {
-    background-image: initial !important;
-    forced-color-adjust: none !important;
-    -webkit-forced-color-adjust: none !important;
+  /* 각 섹션별 배경색 명시적 지정 */
+  .from-slate-900 {
+    background: linear-gradient(to bottom right, #0f172a, #1e293b, #0f172a) !important;
   }
 
-  /* 추가: 모든 배경색과 그라데이션 보존 */
-  .bg-white,
-  .bg-black,
-  [class*="bg-"],
-  [class*="from-"],
-  [class*="via-"],
-  [class*="to-"] {
-    forced-color-adjust: none !important;
-    -webkit-forced-color-adjust: none !important;
+  .from-rose-50 {
+    background: linear-gradient(to bottom right, #fff1f2, #ffffff, #fff1f2) !important;
   }
 
-  /* 추가: 모든 텍스트 색상 보존 */
+  .from-emerald-950 {
+    background: linear-gradient(to bottom right, #064e3b, #0f172a, #064e3b) !important;
+  }
+
+  .from-\[#623D91\] {
+    background: linear-gradient(to bottom right, #623D91, #1e1b4b, #623D91) !important;
+  }
+
+  .from-green-50 {
+    background: linear-gradient(to bottom right, #f0fdf4, #f0fdf4, #f0fdf4) !important;
+  }
+
+  .from-slate-100 {
+    background: linear-gradient(to bottom right, #f1f5f9, #e2e8f0, #f1f5f9) !important;
+  }
+
+  /* 그라데이션 배경 보존 */
+  .bg-gradient-to-br {
+    background-image: inherit !important;
+  }
+
+  /* 텍스트 색상 보존 */
   [class*="text-"] {
-    color: initial !important;
-    forced-color-adjust: none !important;
-    -webkit-forced-color-adjust: none !important;
+    color: inherit !important;
   }
 }
 
-/* 추가: 명시적으로 라이트 모드 강제 */
+/* 명시적 라이트 모드 설정 */
 @media screen {
   :root {
     color-scheme: light;

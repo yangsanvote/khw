@@ -44,13 +44,13 @@ export default function AptSection() {
           viewport={{ once: true }}
           className="text-center mb-8"
         >
-          <h2 className="text-3xl md:text-5xl font-black text-[#E8326E] mb-4">
+          <h2 className="text-2xl md:text-5xl font-black text-[#E8326E] mb-4">
             아파트의 개념을 새로 쓴 사람
           </h2>
-          <p className="text-xl md:text-2xl text-rose-600 mb-3">
+          <p className="text-lg md:text-2xl text-rose-600 mb-3">
             사는 곳을 바꿉니다, 삶을 바꿉니다
           </p>
-          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base md:text-xl text-gray-600 max-w-3xl mx-auto">
             청어람 아파트를 전국 1등으로 만든 경험,<br/>
             양산시를 전국 1등으로 만들겠습니다
           </p>

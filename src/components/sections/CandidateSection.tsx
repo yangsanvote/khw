@@ -100,9 +100,9 @@ export default function CandidateSection() {
   return (
     <section 
       suppressHydrationWarning={true}
-      className="h-screen snap-start relative flex flex-col items-center pt-0 md:pt-[2vh] bg-gradient-to-br from-slate-100 via-slate-200 to-slate-100 px-4 text-gray-800 overflow-x-hidden"
+      className="h-screen snap-start relative flex flex-col items-center pt-8 md:pt-12 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-100 px-4 text-gray-800 overflow-x-hidden"
     >
-      <div className="w-full max-w-6xl mx-auto relative -mt-4 md:-mt-16">
+      <div className="w-full max-w-6xl mx-auto relative mt-4 md:mt-8">
         <div className="flex flex-col h-[90vh] md:h-full">
           {/* 사진 */}
           <div className="flex flex-col mb-2 md:mb-4">
@@ -354,7 +354,7 @@ export default function CandidateSection() {
         </div>
       </div>
 
-      {/* 스크롤 화살표 수정 */}
+      {/* 스크롤 화살표 */}
       <div className="absolute bottom-[10%] left-0 right-0 z-10">
         <ScrollIndicator isDark={true} color="text-gray-400" />
       </div>
