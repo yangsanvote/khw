@@ -116,7 +116,7 @@ export default function DeclarationSection() {
         </div>
       )}
 
-      <ScrollIndicator isDark={false} className="bottom-4 md:bottom-8" />
+      <ScrollIndicator isDark={false} className="bottom-24 md:bottom-8" />
     </section>
   );
 } 

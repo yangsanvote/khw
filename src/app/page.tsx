@@ -55,7 +55,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative snap-y snap-mandatory h-screen overflow-y-scroll overflow-x-hidden">
+    <main className="h-screen w-full snap-y snap-mandatory overflow-y-scroll">
       <HeroSection />
       <DeclarationSection />
       <SupportSection />
