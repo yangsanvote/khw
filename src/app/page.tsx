@@ -11,7 +11,6 @@ import CareSection from '@/components/sections/CareSection';
 import WorkerSection from '@/components/sections/WorkerSection';
 import { useEffect } from 'react';
 import { event } from '@/lib/gtag';
-import ScrollIndicator from '@/components/ScrollIndicator';
 
 export default function Home() {
   useEffect(() => {
