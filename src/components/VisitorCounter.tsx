@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from 'react';
 
-export default function VisitorCounter() {
+interface VisitorCounterProps {
+  className?: string;
+}
+
+export default function VisitorCounter({ className = "" }: VisitorCounterProps) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -21,7 +25,7 @@ export default function VisitorCounter() {
   }, []);
 
   return (
-    <div className="text-[10px] text-white/30 absolute bottom-2 right-2">
+    <div className={`text-[10px] text-white/30 absolute bottom-2 right-2 ${className}`}>
       방문자 {count}
     </div>
   );
