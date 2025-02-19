@@ -203,55 +203,69 @@ section {
   font-family: 'Nanum Brush Script', cursive;
 }
 
+/* 기존 다크모드 미디어 쿼리를 수정 */
 @media (prefers-color-scheme: dark) {
   :root {
-    color-scheme: light;
-    forced-color-adjust: none;
+    color-scheme: light !important;
+    forced-color-adjust: none !important;
+    -webkit-forced-color-adjust: none !important;
   }
   
-  html, body {
+  html {
+    color-scheme: light !important;
+  }
+  
+  body {
     background-color: white !important;
     color: black !important;
   }
 
-  /* 배경색 보존을 위한 수정된 규칙 */
-  section[class*="from-"] {
-    background: inherit !important;
-  }
-
-  /* 각 섹션별 배경색 명시적 지정 */
-  .from-slate-900 {
+  /* 섹션별 배경색 직접 지정 */
+  section.from-slate-900 {
     background: linear-gradient(to bottom right, #0f172a, #1e293b, #0f172a) !important;
   }
 
-  .from-rose-50 {
+  section.from-rose-50 {
     background: linear-gradient(to bottom right, #fff1f2, #ffffff, #fff1f2) !important;
   }
 
-  .from-emerald-950 {
+  section.from-emerald-950 {
     background: linear-gradient(to bottom right, #064e3b, #0f172a, #064e3b) !important;
   }
 
-  .from-\[#623D91\] {
+  section.from-\[#623D91\] {
     background: linear-gradient(to bottom right, #623D91, #1e1b4b, #623D91) !important;
   }
 
-  .from-green-50 {
+  section.from-green-50 {
     background: linear-gradient(to bottom right, #f0fdf4, #f0fdf4, #f0fdf4) !important;
   }
 
-  .from-slate-100 {
+  section.from-slate-100 {
     background: linear-gradient(to bottom right, #f1f5f9, #e2e8f0, #f1f5f9) !important;
   }
 
-  /* 그라데이션 배경 보존 */
-  .bg-gradient-to-br {
-    background-image: inherit !important;
+  /* 모든 섹션에 대한 기본 처리 */
+  section {
+    forced-color-adjust: none !important;
+    -webkit-forced-color-adjust: none !important;
   }
 
   /* 텍스트 색상 보존 */
   [class*="text-"] {
     color: inherit !important;
+  }
+}
+
+/* 추가: 크롬 전용 다크모드 대응 */
+@media all and (-webkit-min-device-pixel-ratio:0) and (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light !important;
+  }
+  
+  body {
+    background-color: white !important;
+    color: black !important;
   }
 }
 
