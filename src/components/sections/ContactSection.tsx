@@ -141,7 +141,7 @@ export default function ContactSection() {
               <h3 className="text-xl md:text-2xl font-bold mb-4">실시간 소식받기</h3>
               <div className="space-y-3">
                 <Link 
-                  href="https://band.us/band/94300871" 
+                  href="https://band.us/@khw" 
                   target="_blank"
                   className="flex items-center justify-between w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-6 py-3 transition-colors"
                   onClick={handleBandClick}
