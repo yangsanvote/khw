@@ -255,6 +255,38 @@ section {
   [class*="text-"] {
     color: inherit !important;
   }
+
+  /* 텍스트 색상 명시적 지정 */
+  section.from-slate-900,
+  section.from-emerald-950,
+  section.from-\[#623D91\] {
+    color: white !important;
+  }
+
+  /* 특정 텍스트 클래스에 대한 색상 강제 지정 */
+  .text-white {
+    color: white !important;
+  }
+
+  .text-gray-400 {
+    color: #9ca3af !important;
+  }
+
+  .text-gray-600 {
+    color: #4b5563 !important;
+  }
+
+  /* 어두운 배경의 섹션 내부 모든 텍스트 */
+  section.from-slate-900 *,
+  section.from-emerald-950 *,
+  section.from-\[#623D91\] * {
+    color: inherit;
+  }
+
+  /* hover 상태의 텍스트 색상도 보존 */
+  .group-hover\:text-yellow-400:hover {
+    color: #facc15 !important;
+  }
 }
 
 /* 추가: 크롬 전용 다크모드 대응 */
@@ -266,6 +298,21 @@ section {
   body {
     background-color: white !important;
     color: black !important;
+  }
+
+  /* 어두운 배경 섹션의 텍스트 색상 */
+  section.from-slate-900,
+  section.from-emerald-950,
+  section.from-\[#623D91\] {
+    color-scheme: dark !important;
+    color: white !important;
+  }
+
+  /* 밝은 텍스트 강제 지정 */
+  .text-white,
+  section[class*="from-slate-900"] .text-white,
+  section[class*="from-emerald-950"] .text-white {
+    color: white !important;
   }
 }
 
