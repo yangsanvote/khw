@@ -6,6 +6,8 @@ import ContactSection from '@/components/sections/ContactSection';
 import DeclarationSection from "@/components/sections/DeclarationSection";
 import SupportSection from "@/components/sections/SupportSection";
 import PressSection from "@/components/sections/PressSection";
+import AptSection from '@/components/sections/AptSection';
+import CareSection from '@/components/sections/CareSection';
 import { useEffect } from 'react';
 import { event } from '@/lib/gtag';
 
@@ -60,6 +62,8 @@ export default function Home() {
       <HeroSection />
       <DeclarationSection />
       <PressSection />
+      <AptSection />
+      <CareSection />
       <SupportSection />
       <CandidateSection />
       <ContactSection />
