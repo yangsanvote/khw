@@ -5,6 +5,7 @@ import CandidateSection from '@/components/sections/CandidateSection';
 import ContactSection from '@/components/sections/ContactSection';
 import DeclarationSection from "@/components/sections/DeclarationSection";
 import SupportSection from "@/components/sections/SupportSection";
+import PressSection from "@/components/sections/PressSection";
 import { useEffect } from 'react';
 import { event } from '@/lib/gtag';
 
@@ -58,6 +59,7 @@ export default function Home() {
     <main className="h-screen w-full snap-y snap-mandatory overflow-y-scroll">
       <HeroSection />
       <DeclarationSection />
+      <PressSection />
       <SupportSection />
       <CandidateSection />
       <ContactSection />
