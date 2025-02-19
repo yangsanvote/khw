@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { event } from '@/lib/gtag';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import ScrollIndicator from '@/components/ScrollIndicator';
 
 interface ContactInfo {
   icon: LucideIcon;
@@ -85,25 +86,25 @@ export default function ContactSection() {
 
   return (
     <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-gradient-to-br from-emerald-950 via-slate-900 to-emerald-950 px-4 text-white overflow-x-hidden">
-      <div className="w-full max-w-4xl mx-auto">
+      <div className="w-full max-w-4xl mx-auto -mt-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-black text-center mb-16"
+          className="text-3xl md:text-5xl font-black text-center mb-8"
         >
           함께 만들어가요
         </motion.h2>
 
-        <div className="grid md:grid-cols-2 gap-8 md:gap-16">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
           {/* 연락처 정보 */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="space-y-4"
           >
             {contactInfo.map((info, index) => (
               <motion.a
@@ -133,7 +134,7 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="space-y-4"
           >
             <div className="flex gap-4 text-white/80">
               <a 
@@ -156,9 +157,9 @@ export default function ContactSection() {
               </a>
             </div>
 
-            <div className="bg-white/10 rounded-2xl p-6 md:p-8">
-              <h3 className="text-xl md:text-2xl font-bold mb-4">실시간 소식받기</h3>
-              <div className="space-y-3">
+            <div className="bg-white/10 rounded-2xl p-4 md:p-6">
+              <h3 className="text-xl md:text-2xl font-bold mb-3">실시간 소식받기</h3>
+              <div className="space-y-2">
                 <Link 
                   href="https://band.us/@khw" 
                   target="_blank"
@@ -219,6 +220,11 @@ export default function ContactSection() {
           </div>
         </div>
       )}
+
+      {/* 스크롤 화살표 - 데스크탑에서만 표시 */}
+      <div className="hidden md:block absolute bottom-[10%] left-0 right-0 z-10">
+        <ScrollIndicator isDark={false} color="text-white/80" />
+      </div>
     </section>
   );
 } 
