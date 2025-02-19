@@ -32,7 +32,7 @@ const contactInfo: ContactInfo[] = [
     icon: MapPin,
     label: "사무실 위치",
     value: "경상남도 양산시 양주로 62 (lh 7단지상가) 2층 203호",
-    href: "https://maps.google.com/?q=경상남도 양산시 양주로 62"
+    href: "https://maps.app.goo.gl/cGMKc23tNGN76Aqr5"
   },
 ];
 

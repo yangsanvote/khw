@@ -130,8 +130,9 @@ export default function PressSection() {
         </div>
       </div>
 
-      <div className="absolute bottom-8 w-full block">
-        <ScrollIndicator isDark={false} color="text-white/80" className="bottom-24 md:bottom-16"/>
+      {/* 스크롤 화살표 추가 */}
+      <div className="absolute bottom-[10%] left-0 right-0 z-10">
+        <ScrollIndicator isDark={false} color="text-white/80" />
       </div>
     </section>
   );

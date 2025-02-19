@@ -14,9 +14,9 @@ const careItems = [
   },
   {
     icon: Utensils,
-    title: "경로당 식사도우미 운영",
-    description: "경로당 식사도우미를 운영하겠습니다.",
-    location: "어르신을 돌보고 일자리는 만들고"
+    title: "경로당 환경 개선 지원사업 확대",
+    description: "어르신 돌봄이 가능한 환경 조성",
+    location: "환경 개선과 더불어 돌봄 일자리도 확대"
   }
 ];
 
@@ -84,8 +84,8 @@ export default function CareSection() {
         </div>
       </div>
 
-      {/* 스크롤 인디케이터 수정 */}
-      <div className="absolute bottom-12 left-0 right-0 z-10">
+      {/* 스크롤 화살표 추가 */}
+      <div className="absolute bottom-[10%] left-0 right-0 z-10">
         <ScrollIndicator isDark={false} />
       </div>
     </section>

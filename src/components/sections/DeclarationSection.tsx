@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import ScrollIndicator from '../ScrollIndicator';
 import { event } from '@/lib/gtag';
+import Image from 'next/image';
 
 export default function DeclarationSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,8 +49,19 @@ export default function DeclarationSection() {
   };
 
   return (
-    <section className="h-screen snap-start relative flex flex-col items-center pt-8 md:pt-12 bg-gradient-to-br from-yellow-50 to-yellow-100 px-4">
-      <div className="w-full max-w-3xl mx-auto bg-white/95 rounded-2xl p-4 md:p-6 shadow-xl">
+    <section className="h-screen snap-start relative flex flex-col items-center justify-center px-4 py-8 overflow-hidden">
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <Image
+          src="/images/BAH07062.JPG"
+          alt="배경 이미지"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-yellow-50/90 via-yellow-50/95 to-yellow-50/90" />
+      </div>
+
+      <div className="w-full max-w-3xl mx-auto bg-white/95 backdrop-blur-sm rounded-2xl p-4 md:p-6 shadow-xl relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -116,8 +128,8 @@ export default function DeclarationSection() {
         </div>
       )}
 
-      <div className="hidden md:block">
-        <ScrollIndicator isDark={false} className="bottom-24 md:bottom-16" />
+      <div className="absolute bottom-[10%] left-0 right-0 z-10">
+        <ScrollIndicator isDark={false} />
       </div>
     </section>
   );
