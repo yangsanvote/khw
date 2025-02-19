@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Heart, Utensils } from 'lucide-react';
 import ScrollIndicator from '../ScrollIndicator';
+import Image from 'next/image';
 
 const careItems = [
   {
@@ -21,8 +22,22 @@ const careItems = [
 
 export default function CareSection() {
   return (
-    <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-gradient-to-br from-[#FFED00] via-yellow-50 to-[#FFED00] px-4 py-8">
-      <div className="w-full max-w-6xl mx-auto relative -mt-20">
+    <section className="h-screen snap-start relative flex flex-col items-center justify-center px-4 py-8 overflow-hidden">
+      {/* 배경 이미지 */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <Image
+          src="/images/IMG_9739.JPG"
+          alt="배경 이미지"
+          fill
+          className="object-cover scale-150 translate-x-1/4"
+          priority
+        />
+        {/* 그라데이션 오버레이 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FFED00]/70 via-yellow-50/80 to-[#FFED00]/70" />
+      </div>
+
+      {/* 컨텐츠 */}
+      <div className="w-full max-w-6xl mx-auto relative z-10 -mt-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -69,8 +84,9 @@ export default function CareSection() {
         </div>
       </div>
 
-      <div className="hidden md:block">
-        <ScrollIndicator isDark={false} className="bottom-24 md:bottom-16" />
+      {/* 스크롤 인디케이터 수정 */}
+      <div className="absolute bottom-12 left-0 right-0 z-10">
+        <ScrollIndicator isDark={false} />
       </div>
     </section>
   );

@@ -78,7 +78,7 @@ const sortedPressItems = [...pressItems].sort((a, b) => {
 
 export default function PressSection() {
   return (
-    <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4 py-8">
+    <section className="h-screen snap-start relative flex flex-col items-center pt-8 md:pt-12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4">
       <div className="w-full max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -130,8 +130,8 @@ export default function PressSection() {
         </div>
       </div>
 
-      <div className="hidden md:block">
-        <ScrollIndicator isDark={false} className="bottom-24 md:bottom-16" />
+      <div className="absolute bottom-8 w-full block">
+        <ScrollIndicator isDark={false} color="text-white/80" className="bottom-24 md:bottom-16"/>
       </div>
     </section>
   );
