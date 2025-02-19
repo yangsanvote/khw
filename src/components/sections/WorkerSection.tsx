@@ -35,7 +35,7 @@ export default function WorkerSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-black text-white mb-4">
-            돈은 '잘' 써야합니다
+            돈은 &lsquo;잘&rsquo; 써야합니다
           </h2>
           <p className="text-xl md:text-2xl text-purple-200">
             일하는 사람들에게 힘이되는 시의원
