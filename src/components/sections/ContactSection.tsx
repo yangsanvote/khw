@@ -220,11 +220,6 @@ export default function ContactSection() {
           </div>
         </div>
       )}
-
-      {/* 스크롤 화살표 - 데스크탑에서만 표시 */}
-      <div className="hidden md:block absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
-        <ScrollIndicator isDark={false} color="text-white/80" />
-      </div>
     </section>
   );
 } 

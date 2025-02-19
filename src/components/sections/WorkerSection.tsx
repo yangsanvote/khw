@@ -79,8 +79,8 @@ export default function WorkerSection() {
         </div>
       </div>
 
-      <div className="hidden md:block">  {/* 데스크탑에서만 표시 */}
-        <ScrollIndicator isDark={true} className="bottom-24 md:bottom-16" />
+      <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
+        <ScrollIndicator isDark={false} color="text-white/80" />
       </div>
     </section>
   );
