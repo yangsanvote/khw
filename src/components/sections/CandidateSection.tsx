@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Footprints, Users, Trophy } from 'lucide-react';
 import ScrollIndicator from '../ScrollIndicator';
 import Image from 'next/image';
 
@@ -32,7 +32,7 @@ const activities = [
   { year: "2019~", title: "청어람작은도서관 운영위원" },
   { year: "2019~", title: "양산신도시아파트 청어람 입주자대표" },
   { year: "2018", title: "제7회 동시지방선거 양산시의회선거 후보자" },
-  { year: "전)", title: "경상남도 주민참여예산위원회 위원" },
+  { year: "전)", title: "경상남도 주민참여예산위원회 위원회 위원" },
   { year: "전)", title: "삽량초등학교 운영위원회 부위원장" },
   { year: "전)", title: "삽량초등학교 교권보호위원회 위원장" },
   { year: "전)", title: "꿈을 꾸는 어린이집 운영위원" },
@@ -100,95 +100,189 @@ export default function CandidateSection() {
   return (
     <section 
       suppressHydrationWarning={true}
-      className="h-screen snap-start relative flex flex-col items-center pt-4 md:pt-[2vh] bg-gradient-to-br from-slate-100 via-slate-200 to-slate-100 px-4 text-gray-800 overflow-x-hidden"
+      className="h-screen snap-start relative flex flex-col items-center pt-0 md:pt-[2vh] bg-gradient-to-br from-slate-100 via-slate-200 to-slate-100 px-4 text-gray-800 overflow-x-hidden"
     >
-      <div className="w-full max-w-7xl mx-auto h-full flex flex-col">
-        {/* 사진 */}
-        <div className="flex flex-col mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="w-full h-[40vh] bg-white/10 rounded-2xl overflow-hidden relative group"
-            onMouseEnter={pauseAutoPlay}
-            onMouseLeave={resumeAutoPlay}
-          >
-            <div className="w-full h-full relative">
-              <Image
-                src={profileImages[currentImageIndex]}
-                alt="권현우"
-                fill
-                className="object-contain transition-opacity duration-300"
-              />
-            </div>
-
-            <button
-              onClick={prevImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <button
-              onClick={nextImage}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-              {profileImages.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentImageIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                    index === currentImageIndex ? 'bg-white scale-125' : 'bg-white/50'
-                  }`}
-                />
-              ))}
-            </div>
-          </motion.div>
-        </div>
-
-        {/* 제목 */}
-        <motion.h2
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-800"
-        >
-          권현우 살아온 길
-        </motion.h2>
-
-        {/* 약력 카드들 */}
-        <div className="flex-1 overflow-y-auto flex flex-col">
-          {/* 데스크탑 뷰 */}
-          <div className="hidden md:grid md:grid-cols-3 gap-8">
-            {/* 직업 */}
+      <div className="w-full max-w-7xl mx-auto flex-1">
+        <div className="flex flex-col h-[90vh] md:h-full">
+          {/* 사진 */}
+          <div className="flex flex-col mb-4 md:mb-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="bg-white/60 backdrop-blur-lg rounded-2xl p-8 border border-gray-200 shadow-sm h-[40vh] overflow-y-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300"
+              className="w-full h-[40vh] bg-white/10 rounded-2xl overflow-hidden relative group"
+              onMouseEnter={pauseAutoPlay}
+              onMouseLeave={resumeAutoPlay}
             >
-              <h3 className="text-2xl font-bold mb-8 text-emerald-600">삶의 발자취</h3>
-              <ul className="space-y-6">
-                {careers.map((career, index) => (
-                  <motion.li
+              <div className="w-full h-full relative">
+                <Image
+                  src={profileImages[currentImageIndex]}
+                  alt="권현우"
+                  fill
+                  className="object-contain transition-opacity duration-300"
+                />
+              </div>
+
+              <button
+                onClick={prevImage}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={nextImage}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                {profileImages.map((_, index) => (
+                  <button
                     key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-center gap-1"
-                  >
-                    <span className="text-sm text-gray-500 shrink-0 w-14">{career.year}</span>
-                    <span className="text-base text-gray-700">{career.title}</span>
-                  </motion.li>
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                      index === currentImageIndex ? 'bg-white scale-125' : 'bg-white/50'
+                    }`}
+                  />
                 ))}
-              </ul>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* 제목 */}
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-bold text-center mb-4 md:mb-8 text-gray-800"
+          >
+            권현우 살아온 길
+          </motion.h2>
+
+          {/* 모바일 버전 */}
+          <div className="block md:hidden flex-1">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-xl p-4 shadow-lg h-[35vh]"
+            >
+              <div className="h-full overflow-y-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300">
+                {/* 수상 */}
+                <div className="mb-8">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
+                      <Trophy className="w-5 h-5 text-slate-600" />
+                    </div>
+                    <h3 className="text-lg font-bold">수상</h3>
+                  </div>
+                  <ul className="space-y-6">
+                    {awards.map((award, index) => (
+                      <motion.li
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        viewport={{ once: true }}
+                        className="flex items-start gap-2"
+                      >
+                        <span className="text-sm text-gray-500 shrink-0 w-14">{award.year}</span>
+                        <span className="text-base text-gray-700">{award.title}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* 사회활동 */}
+                <div className="mb-8">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
+                      <Users className="w-5 h-5 text-slate-600" />
+                    </div>
+                    <h3 className="text-lg font-bold">사회활동</h3>
+                  </div>
+                  <ul className="space-y-6">
+                    {activities.map((activity, index) => (
+                      <motion.li
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        viewport={{ once: true }}
+                        className="flex items-start gap-2"
+                      >
+                        <span className="text-sm text-gray-500 shrink-0 w-14">{activity.year}</span>
+                        <span className="text-base text-gray-700">{activity.title}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* 삶의 발자취 */}
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
+                      <Footprints className="w-5 h-5 text-slate-600" />
+                    </div>
+                    <h3 className="text-lg font-bold">삶의 발자취</h3>
+                  </div>
+                  <ul className="space-y-6">
+                    {careers.map((career, index) => (
+                      <motion.li
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        viewport={{ once: true }}
+                        className="flex items-start gap-2"
+                      >
+                        <span className="text-sm text-gray-500 shrink-0 w-14">{career.year}</span>
+                        <span className="text-base text-gray-700">{career.title}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* 데스크탑 버전 */}
+          <div className="hidden md:grid md:grid-cols-3 gap-6 mb-4 flex-1">
+            {/* 삶의 발자취 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-xl p-4 shadow-lg md:h-[35vh]"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
+                  <Footprints className="w-5 h-5 text-slate-600" />
+                </div>
+                <h3 className="text-lg font-bold">삶의 발자취</h3>
+              </div>
+              <div className="h-[calc(100%-3.5rem)] overflow-y-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300">
+                <ul className="space-y-6">
+                  {careers.map((career, index) => (
+                    <motion.li
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="flex items-start gap-2"
+                    >
+                      <span className="text-sm text-gray-500 shrink-0 w-14">{career.year}</span>
+                      <span className="text-base text-gray-700">{career.title}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
             </motion.div>
 
             {/* 사회활동 */}
@@ -197,24 +291,31 @@ export default function CandidateSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: true }}
-              className="bg-white/60 backdrop-blur-lg rounded-2xl p-8 border border-gray-200 shadow-sm h-[40vh] overflow-y-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300"
+              className="bg-white rounded-xl p-4 shadow-lg md:h-[35vh]"
             >
-              <h3 className="text-2xl font-bold mb-8 text-emerald-600">사회활동</h3>
-              <ul className="space-y-6">
-                {activities.map((activity, index) => (
-                  <motion.li
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-center gap-1"
-                  >
-                    <span className="text-sm text-gray-500 shrink-0 w-14">{activity.year}</span>
-                    <span className="text-base text-gray-700">{activity.title}</span>
-                  </motion.li>
-                ))}
-              </ul>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
+                  <Users className="w-5 h-5 text-slate-600" />
+                </div>
+                <h3 className="text-lg font-bold">사회활동</h3>
+              </div>
+              <div className="h-[calc(100%-3.5rem)] overflow-y-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300">
+                <ul className="space-y-6">
+                  {activities.map((activity, index) => (
+                    <motion.li
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="flex items-start gap-2"
+                    >
+                      <span className="text-sm text-gray-500 shrink-0 w-14">{activity.year}</span>
+                      <span className="text-base text-gray-700">{activity.title}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
             </motion.div>
 
             {/* 수상 */}
@@ -223,93 +324,37 @@ export default function CandidateSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="bg-white/60 backdrop-blur-lg rounded-2xl p-8 border border-gray-200 shadow-sm h-[40vh] overflow-y-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300"
+              className="bg-white rounded-xl p-4 shadow-lg md:h-[35vh]"
             >
-              <h3 className="text-2xl font-bold mb-8 text-emerald-600">수상</h3>
-              <ul className="space-y-6">
-                {awards.map((award, index) => (
-                  <motion.li
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-center gap-1"
-                  >
-                    <span className="text-sm text-gray-500 shrink-0 w-14">{award.year}</span>
-                    <span className="text-base text-gray-700">{award.title}</span>
-                  </motion.li>
-                ))}
-              </ul>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
+                  <Trophy className="w-5 h-5 text-slate-600" />
+                </div>
+                <h3 className="text-lg font-bold">수상</h3>
+              </div>
+              <div className="h-[calc(100%-3.5rem)] overflow-y-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300">
+                <ul className="space-y-6">
+                  {awards.map((award, index) => (
+                    <motion.li
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="flex items-start gap-2"
+                    >
+                      <span className="text-sm text-gray-500 shrink-0 w-14">{award.year}</span>
+                      <span className="text-base text-gray-700">{award.title}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
             </motion.div>
-          </div>
-
-          {/* 모바일 뷰 - 하나의 카드로 통합 */}
-          <div className="md:hidden bg-white/60 backdrop-blur-lg rounded-2xl p-6 border border-gray-200 h-[30vh] overflow-y-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 mb-4 shadow-sm">
-            {/* 수상 섹션 */}
-            <div className="mb-8">
-              <h3 className="text-2xl font-bold mb-6 text-emerald-600">수상</h3>
-              <ul className="space-y-4">
-                {awards.map((award, index) => (
-                  <motion.li
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-center gap-1"
-                  >
-                    <span className="text-sm text-gray-500 shrink-0 w-14">{award.year}</span>
-                    <span className="text-base text-gray-700">{award.title}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-
-            {/* 삶의 발자취 섹션 */}
-            <div className="mb-8">
-              <h3 className="text-2xl font-bold mb-6 text-emerald-600">삶의 발자취</h3>
-              <ul className="space-y-4">
-                {careers.map((career, index) => (
-                  <motion.li
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-center gap-1"
-                  >
-                    <span className="text-sm text-gray-500 shrink-0 w-14">{career.year}</span>
-                    <span className="text-base text-gray-700">{career.title}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-
-            {/* 사회활동 섹션 */}
-            <div>
-              <h3 className="text-2xl font-bold mb-6 text-emerald-600">사회활동</h3>
-              <ul className="space-y-4">
-                {activities.map((activity, index) => (
-                  <motion.li
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-center gap-1"
-                  >
-                    <span className="text-sm text-gray-500 shrink-0 w-14">{activity.year}</span>
-                    <span className="text-base text-gray-700">{activity.title}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
           </div>
         </div>
       </div>
 
-      <div className="relative w-full h-8 md:h-4">
+      <div className="fixed md:relative top-[85vh] md:top-auto w-full h-6 md:h-20">
         <ScrollIndicator isDark={false} color="text-gray-400" />
       </div>
     </section>
