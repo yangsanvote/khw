@@ -1,13 +1,21 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, Facebook, Instagram, Heart } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Instagram } from 'lucide-react';
 import Link from 'next/link';
 import { event } from '@/lib/gtag';
 import { useState } from 'react';
 import Image from 'next/image';
 
-const contactInfo = [
+interface ContactInfo {
+  icon: any;
+  label: string;
+  value: string;
+  href: string;
+  className?: string;
+}
+
+const contactInfo: ContactInfo[] = [
   {
     icon: Phone,
     label: "전화번호",
@@ -158,9 +166,9 @@ export default function ContactSection() {
 
       {showAccount && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 md:p-8 max-w-md w-full">
-            <h3 className="text-xl md:text-2xl font-bold text-center mb-4">후원 계좌</h3>
-            <div className="space-y-4">
+          <div className="bg-white rounded-2xl p-4 md:p-6 max-w-sm w-full">
+            <h3 className="text-lg md:text-xl font-bold text-center mb-3">후원 계좌</h3>
+            <div className="space-y-3">
               <div className="relative w-full aspect-[1/1.414] rounded-lg overflow-hidden">
                 <Image
                   src="/images/donate.jpg"
@@ -169,7 +177,7 @@ export default function ContactSection() {
                   className="object-contain"
                 />
               </div>
-              <p className="text-center text-gray-700">
+              <p className="text-center text-sm md:text-base text-gray-700">
                 농협은행<br />
                 301-0363-7467-81<br />
                 예금주: 양산시마선거구시의회의원예비후보자권현우후원회
@@ -178,14 +186,14 @@ export default function ContactSection() {
                 href="http://bit.ly/khwm0402"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full text-center py-2 text-blue-600 hover:text-blue-700 transition-colors"
+                className="block w-full text-center py-2 text-sm md:text-base text-blue-600 hover:text-blue-700 transition-colors"
               >
                 👉 영수증 발급 신청하기
               </Link>
             </div>
             <button
               onClick={() => setShowAccount(false)}
-              className="mt-6 w-full px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors"
+              className="mt-4 w-full px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors text-sm md:text-base"
             >
               닫기
             </button>
