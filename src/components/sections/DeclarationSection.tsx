@@ -128,7 +128,7 @@ export default function DeclarationSection() {
         </div>
       )}
 
-      <div className="absolute bottom-[10%] left-0 right-0 z-10">
+      <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
         <ScrollIndicator isDark={false} />
       </div>
     </section>

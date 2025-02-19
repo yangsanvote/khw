@@ -130,8 +130,8 @@ export default function PressSection() {
         </div>
       </div>
 
-      {/* 스크롤 화살표 추가 */}
-      <div className="absolute bottom-[10%] left-0 right-0 z-10">
+      {/* 스크롤 화살표 - 하나로 통일 */}
+      <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
         <ScrollIndicator isDark={false} color="text-white/80" />
       </div>
     </section>
