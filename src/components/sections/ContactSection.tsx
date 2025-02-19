@@ -147,7 +147,7 @@ export default function ContactSection() {
                 <Facebook className="w-6 h-6" />
               </a>
               <a 
-                href="https://www.instagram.com/fuller1107/" 
+                href="https://www.instagram.com/khyun.woo.kr" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"
