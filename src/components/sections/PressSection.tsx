@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import { Newspaper } from 'lucide-react';
 import ScrollIndicator from '../ScrollIndicator';
-import { LucideIcon } from 'lucide-react';
 
 interface PressItem {
   title: string;

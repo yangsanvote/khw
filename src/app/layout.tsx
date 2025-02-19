@@ -5,8 +5,10 @@ import Script from 'next/script'
 import { GA_TRACKING_ID } from '@/lib/gtag';
 
 const notoSansKr = Noto_Sans_KR({
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "900"],
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  weight: ['400', '500', '700', '900']
 });
 
 export const metadata: Metadata = {

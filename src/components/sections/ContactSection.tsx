@@ -1,14 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, Facebook, Instagram } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Instagram, LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import { event } from '@/lib/gtag';
 import { useState } from 'react';
 import Image from 'next/image';
 
 interface ContactInfo {
-  icon: any;
+  icon: LucideIcon;
   label: string;
   value: string;
   href: string;
