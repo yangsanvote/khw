@@ -48,7 +48,7 @@ export default function DeclarationSection() {
   };
 
   return (
-    <section className="h-screen snap-start relative flex flex-col items-center justify-start pt-8 md:pt-16 bg-gradient-to-br from-yellow-50 to-yellow-100 px-4">
+    <section className="h-screen snap-start relative flex flex-col items-center justify-between pt-8 md:pt-16 bg-gradient-to-br from-yellow-50 to-yellow-100 px-4">
       <div className="w-full max-w-4xl mx-auto bg-white/95 rounded-2xl p-6 md:p-12 shadow-xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -116,7 +116,7 @@ export default function DeclarationSection() {
         </div>
       )}
 
-      <ScrollIndicator />
+      <ScrollIndicator isDark={false} className="bottom-4 md:bottom-8" />
     </section>
   );
 } 
