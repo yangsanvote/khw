@@ -100,9 +100,9 @@ export default function CandidateSection() {
   return (
     <section 
       suppressHydrationWarning={true}
-      className="h-screen snap-start relative flex flex-col items-center pt-8 md:pt-12 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-100 px-4 text-gray-800 overflow-x-hidden"
+      className="h-screen snap-start relative flex flex-col items-center pt-8 md:pt-0 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-100 px-4 text-gray-800 overflow-x-hidden"
     >
-      <div className="w-full max-w-6xl mx-auto relative mt-4 md:mt-8">
+      <div className="w-full max-w-6xl mx-auto relative mt-4 md:mt-0">
         <div className="flex flex-col h-[90vh] md:h-full">
           {/* 사진 */}
           <div className="flex flex-col mb-2 md:mb-4">

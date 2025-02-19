@@ -78,8 +78,8 @@ const sortedPressItems = [...pressItems].sort((a, b) => {
 
 export default function PressSection() {
   return (
-    <section className="h-screen snap-start relative flex flex-col items-center pt-8 md:pt-12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4">
-      <div className="w-full max-w-6xl mx-auto relative mt-4 md:mt-8">
+    <section className="h-screen snap-start relative flex flex-col items-center pt-16 md:pt-12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4">
+      <div className="w-full max-w-6xl mx-auto relative mt-8 md:mt-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
