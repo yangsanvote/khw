@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { event } from '@/lib/gtag';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import ScrollIndicator from '@/components/ScrollIndicator';
 
 interface ContactInfo {
   icon: LucideIcon;
