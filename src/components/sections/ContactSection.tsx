@@ -186,7 +186,7 @@ export default function ContactSection() {
       {showAccount && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl p-4 md:p-6 max-w-sm w-full">
-            <h3 className="text-lg font-bold text-center mb-2">후원 계좌</h3>
+            <h3 className="text-lg font-bold text-center mb-2 text-gray-900">후원 계좌</h3>
             <div className="space-y-2">
               <div className="relative w-full aspect-[1/1] rounded-lg overflow-hidden">
                 <Image
@@ -196,7 +196,7 @@ export default function ContactSection() {
                   className="object-contain"
                 />
               </div>
-              <p className="text-center text-sm text-gray-700 leading-tight">
+              <p className="text-center text-sm text-gray-900 leading-tight">
                 농협은행<br />
                 301-0363-7467-81<br />
                 예금주: 양산시마선거구시의회의원예비후보자권현우후원회
