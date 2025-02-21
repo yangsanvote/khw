@@ -14,6 +14,27 @@ const notoSansKr = Noto_Sans_KR({
 export const metadata: Metadata = {
   title: "권현우 | 양산시의회의원 후보",
   description: "사는 곳을 바꿉니다, 삶을 바꿉니다",
+  openGraph: {
+    title: "권현우 | 양산시의회의원 후보",
+    description: "사는 곳을 바꿉니다, 삶을 바꿉니다",
+    url: "https://권현우.kr",
+    siteName: "권현우 | 양산시의회의원 후보",
+    images: [
+      {
+        url: "/images/og-image.jpg",  // 대표 이미지 경로
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "권현우 | 양산시의회의원 후보",
+    description: "사는 곳을 바꿉니다, 삶을 바꿉니다",
+    images: ["/images/og-image.jpg"],  // 대표 이미지 경로
+  },
 };
 
 export default function RootLayout({
