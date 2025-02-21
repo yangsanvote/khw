@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Facebook, Instagram, LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import { event } from '@/lib/gtag';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 interface ContactInfo {
@@ -32,7 +32,7 @@ const contactInfo: ContactInfo[] = [
     icon: MapPin,
     label: "사무실 위치",
     value: "경상남도 양산시 양주로 62 (lh 7단지상가) 2층 203호",
-    href: "https://maps.google.com/?q=경상남도 양산시 양주로 62"
+    href: "https://maps.app.goo.gl/cGMKc23tNGN76Aqr5"
   },
 ];
 
@@ -64,27 +64,46 @@ const handleSocialClick = (platform: string) => {
 export default function ContactSection() {
   const [showAccount, setShowAccount] = useState(false);
 
+  // URL 해시 체크하여 모달 표시
+  useEffect(() => {
+    if (window.location.hash === '#donate') {
+      setShowAccount(true);
+    }
+  }, []);
+
+  // URL 해시 업데이트
+  useEffect(() => {
+    if (showAccount) {
+      window.location.hash = 'donate';
+    } else {
+      // 모달이 닫힐 때 해시 제거
+      if (window.location.hash === '#donate') {
+        window.history.pushState('', document.title, window.location.pathname + window.location.search);
+      }
+    }
+  }, [showAccount]);
+
   return (
     <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-gradient-to-br from-emerald-950 via-slate-900 to-emerald-950 px-4 text-white overflow-x-hidden">
-      <div className="w-full max-w-4xl mx-auto">
+      <div className="w-full max-w-4xl mx-auto -mt-8 md:-mt-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-black text-center mb-16"
+          className="text-3xl md:text-5xl font-black text-center mb-8"
         >
           함께 만들어가요
         </motion.h2>
 
-        <div className="grid md:grid-cols-2 gap-8 md:gap-16">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
           {/* 연락처 정보 */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="space-y-4"
           >
             {contactInfo.map((info, index) => (
               <motion.a
@@ -114,7 +133,7 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="space-y-4"
           >
             <div className="flex gap-4 text-white/80">
               <a 
@@ -127,7 +146,7 @@ export default function ContactSection() {
                 <Facebook className="w-6 h-6" />
               </a>
               <a 
-                href="https://www.instagram.com/fuller1107/" 
+                href="https://www.instagram.com/khyun.woo.kr" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"
@@ -137,9 +156,9 @@ export default function ContactSection() {
               </a>
             </div>
 
-            <div className="bg-white/10 rounded-2xl p-6 md:p-8">
-              <h3 className="text-xl md:text-2xl font-bold mb-4">실시간 소식받기</h3>
-              <div className="space-y-3">
+            <div className="bg-white/10 rounded-2xl p-4 md:p-6">
+              <h3 className="text-xl md:text-2xl font-bold mb-3">실시간 소식받기</h3>
+              <div className="space-y-2">
                 <Link 
                   href="https://band.us/@khw" 
                   target="_blank"
@@ -167,9 +186,9 @@ export default function ContactSection() {
       {showAccount && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl p-4 md:p-6 max-w-sm w-full">
-            <h3 className="text-lg md:text-xl font-bold text-center mb-3">후원 계좌</h3>
-            <div className="space-y-3">
-              <div className="relative w-full aspect-[1/1.414] rounded-lg overflow-hidden">
+            <h3 className="text-lg font-bold text-center mb-2">후원 계좌</h3>
+            <div className="space-y-2">
+              <div className="relative w-full aspect-[1/1] rounded-lg overflow-hidden">
                 <Image
                   src="/images/donate.jpg"
                   alt="후원 안내"
@@ -177,7 +196,7 @@ export default function ContactSection() {
                   className="object-contain"
                 />
               </div>
-              <p className="text-center text-sm md:text-base text-gray-700">
+              <p className="text-center text-sm text-gray-700 leading-tight">
                 농협은행<br />
                 301-0363-7467-81<br />
                 예금주: 양산시마선거구시의회의원예비후보자권현우후원회
@@ -186,14 +205,14 @@ export default function ContactSection() {
                 href="http://bit.ly/khwm0402"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full text-center py-2 text-sm md:text-base text-blue-600 hover:text-blue-700 transition-colors"
+                className="block w-full text-center py-1.5 text-sm text-blue-600 hover:text-blue-700 transition-colors"
               >
                 👉 영수증 발급 신청하기
               </Link>
             </div>
             <button
               onClick={() => setShowAccount(false)}
-              className="mt-4 w-full px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors text-sm md:text-base"
+              className="mt-3 w-full px-4 py-1.5 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors text-sm"
             >
               닫기
             </button>

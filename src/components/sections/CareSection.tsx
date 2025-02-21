@@ -3,26 +3,41 @@
 import { motion } from 'framer-motion';
 import { Heart, Utensils } from 'lucide-react';
 import ScrollIndicator from '../ScrollIndicator';
+import Image from 'next/image';
 
 const careItems = [
   {
     icon: Heart,
     title: "다함께 돌봄센터 유치",
-    description: "석금산에 다함께 돌봄센터를 유치하겠습니다.",
+    description: "석금산과 양주동에 다함께 돌봄센터를 유치하겠습니다.",
     location: "권역별 돌봄센터가 일하는 부모를 돕습니다"
   },
   {
     icon: Utensils,
-    title: "경로당 식사도우미 운영",
-    description: "경로당 식사도우미를 운영하겠습니다.",
-    location: "어르신을 돌보고 일자리는 만들고"
+    title: "경로당 환경 개선 지원사업 확대",
+    description: "어르신 돌봄이 가능한 환경 조성",
+    location: "환경 개선과 더불어 돌봄 일자리도 확대"
   }
 ];
 
 export default function CareSection() {
   return (
-    <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-gradient-to-br from-[#FFED00] via-yellow-50 to-[#FFED00] px-4 py-8">
-      <div className="w-full max-w-6xl mx-auto relative -mt-20">
+    <section className="h-screen snap-start relative flex flex-col items-center justify-center px-4 py-8 overflow-hidden">
+      {/* 배경 이미지 */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <Image
+          src="/images/IMG_9739.JPG"
+          alt="배경 이미지"
+          fill
+          className="object-cover scale-150 translate-x-1/4"
+          priority
+        />
+        {/* 그라데이션 오버레이 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FFED00]/70 via-yellow-50/80 to-[#FFED00]/70" />
+      </div>
+
+      {/* 컨텐츠 */}
+      <div className="w-full max-w-6xl mx-auto relative z-10 -mt-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -69,8 +84,9 @@ export default function CareSection() {
         </div>
       </div>
 
-      <div className="hidden md:block">
-        <ScrollIndicator isDark={false} className="bottom-24 md:bottom-16" />
+      {/* 스크롤 화살표 - 하나로 통일 */}
+      <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
+        <ScrollIndicator isDark={false} />
       </div>
     </section>
   );

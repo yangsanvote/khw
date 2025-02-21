@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Newspaper } from 'lucide-react';
 import ScrollIndicator from '../ScrollIndicator';
 
+// PressItem 인터페이스를 Article 인터페이스와 통합
 interface PressItem {
   title: string;
   date: string;
@@ -12,18 +13,6 @@ interface PressItem {
 }
 
 const pressItems: PressItem[] = [
-  {
-    title: '권현우 예비후보 "양산시 전국 1등 도시 만들겠다"',
-    date: "2024.02.14",
-    source: "경남도민일보",
-    link: "http://www.idomin.com/news/articleView.html?idxno=834386"
-  },
-  {
-    title: '권현우 양산시의원 예비후보 "청년이 살기 좋은 도시 만들 것"',
-    date: "2024.02.13",
-    source: "경남신문",
-    link: "https://www.knnews.co.kr/news/articleView.php?idxno=1444467"
-  },
   {
     title: '청어람아파트, "국토부 2024 최우수 관리단지" 선정',
     date: "2024.12.18",
@@ -80,10 +69,17 @@ const pressItems: PressItem[] = [
   }
 ];
 
+// pressItems 배열을 날짜순으로 정렬
+const sortedPressItems = [...pressItems].sort((a, b) => {
+  const dateA = new Date(a.date.replace(/\./g, '-'));
+  const dateB = new Date(b.date.replace(/\./g, '-'));
+  return dateB.getTime() - dateA.getTime();
+});
+
 export default function PressSection() {
   return (
-    <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4 py-8">
-      <div className="w-full max-w-6xl mx-auto">
+    <section className="h-screen snap-start relative flex flex-col items-center pt-16 md:pt-12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4">
+      <div className="w-full max-w-6xl mx-auto relative mt-8 md:mt-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -101,7 +97,7 @@ export default function PressSection() {
           <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-slate-900 to-transparent z-10" />
           
           <div className="space-y-4 max-h-[60vh] overflow-y-auto px-4 hide-scrollbar">
-            {pressItems.map((item, index) => (
+            {sortedPressItems.map((item, index) => (
               <motion.a
                 key={index}
                 href={item.link}
@@ -134,8 +130,9 @@ export default function PressSection() {
         </div>
       </div>
 
-      <div className="hidden md:block">
-        <ScrollIndicator isDark={false} className="bottom-24 md:bottom-16" />
+      {/* 스크롤 화살표 - 하나로 통일 */}
+      <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
+        <ScrollIndicator isDark={false} color="text-white/80" />
       </div>
     </section>
   );

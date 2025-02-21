@@ -100,18 +100,18 @@ export default function CandidateSection() {
   return (
     <section 
       suppressHydrationWarning={true}
-      className="h-screen snap-start relative flex flex-col items-center pt-0 md:pt-[2vh] bg-gradient-to-br from-slate-100 via-slate-200 to-slate-100 px-4 text-gray-800 overflow-x-hidden"
+      className="h-screen snap-start relative flex flex-col items-center pt-8 md:pt-0 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-100 px-4 text-gray-800 overflow-x-hidden"
     >
-      <div className="w-full max-w-7xl mx-auto flex-1">
+      <div className="w-full max-w-6xl mx-auto relative mt-4 md:mt-0">
         <div className="flex flex-col h-[90vh] md:h-full">
           {/* 사진 */}
-          <div className="flex flex-col mb-4 md:mb-8">
+          <div className="flex flex-col mb-2 md:mb-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="w-full h-[40vh] bg-white/10 rounded-2xl overflow-hidden relative group"
+              className="w-full h-[35vh] bg-white/10 rounded-2xl overflow-hidden relative group"
               onMouseEnter={pauseAutoPlay}
               onMouseLeave={resumeAutoPlay}
             >
@@ -157,7 +157,7 @@ export default function CandidateSection() {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-center mb-4 md:mb-8 text-gray-800"
+            className="text-2xl md:text-3xl font-bold text-center mb-2 md:mb-4 text-gray-800"
           >
             권현우 살아온 길
           </motion.h2>
@@ -169,7 +169,7 @@ export default function CandidateSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="bg-white rounded-xl p-4 shadow-lg h-[35vh]"
+              className="bg-white rounded-xl p-3 shadow-lg h-[40vh]"
             >
               <div className="h-full overflow-y-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300">
                 {/* 수상 */}
@@ -251,14 +251,14 @@ export default function CandidateSection() {
           </div>
 
           {/* 데스크탑 버전 */}
-          <div className="hidden md:grid md:grid-cols-3 gap-6 mb-4 flex-1">
+          <div className="hidden md:grid md:grid-cols-3 gap-4 mb-2 flex-1">
             {/* 삶의 발자취 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="bg-white rounded-xl p-4 shadow-lg md:h-[35vh]"
+              className="bg-white rounded-xl p-3 shadow-lg md:h-[40vh]"
             >
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
@@ -291,7 +291,7 @@ export default function CandidateSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: true }}
-              className="bg-white rounded-xl p-4 shadow-lg md:h-[35vh]"
+              className="bg-white rounded-xl p-3 shadow-lg md:h-[40vh]"
             >
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
@@ -324,7 +324,7 @@ export default function CandidateSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="bg-white rounded-xl p-4 shadow-lg md:h-[35vh]"
+              className="bg-white rounded-xl p-3 shadow-lg md:h-[40vh]"
             >
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
@@ -354,8 +354,9 @@ export default function CandidateSection() {
         </div>
       </div>
 
-      <div className="hidden md:block">  {/* 데스크탑에서만 표시 */}
-        <ScrollIndicator isDark={false} color="text-gray-400" />
+      {/* 스크롤 화살표 */}
+      <div className="absolute bottom-[10%] left-0 right-0 z-10">
+        <ScrollIndicator isDark={true} color="text-gray-400" />
       </div>
     </section>
   );

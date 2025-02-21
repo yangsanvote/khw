@@ -202,3 +202,123 @@ section {
 .font-nanum-brush {
   font-family: 'Nanum Brush Script', cursive;
 }
+
+/* 기존 다크모드 미디어 쿼리를 수정 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light !important;
+    forced-color-adjust: none !important;
+    -webkit-forced-color-adjust: none !important;
+  }
+  
+  html {
+    color-scheme: light !important;
+  }
+  
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+
+  /* 섹션별 배경색 직접 지정 */
+  section.from-slate-900 {
+    background: linear-gradient(to bottom right, #0f172a, #1e293b, #0f172a) !important;
+  }
+
+  section.from-rose-50 {
+    background: linear-gradient(to bottom right, #fff1f2, #ffffff, #fff1f2) !important;
+  }
+
+  section.from-emerald-950 {
+    background: linear-gradient(to bottom right, #064e3b, #0f172a, #064e3b) !important;
+  }
+
+  section.from-\[#623D91\] {
+    background: linear-gradient(to bottom right, #623D91, #1e1b4b, #623D91) !important;
+  }
+
+  section.from-green-50 {
+    background: linear-gradient(to bottom right, #f0fdf4, #f0fdf4, #f0fdf4) !important;
+  }
+
+  section.from-slate-100 {
+    background: linear-gradient(to bottom right, #f1f5f9, #e2e8f0, #f1f5f9) !important;
+  }
+
+  /* 모든 섹션에 대한 기본 처리 */
+  section {
+    forced-color-adjust: none !important;
+    -webkit-forced-color-adjust: none !important;
+  }
+
+  /* 텍스트 색상 보존 */
+  [class*="text-"] {
+    color: inherit !important;
+  }
+
+  /* 텍스트 색상 명시적 지정 */
+  section.from-slate-900,
+  section.from-emerald-950,
+  section.from-\[#623D91\] {
+    color: white !important;
+  }
+
+  /* 특정 텍스트 클래스에 대한 색상 강제 지정 */
+  .text-white {
+    color: white !important;
+  }
+
+  .text-gray-400 {
+    color: #9ca3af !important;
+  }
+
+  .text-gray-600 {
+    color: #4b5563 !important;
+  }
+
+  /* 어두운 배경의 섹션 내부 모든 텍스트 */
+  section.from-slate-900 *,
+  section.from-emerald-950 *,
+  section.from-\[#623D91\] * {
+    color: inherit;
+  }
+
+  /* hover 상태의 텍스트 색상도 보존 */
+  .group-hover\:text-yellow-400:hover {
+    color: #facc15 !important;
+  }
+}
+
+/* 추가: 크롬 전용 다크모드 대응 */
+@media all and (-webkit-min-device-pixel-ratio:0) and (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light !important;
+  }
+  
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+
+  /* 어두운 배경 섹션의 텍스트 색상 */
+  section.from-slate-900,
+  section.from-emerald-950,
+  section.from-\[#623D91\] {
+    color-scheme: dark !important;
+    color: white !important;
+  }
+
+  /* 밝은 텍스트 강제 지정 */
+  .text-white,
+  section[class*="from-slate-900"] .text-white,
+  section[class*="from-emerald-950"] .text-white {
+    color: white !important;
+  }
+}
+
+/* 명시적 라이트 모드 설정 */
+@media screen {
+  :root {
+    color-scheme: light;
+  }
+}

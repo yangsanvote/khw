@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     siteName: "권현우 | 양산시의회의원 후보",
     images: [
       {
-        url: "/images/og-image.jpg",  // 대표 이미지 경로
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
       },
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "권현우 | 양산시의회의원 후보",
     description: "사는 곳을 바꿉니다, 삶을 바꿉니다",
-    images: ["/images/og-image.jpg"],  // 대표 이미지 경로
+    images: ["/images/og-image.jpg"],
   },
 };
 
@@ -71,10 +71,6 @@ export default function RootLayout({
             }
           `}
         </Script>
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" 
-          rel="stylesheet"
-        />
       </head>
       <body className={`${notoSansKr.className} overflow-x-hidden`} suppressHydrationWarning={true}>
         <div className="overflow-x-hidden">
