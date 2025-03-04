@@ -23,7 +23,11 @@ const aptItems = [
   }
 ];
 
-export default function AptSection() {
+interface AptSectionProps {
+  hideScrollIndicator?: boolean;
+}
+
+export default function AptSection({ hideScrollIndicator = false }: AptSectionProps) {
   return (
     <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-gradient-to-br from-rose-50 via-white to-rose-50 px-4 py-8">
       <div className="absolute inset-0 opacity-10">
@@ -44,7 +48,7 @@ export default function AptSection() {
           viewport={{ once: true }}
           className="text-center mb-8"
         >
-          <h2 className="text-2xl md:text-5xl font-black text-[#E8326E] mb-4">
+          <h2 className="text-2xl md:text-5xl font-black text-[#E8326E] mb-4 font-giants">
             아파트의 개념을 새로 쓴 사람
           </h2>
           <p className="text-lg md:text-2xl text-rose-600 mb-3">
@@ -82,9 +86,11 @@ export default function AptSection() {
         </div>
       </div>
 
-      <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
-        <ScrollIndicator isDark={false} />
-      </div>
+      {!hideScrollIndicator && (
+        <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
+          <ScrollIndicator isDark={false} />
+        </div>
+      )}
     </section>
   );
 } 

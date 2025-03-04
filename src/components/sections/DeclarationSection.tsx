@@ -6,7 +6,11 @@ import ScrollIndicator from '../ScrollIndicator';
 import { event } from '@/lib/gtag';
 import Image from 'next/image';
 
-export default function DeclarationSection() {
+interface DeclarationSectionProps {
+  isStandalone?: boolean;
+}
+
+export default function DeclarationSection({ isStandalone }: DeclarationSectionProps = {}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fullText = `
@@ -49,62 +53,54 @@ export default function DeclarationSection() {
   };
 
   return (
-    <section className="h-screen snap-start relative flex flex-col items-center justify-center px-4 py-8 overflow-hidden">
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <Image
-          src="/images/BAH07062.JPG"
-          alt="배경 이미지"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-50/90 via-yellow-50/95 to-yellow-50/90" />
-      </div>
-
-      <div className="w-full max-w-3xl mx-auto bg-white/95 backdrop-blur-sm rounded-2xl p-4 md:p-6 shadow-xl relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-2 md:mb-3"
-        >
-          <h2 className="text-2xl md:text-3xl font-bold text-yellow-800 mb-0.5">출마선언문</h2>
-          <p className="text-lg md:text-xl text-yellow-700">정의당 권현우 양산시의원 출마 기자회견</p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="space-y-2 md:space-y-3 text-gray-800"
-        >
-          <p className="text-base md:text-lg">존경하는 양주동면 주민 여러분, 그리고 양산시민 여러분.</p>
-          <p className="text-base md:text-lg">안녕하십니까? 저는 이번 4월 2일 양산시의원 보궐선거에 출마하는 정의당 권현우입니다.</p>
-
-          <div className="bg-yellow-50 p-2.5 md:p-3 rounded-xl my-2.5 md:my-4 border border-yellow-200">
-            <p className="text-base md:text-lg font-medium">주거, 돌봄, 일자리가 함께 어우러지는 양주동과 동면을 만들겠습니다.</p>
-            <p className="text-base md:text-lg font-medium">아파트로 전국 1등을 해 봤습니다.</p>
-            <p className="text-base md:text-lg font-medium">이제는 양산시를 전국 1등으로 만들어 보겠습니다.</p>
-          </div>
-
-          <p className="text-base md:text-lg">실력으로 검증받았고, 현장에서 경험을 쌓았습니다.</p>
-          <p className="text-base md:text-lg">4월 2일, 권현우를 선택해 주십시오.</p>
-
-          <div className="text-right mt-2 md:mt-4">
-            <p className="text-base md:text-lg font-semibold text-yellow-800">2025년 2월 13일</p>
-            <p className="text-base md:text-lg font-semibold text-yellow-800">권현우 올림</p>
-          </div>
-        </motion.div>
-
-        <div className="text-center mt-3">
-          <button
-            onClick={handleOpenModal}
-            className="px-5 py-1.5 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors"
+    <section className={`min-h-screen w-full bg-yellow-100 text-white relative overflow-hidden ${isStandalone ? '' : 'pb-20'}`}>
+      <div className="absolute inset-0 bg-grid-white/[0.08] bg-[length:28px_28px]"></div>
+      
+      <div className="relative z-10 pt-8 pb-10 px-4 container mx-auto">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-2 md:mb-3"
           >
-            전문 보기
-          </button>
+            <p className="text-lg md:text-xl text-yellow-700">정의당 권현우 양산시의원 출마 기자회견</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="space-y-2 md:space-y-3 text-gray-800"
+          >
+            <p className="text-base md:text-lg">존경하는 양주동면 주민 여러분, 그리고 양산시민 여러분.</p>
+            <p className="text-base md:text-lg">안녕하십니까? 저는 이번 4월 2일 양산시의원 보궐선거에 출마하는 정의당 권현우입니다.</p>
+
+            <div className="bg-yellow-50 p-2.5 md:p-3 rounded-xl my-2.5 md:my-4 border border-yellow-200">
+              <p className="text-base md:text-lg font-medium">주거, 돌봄, 일자리가 함께 어우러지는 양주동과 동면을 만들겠습니다.</p>
+              <p className="text-base md:text-lg font-medium">아파트로 전국 1등을 해 봤습니다.</p>
+              <p className="text-base md:text-lg font-medium">이제는 양산시를 전국 1등으로 만들어 보겠습니다.</p>
+            </div>
+
+            <p className="text-base md:text-lg">실력으로 검증받았고, 현장에서 경험을 쌓았습니다.</p>
+            <p className="text-base md:text-lg">4월 2일, 권현우를 선택해 주십시오.</p>
+
+            <div className="text-right mt-2 md:mt-4">
+              <p className="text-base md:text-lg font-semibold text-yellow-800">2025년 2월 13일</p>
+              <p className="text-base md:text-lg font-semibold text-yellow-800">권현우 올림</p>
+            </div>
+          </motion.div>
+
+          <div className="text-center mt-3">
+            <button
+              onClick={handleOpenModal}
+              className="px-5 py-1.5 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors"
+            >
+              전문 보기
+            </button>
+          </div>
         </div>
       </div>
 
@@ -128,9 +124,13 @@ export default function DeclarationSection() {
         </div>
       )}
 
-      <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
-        <ScrollIndicator isDark={false} />
-      </div>
+        {/* 스크롤 화살표 - 항상 표시 */}
+        <div className="absolute bottom-[20%] left-0 right-0 z-[80] flex flex-col items-center justify-center">
+          <p className="text-xs text-gray-700 mb-1">아래로 스크롤</p>
+          <div className="relative h-12 w-full flex justify-center">
+            <ScrollIndicator isDark={true} color="text-gray-900" />
+          </div>
+        </div>
     </section>
   );
 } 

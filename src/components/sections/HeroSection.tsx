@@ -6,10 +6,45 @@ import CountdownTimer from '../CountdownTimer';
 import ScrollIndicator from '../ScrollIndicator';
 import VisitorCounter from '../VisitorCounter';
 
-export default function HeroSection() {
+// 폰트 스타일 정의
+const fontsStyle = `
+  @font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Giants-Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'InkLipquid';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/InkLipquid.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  body, h1, h2, h3, h4, h5, h6, p, span, button {
+    font-family: 'Pretendard-Regular', sans-serif;
+  }
+`;
+
+interface HeroSectionProps {
+  hideScrollIndicator?: boolean;
+}
+
+export default function HeroSection({ hideScrollIndicator = false }: HeroSectionProps) {
   return (
     <>
-      <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-white text-gray-900 overflow-visible px-4 py-8">
+      {/* Pretendard 폰트 스타일 적용 */}
+      <style jsx global>{fontsStyle}</style>
+      
+      <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-white text-gray-900 overflow-visible px-4 py-8 font-[Pretendard-Regular]">
         {/* 네 귀퉁이 삼각형 - 최하위 레이어 */}
         <div className="absolute top-0 left-0 w-32 h-32 md:w-48 md:h-48 z-0">
           <div className="w-full h-full" style={{
@@ -55,7 +90,8 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-4xl md:text-5xl lg:text-6xl text-center -mb-1 md:-mb-2 font-nanum-brush z-10"
+              className="text-5xl md:text-6xl lg:text-7xl text-center -mb-1 md:-mb-2 z-10"
+              style={{ fontFamily: 'InkLipquid, cursive', letterSpacing: '0.01em' }}
             >
               사는 곳을 바꿉니다,{' '}
               <span className="md:hidden"><br /></span>
@@ -71,6 +107,7 @@ export default function HeroSection() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                   className="absolute left-3 md:left-[15%] lg:left-[18%] xl:left-[20%] text-4xl md:text-5xl lg:text-6xl font-extrabold z-0"
+                  style={{ fontFamily: 'Giants-Bold, sans-serif' }}
                 >
                   다르다
                 </motion.span>
@@ -97,6 +134,7 @@ export default function HeroSection() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                   className="absolute right-5 md:right-[15%] lg:right-[18%] xl:right-[20%] text-4xl md:text-5xl lg:text-6xl font-extrabold z-0"
+                  style={{ fontFamily: 'Giants-Bold, sans-serif' }}
                 >
                   진짜다
                 </motion.span>
@@ -109,9 +147,9 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="text-xl md:text-3xl font-bold text-center -mb-0.5"
+                className="text-xl md:text-3xl font-bold text-center -mb-0.5 font-giants"
               >
-                양산시의원예비후보 권현우
+                양산시의원예비후보(양주동, 동면) 권현우
               </motion.h2>
               <motion.div
                 initial={{ opacity: 0 }}
@@ -131,9 +169,14 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* 스크롤 화살표 - 하나로 통일 */}
-        <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
-          <ScrollIndicator isDark={true} color="text-gray-900" />
+        {/* 스크롤 화살표 - 항상 표시 */}
+        <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex flex-col items-center justify-center">
+          <p className="text-xs text-gray-800 mb-1">아래로 스크롤</p>
+          <div className="relative h-12 w-full flex justify-center">
+            <div className="text-gray-800">
+              <ScrollIndicator isDark={true} color="text-gray-800" className="[&>svg]:text-gray-800" />
+            </div>
+          </div>
         </div>
       </section>
     </>

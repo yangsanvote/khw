@@ -12,6 +12,11 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        'pretendard': ['Pretendard-Regular', 'Arial', 'sans-serif'],
+        'giants': ['Giants-Bold', 'Arial', 'sans-serif'],
+        'ink': ['InkLipquid', 'cursive'],
+      },
     },
   },
   plugins: [],

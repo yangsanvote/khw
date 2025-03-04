@@ -43,11 +43,16 @@ const supportItems = [
   }
 ];
 
-export default function SupportSection() {
+interface SupportSectionProps {
+  isStandalone?: boolean;
+  hideScrollIndicator?: boolean;
+}
+
+export default function SupportSection({ isStandalone = false, hideScrollIndicator = false }: SupportSectionProps) {
   return (
     <section 
       id="support"
-      className="h-screen snap-start relative flex flex-col items-center justify-center bg-gradient-to-br from-green-50 to-green-100 px-4 py-8"
+      className={`${isStandalone ? 'h-full' : 'h-screen snap-start'} relative flex flex-col items-center justify-center bg-gradient-to-br from-green-50 to-green-100 px-4 py-8`}
     >
       <div className="w-full max-w-6xl mx-auto -mt-12">
         <motion.div
@@ -57,7 +62,7 @@ export default function SupportSection() {
           viewport={{ once: true }}
           className="text-center mb-6 md:mb-8"
         >
-          <h2 className="text-3xl md:text-5xl font-black text-green-900 mb-2">
+          <h2 className="text-3xl md:text-5xl font-black text-green-900 mb-2 font-giants">
             자영업 경력 8년<br />삶의 고단함을 아는 후보
           </h2>
           <p className="text-xl md:text-2xl text-green-800">
@@ -111,9 +116,11 @@ export default function SupportSection() {
         </motion.div>
       </div>
 
-      <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
-        <ScrollIndicator isDark={false} />
-      </div>
+      {!hideScrollIndicator && (
+        <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
+          <ScrollIndicator isDark={false} />
+        </div>
+      )}
     </section>
   );
 } 

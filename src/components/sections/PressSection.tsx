@@ -12,6 +12,10 @@ interface PressItem {
   link: string;
 }
 
+interface PressSectionProps {
+  isStandalone?: boolean;
+}
+
 const pressItems: PressItem[] = [
   {
     title: '청어람아파트, "국토부 2024 최우수 관리단지" 선정',
@@ -76,20 +80,22 @@ const sortedPressItems = [...pressItems].sort((a, b) => {
   return dateB.getTime() - dateA.getTime();
 });
 
-export default function PressSection() {
+export default function PressSection({ isStandalone }: PressSectionProps = {}) {
   return (
-    <section className="h-screen snap-start relative flex flex-col items-center pt-16 md:pt-12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4">
-      <div className="w-full max-w-6xl mx-auto relative mt-8 md:mt-8">
+    <section className={`${isStandalone ? 'h-full' : 'h-[calc(100vh-5rem)]'} relative flex flex-col items-center pt-4 md:pt-3 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4`}>
+      {/* 상단 헤더 */}
+      
+      <div className="w-full max-w-6xl mx-auto relative mt-4 md:mt-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-8"
+          className="text-center mb-6"
         >
-          <h2 className="text-3xl md:text-5xl font-black text-white mb-2">
-            언론으로 본 권현우의 활동
-          </h2>
+          <h3 className="text-xl md:text-2xl font-medium text-white mb-1">
+            언론이 본 권현우
+          </h3>
         </motion.div>
 
         <div className="relative overflow-hidden">
@@ -130,10 +136,15 @@ export default function PressSection() {
         </div>
       </div>
 
-      {/* 스크롤 화살표 - 하나로 통일 */}
-      <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
-        <ScrollIndicator isDark={false} color="text-white/80" />
-      </div>
+        {/* 스크롤 화살표 - 항상 표시 */}
+        <div className="absolute bottom-[10%] left-0 right-0 z-[80] flex flex-col items-center justify-center">
+          <p className="text-xs text-white mb-1">아래로 스크롤</p>
+          <div className="relative h-12 w-full flex justify-center">
+            <div className="text-white">
+              <ScrollIndicator isDark={false} color="text-white" className="[&>svg]:text-white" />
+            </div>
+          </div>
+        </div>
     </section>
   );
 } 

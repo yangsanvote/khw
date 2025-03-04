@@ -7,6 +7,10 @@ import { event } from '@/lib/gtag';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
+interface ContactSectionProps {
+  hideScrollIndicator?: boolean;
+}
+
 interface ContactInfo {
   icon: LucideIcon;
   label: string;
@@ -61,7 +65,7 @@ const handleSocialClick = (platform: string) => {
   });
 };
 
-export default function ContactSection() {
+export default function ContactSection({ hideScrollIndicator = false }: ContactSectionProps) {
   const [showAccount, setShowAccount] = useState(false);
 
   // URL 해시 체크하여 모달 표시
@@ -91,7 +95,7 @@ export default function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-black text-center mb-8"
+          className="text-3xl md:text-5xl font-black text-center mb-8 font-giants"
         >
           함께 만들어가요
         </motion.h2>

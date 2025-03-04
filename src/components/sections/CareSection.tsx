@@ -20,7 +20,11 @@ const careItems = [
   }
 ];
 
-export default function CareSection() {
+interface CareSectionProps {
+  hideScrollIndicator?: boolean;
+}
+
+export default function CareSection({ hideScrollIndicator = false }: CareSectionProps) {
   return (
     <section className="h-screen snap-start relative flex flex-col items-center justify-center px-4 py-8 overflow-hidden">
       {/* 배경 이미지 */}
@@ -45,7 +49,7 @@ export default function CareSection() {
           viewport={{ once: true }}
           className="text-center mb-8"
         >
-          <h2 className="text-3xl md:text-5xl font-black text-yellow-900 mb-4">
+          <h2 className="text-3xl md:text-5xl font-black text-yellow-900 mb-4 font-giants">
             돌봄, 정주, 일자리<br />
             세마리 토끼를 한 번에
           </h2>
@@ -84,10 +88,12 @@ export default function CareSection() {
         </div>
       </div>
 
-      {/* 스크롤 화살표 - 하나로 통일 */}
-      <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
-        <ScrollIndicator isDark={false} />
-      </div>
+      {/* 스크롤 화살표 - hideScrollIndicator가 false일 때만 표시 */}
+      {!hideScrollIndicator && (
+        <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
+          <ScrollIndicator isDark={false} />
+        </div>
+      )}
     </section>
   );
 } 

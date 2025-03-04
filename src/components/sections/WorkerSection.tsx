@@ -17,7 +17,11 @@ const workerItems = [
   }
 ];
 
-export default function WorkerSection() {
+interface WorkerSectionProps {
+  hideScrollIndicator?: boolean;
+}
+
+export default function WorkerSection({ hideScrollIndicator = false }: WorkerSectionProps) {
   return (
     <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-gradient-to-br from-[#623D91] via-purple-950 to-[#623D91] px-4 py-8 overflow-hidden">
       {/* 배경 장식 */}
@@ -34,7 +38,7 @@ export default function WorkerSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-black text-white mb-4">
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-4 font-giants">
             돈은 &lsquo;잘&rsquo; 써야합니다
           </h2>
           <p className="text-xl md:text-2xl text-purple-200">
@@ -79,9 +83,12 @@ export default function WorkerSection() {
         </div>
       </div>
 
-      <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
-        <ScrollIndicator isDark={false} color="text-white/80" />
-      </div>
+      {/* 스크롤 화살표 - hideScrollIndicator가 false일 때만 표시 */}
+      {!hideScrollIndicator && (
+        <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
+          <ScrollIndicator isDark={true} />
+        </div>
+      )}
     </section>
   );
 } 

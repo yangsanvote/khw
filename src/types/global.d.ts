@@ -23,4 +23,20 @@ interface Window {
       }) => void;
     };
   };
+}
+
+// Leaflet 타입 선언
+declare module 'leaflet' {
+  export interface MapOptions {
+    preferCanvas?: boolean;
+  }
+}
+
+// React Leaflet 타입 선언
+declare module 'react-leaflet' {
+  export const MapContainer: any;
+  export const TileLayer: any;
+  export const Marker: any;
+  export const Popup: any;
+  export const useMap: any;
 } 

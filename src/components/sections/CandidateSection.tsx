@@ -63,7 +63,11 @@ const profileImages = [
   ...Array.from({ length: 9 }, (_, i) => `/images/candidate/profile-${i + 2}.jpg`)
 ];
 
-export default function CandidateSection() {
+interface CandidateSectionProps {
+  isStandalone?: boolean;
+}
+
+export default function CandidateSection({ isStandalone = false }: CandidateSectionProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -99,19 +103,21 @@ export default function CandidateSection() {
 
   return (
     <section 
+      id="candidate"
       suppressHydrationWarning={true}
-      className="h-screen snap-start relative flex flex-col items-center pt-8 md:pt-0 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-100 px-4 text-gray-800 overflow-x-hidden"
+      className={`${isStandalone ? 'h-full' : 'h-[calc(100vh-5rem)]'} relative flex flex-col items-center pt-0 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-100 px-4 text-gray-800 overflow-x-hidden`}
     >
-      <div className="w-full max-w-6xl mx-auto relative mt-4 md:mt-0">
-        <div className="flex flex-col h-[90vh] md:h-full">
+      {/* 상단 헤더 */}     
+      <div className="w-full max-w-6xl mx-auto relative mt-0 pt-0">
+        <div className="flex flex-col h-[60vh] md:h-full">
           {/* 사진 */}
-          <div className="flex flex-col mb-2 md:mb-4">
+          <div className="flex flex-col mb-0 md:mb-4 mt-0 pt-0">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="w-full h-[35vh] bg-white/10 rounded-2xl overflow-hidden relative group"
+              className="w-full h-[25vh] bg-white/10 rounded-2xl overflow-hidden relative group"
               onMouseEnter={pauseAutoPlay}
               onMouseLeave={resumeAutoPlay}
             >
@@ -157,7 +163,7 @@ export default function CandidateSection() {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-2xl md:text-3xl font-bold text-center mb-2 md:mb-4 text-gray-800"
+            className="text-xl md:text-2xl font-bold text-center mb-2 md:mb-4 text-gray-600"
           >
             권현우 살아온 길
           </motion.h2>
@@ -354,10 +360,13 @@ export default function CandidateSection() {
         </div>
       </div>
 
-      {/* 스크롤 화살표 */}
-      <div className="absolute bottom-[10%] left-0 right-0 z-10">
-        <ScrollIndicator isDark={true} color="text-gray-400" />
-      </div>
+        {/* 스크롤 화살표 - 항상 표시 */}
+        <div className="absolute bottom-[10%] left-0 right-0 z-[80] flex flex-col items-center justify-center">
+          <p className="text-xs text-gray-700 mb-1">아래로 스크롤</p>
+          <div className="relative h-12 w-full flex justify-center">
+            <ScrollIndicator isDark={true} color="text-gray-900" />
+          </div>
+        </div>
     </section>
   );
 } 
