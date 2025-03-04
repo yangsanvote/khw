@@ -139,13 +139,13 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false }: YDSectionProps
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="mb-8 text-center"
+          className="mb-4 md:mb-6 text-center"
         >
-          <h2 className="text-4xl md:text-6xl font-bold text-[#623D91]" style={{ 
+          <h2 className="text-3xl md:text-5xl font-bold text-[#623D91]" style={{ 
                   fontFamily: 'Giants-Bold', 
                   fontWeight: 700
                 }}>권현우의 양동작전</h2>
-          <p className="text-xl md:text-2xl text-gray-600 mt-2" style={{ 
+          <p className="text-xl md:text-2xl text-[#547EB9] mt-2" style={{ 
                   fontFamily: 'Giants-Bold', 
                   fontWeight: 200
                 }}>
@@ -156,32 +156,32 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false }: YDSectionProps
             <span className="text-[#623D91] font-bold"  style={{ 
                   fontFamily: 'Giants-Bold', 
                   fontWeight: 200
-                }}>동</span>면의 
+                }}> 동</span>면의 
             <span className="text-[#623D91] font-bold" style={{ 
                   fontFamily: 'Giants-Bold', 
                   fontWeight: 200
-                }}>작</span>지만 소중한 
+                }}> 작</span>지만 소중한 
             <span className="text-[#623D91] font-bold" style={{ 
                   fontFamily: 'Giants-Bold', 
                   fontWeight: 200
-                }}>전</span>망
+                }}> 전</span>망
           </p>
         </motion.div>
 
-        <Tabs defaultValue="alternative" className="w-full mb-10">
-          <div className="flex justify-center mb-4 overflow-x-auto">
-            <TabsList className="bg-purple-50 p-1.5">
+        <Tabs defaultValue="alternative" className="w-full mb-6">
+          <div className="flex justify-center mb-2 overflow-x-auto">
+            <TabsList className="bg-purple-50 p-1">
               <TabsTrigger 
                 value="alternative" 
                 onClick={() => setActiveTab("alternative")}
-                className={`text-base md:text-xl py-2 px-4 ${activeTab === "alternative" ? "data-[state=active]:bg-[#623D91] data-[state=active]:text-white" : ""}`}
+                className={`text-sm md:text-base py-1.5 px-3 ${activeTab === "alternative" ? "data-[state=active]:bg-[#623D91] data-[state=active]:text-white" : ""}`}
               >
                 지역 현안 진단
               </TabsTrigger>
               <TabsTrigger 
                 value="issues" 
                 onClick={() => setActiveTab("issues")}
-                className={`text-base md:text-xl py-2 px-4 ${activeTab === "issues" ? "data-[state=active]:bg-[#623D91] data-[state=active]:text-white" : ""}`}
+                className={`text-sm md:text-base py-1.5 px-3 ${activeTab === "issues" ? "data-[state=active]:bg-[#623D91] data-[state=active]:text-white" : ""}`}
               >
                 지역별 공약
               </TabsTrigger>
@@ -490,8 +490,8 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false }: YDSectionProps
           
           <TabsContent value="issues" className="mt-0">
             {/* 필터 영역을 가운데로 배치 */}
-            <div className="flex flex-col items-center justify-center gap-4 mb-6">
-              <div className="grid grid-cols-2 gap-2 md:gap-4 w-full max-w-4xl">
+            <div className="flex flex-col items-center justify-center gap-3 mb-4">
+              <div className="grid grid-cols-2 gap-2 w-full max-w-4xl">
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -501,9 +501,9 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false }: YDSectionProps
                   <div className="bg-[#623D91] p-2 md:p-4 text-white">
                     <div className="flex items-center gap-1 md:gap-2">
                       <FolderOpen className="w-3 h-3 md:w-5 md:h-5 flex-shrink-0" />
-                      <h4 className="text-base md:text-xl font-semibold truncate">공약 카테고리</h4>
+                      <h4 className="text-base md:text-xl font-semibold truncate">같은 문제는<br/>강력한 대안으로</h4>
                     </div>
-                    <p className="text-xs md:text-base text-white/80 ml-4 md:ml-7 line-clamp-1">원하는 카테고리를 선택하세요</p>
+                    <p className="text-xs md:text-base text-white/80 ml-4 md:ml-7 line-clamp-1">"젊고 패기있는 전국1등 입대표"</p>
                   </div>
                   
                   <div className="p-2 md:p-4">
@@ -547,9 +547,9 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false }: YDSectionProps
                   >
                     <div className="flex items-center gap-1 md:gap-2">
                       <FolderOpen className="w-3 h-3 md:w-5 md:h-5 flex-shrink-0" />
-                      <h4 className="text-base md:text-xl font-semibold truncate">지역별 필터</h4>
+                      <h4 className="text-base md:text-xl font-semibold truncate">다른 상황에는<br/>세심한 정책으로</h4>
                     </div>
-                    <p className="text-xs md:text-base text-white/80 ml-4 md:ml-7 line-clamp-1">원하는 지역을 선택하세요</p>
+                    <p className="text-xs md:text-base text-white/80 ml-4 md:ml-7 line-clamp-1">"손에 잡히는 양주동, 동면"</p>
                   </div>
                   
                   <div className="p-2 md:p-4">
@@ -592,17 +592,17 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false }: YDSectionProps
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-white/80 backdrop-blur-sm rounded-xl p-4 md:p-6 shadow-md"
+              className="bg-white/80 backdrop-blur-sm rounded-xl p-3 md:p-4 shadow-md"
             >
-              <h3 className="text-base md:text-xl font-bold text-[#623D91] mb-4 md:mb-6 text-center">
+              <h3 className="text-base md:text-lg font-bold text-[#623D91] mb-3 md:mb-4 text-center">
                 {filteredPromises.length > 0 
                   ? `권현우의 약속 (${filteredPromises.length}개)` 
                   : "카테고리나 지역을 선택하시면 공약이 표시됩니다"}
               </h3>
               
               {filteredPromises.length > 0 ? (
-                <div className="max-h-[60vh] overflow-y-auto px-2 pb-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="max-h-[45vh] overflow-y-auto px-2 pb-4 overscroll-contain">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {filteredPromises.map(promise => (
                       <PromiseCard 
                         key={promise.id} 
@@ -611,6 +611,8 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false }: YDSectionProps
                       />
                     ))}
                   </div>
+                  {/* 스크롤 버퍼 공간 추가 */}
+                  <div className="h-32 md:h-40"></div>
                 </div>
               ) : (
                 <div className="text-center py-10">
@@ -619,6 +621,9 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false }: YDSectionProps
                 </div>
               )}
             </motion.div>
+            
+            {/* 하단 여백 크기 조정 */}
+            <div className="h-16 md:h-24"></div>
           </TabsContent>
         </Tabs>
       </div>
