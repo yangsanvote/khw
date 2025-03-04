@@ -44,7 +44,7 @@ export default function HeroSection({ hideScrollIndicator = false }: HeroSection
       {/* Pretendard 폰트 스타일 적용 */}
       <style jsx global>{fontsStyle}</style>
       
-      <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-white text-gray-900 overflow-visible px-4 py-8 font-[Pretendard-Regular]">
+      <section className="h-screen snap-start relative flex flex-col items-center justify-start pt-8 md:pt-10 bg-white text-gray-900 overflow-visible px-4 py-8 font-[Pretendard-Regular]">
         {/* 네 귀퉁이 삼각형 - 최하위 레이어 */}
         <div className="absolute top-0 left-0 w-32 h-32 md:w-48 md:h-48 z-0">
           <div className="w-full h-full" style={{
@@ -78,7 +78,7 @@ export default function HeroSection({ hideScrollIndicator = false }: HeroSection
         </div>
 
         {/* 메인 컨텐츠 */}
-        <div className="w-full max-w-6xl mx-auto -mt-12">
+        <div className="w-full max-w-6xl mx-auto mt-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -90,7 +90,7 @@ export default function HeroSection({ hideScrollIndicator = false }: HeroSection
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-5xl md:text-6xl lg:text-7xl text-center -mb-1 md:-mb-2 z-10"
+              className="text-4xl md:text-6xl lg:text-7xl text-center -mb-1 md:-mb-2 z-10"
               style={{ fontFamily: 'InkLipquid, cursive', letterSpacing: '0.01em' }}
             >
               사는 곳을 바꿉니다,{' '}

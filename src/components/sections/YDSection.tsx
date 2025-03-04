@@ -133,13 +133,13 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false }: YDSectionProps
   };
 
   return (
-    <section id="yd-section" className={`w-full py-6 ${!isStandalone ? 'bg-gradient-to-br from-purple-50 to-purple-100' : ''}`}>
+    <section id="yd-section" className={`w-full py-3 md:py-4 ${!isStandalone ? 'bg-gradient-to-br from-purple-50 to-purple-100' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="mb-4 md:mb-6 text-center"
+          className="mb-3 md:mb-4 text-center"
         >
           <h2 className="text-3xl md:text-5xl font-bold text-[#623D91]" style={{ 
                   fontFamily: 'Giants-Bold', 
