@@ -1109,7 +1109,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
       {/* 하단 여백 추가 */}
       <div className="h-[100px] md:h-[150px] relative">
         {/* 스크롤 인디케이터 추가 */}
-        {!hideScrollIndicator && <ScrollIndicator className="absolute top-4 left-1/2 transform -translate-x-1/2" />}
+        {!hideScrollIndicator && <ScrollIndicator className="absolute bottom-20 left-1/2 transform -translate-x-1/2" isFixed={false} />}
       </div>
       
       {/* 공약 상세 모달 */}

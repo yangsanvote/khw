@@ -6,9 +6,17 @@ import { useEffect, useState } from 'react';
 
 interface ScrollIndicatorProps {
   className?: string;
+  isFixed?: boolean;
+  isDark?: boolean;
+  color?: string;
 }
 
-export default function ScrollIndicator({ className = '' }: ScrollIndicatorProps) {
+export default function ScrollIndicator({ 
+  className = '', 
+  isFixed = false, 
+  isDark = false, 
+  color = '' 
+}: ScrollIndicatorProps) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -18,23 +26,28 @@ export default function ScrollIndicator({ className = '' }: ScrollIndicatorProps
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       
-      // 페이지의 90% 이상 스크롤했으면 인디케이터 숨기기
-      if (scrollPosition + windowHeight > documentHeight * 0.9) {
+      // 페이지 상단(10% 이내)이거나 페이지의 90% 이상 스크롤했으면 인디케이터 숨기기
+      if (scrollPosition < windowHeight * 0.1 || scrollPosition + windowHeight > documentHeight * 0.9) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
       }
     };
 
+    // 초기 스크롤 위치 확인
+    handleScroll();
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   if (!isVisible) return null;
 
+  const textColorClass = color || (isDark ? 'text-white' : 'text-gray-600');
+
   return (
     <motion.div 
-      className={`fixed bottom-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-40 ${className}`}
+      className={`${isFixed ? 'fixed' : 'absolute'} bottom-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-40 ${className}`}
       initial={{ opacity: 0, y: -10 }}
       animate={{ 
         opacity: 1, 
@@ -46,8 +59,8 @@ export default function ScrollIndicator({ className = '' }: ScrollIndicatorProps
         }
       }}
     >
-      <p className="text-sm text-gray-600 mb-1 font-medium">아래로 스크롤</p>
-      <ChevronDown className="text-gray-600" size={24} />
+      <p className={`text-sm ${textColorClass} mb-1 font-medium`}>아래로 스크롤</p>
+      <ChevronDown className={textColorClass} size={24} />
     </motion.div>
   );
 } 

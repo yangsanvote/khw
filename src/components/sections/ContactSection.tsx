@@ -203,7 +203,7 @@ export default function ContactSection({ hideScrollIndicator = false, showHeader
       </div>
 
       {/* 스크롤 인디케이터 추가 */}
-      {!hideScrollIndicator && <ScrollIndicator className="absolute bottom-20 left-1/2 transform -translate-x-1/2" />}
+      {!hideScrollIndicator && <ScrollIndicator className="absolute bottom-20 left-1/2 transform -translate-x-1/2" isFixed={false} />}
 
       {showAccount && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">

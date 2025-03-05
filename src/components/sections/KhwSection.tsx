@@ -545,7 +545,7 @@ export default function KhwSection({
         </div>
         
         {/* 스크롤 인디케이터 추가 */}
-        {activeButton === 'declaration' && <ScrollIndicator className="absolute bottom-4 left-1/2 transform -translate-x-1/2" />}
+        {activeButton === 'declaration' && <ScrollIndicator className="absolute bottom-4 left-1/2 transform -translate-x-1/2" isFixed={false} />}
       </div>
 
       {/* 언론 콘텐츠 영역 - 항상 표시 */}
