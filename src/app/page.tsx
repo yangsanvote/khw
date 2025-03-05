@@ -1,244 +1,98 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
 import HeroSection from "@/components/sections/HeroSection";
 import KhwSection from "@/components/sections/KhwSection";
 import YDSection from "@/components/sections/YDSection";
 import ContactSection from "@/components/sections/ContactSection";
 import BottomNav from "@/components/BottomNav";
+import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState<number>(0);
-  const [expandedSection, setExpandedSection] = useState<number | null>(null);
-  const [khwActiveSubSection, setKhwActiveSubSection] = useState<string>('declaration-section');
-  
-  // 네비게이션 텍스트 표시 관련 상태
-  const [showLabels, setShowLabels] = useState<boolean>(true);
-  const [navInteraction, setNavInteraction] = useState<boolean>(false);
-  const labelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
-  const sectionRefs = useRef<(HTMLElement | null)[]>([null, null, null, null]);
-  
-  const sections = [
-    { id: 'hero', name: '메인', color: '#FFED00', isDarkBackground: false },
-    { id: 'khw', name: '권현우', color: '#00A367', isDarkBackground: true },
-    { id: 'yd', name: '양주동·동면', color: '#623D91', isDarkBackground: false },
-    { id: 'contact', name: '제안하기', color: '#333333', isDarkBackground: true },
-  ];
+  const mainRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState<string>('hero');
 
-  // KHW 섹션 내 서브섹션
-  const khwSubSections = [
-    { id: 'declaration-section', name: '출마선언문', isDarkBackground: true },
-    { id: 'press-section', name: '보도자료', isDarkBackground: true },
-    { id: 'candidate-section', name: '후보자', isDarkBackground: false },
-    { id: 'act-section', name: '의정활동', isDarkBackground: false }
-  ];
-
-  const getActiveSectionBackground = () => {
-    const currentSection = sections[activeSection];
-    return currentSection?.color || '#FFED00';
-  };
-
-  const getActiveSectionIsDark = () => {
-    if (activeSection === 1) { // KhwSection
-      const activeSubSection = khwSubSections.find(section => section.id === khwActiveSubSection);
-      return activeSubSection?.isDarkBackground ?? false;
-    } else {
-      return sections[activeSection]?.isDarkBackground || false;
-    }
-  };
-
-  const currentBgColor = getActiveSectionBackground();
-  const currentBgIsDark = getActiveSectionIsDark();
-
-  // 네비게이션 인터랙션 핸들러
-  const handleNavInteraction = () => {
-    setNavInteraction(true);
-    setShowLabels(true);
-    
-    // 기존 타이머 취소
-    if (labelTimeoutRef.current) {
-      clearTimeout(labelTimeoutRef.current);
-    }
-    
-    // 5초 후 레이블 숨김
-    labelTimeoutRef.current = setTimeout(() => {
-      setShowLabels(false);
-      setNavInteraction(false);
-    }, 5000);
-  };
-
+  // 페이지 로드 시 상단으로 스크롤
   useEffect(() => {
-    // 초기 로드 시 네비게이션 레이블 자동 숨김
-    const initialTimeout = setTimeout(() => {
-      setShowLabels(false);
-    }, 5000);
-    
-    // IntersectionObserver 설정
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-            const index = sectionRefs.current.findIndex(ref => ref === entry.target);
-            if (index !== -1) {
-              setActiveSection(index);
-            }
-          }
-        });
-      },
-      {
-        threshold: 0.5  // 50% 이상 보일 때 활성화
-      }
-    );
-    
-    // KhwSection 서브섹션 감지
-    const khwSubsectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
-            const prevSubSection = khwActiveSubSection;
-            setKhwActiveSubSection(entry.target.id);
-            
-            // 새로운 서브섹션으로 이동 시 레이블 표시
-            if (prevSubSection !== entry.target.id && activeSection === 1) {
-              handleNavInteraction();
-            }
-          }
-        });
-      },
-      {
-        root: document.getElementById('khw-section'),
-        rootMargin: '0px',
-        threshold: 0.3  // 30% 이상 보일 때 활성화
-      }
-    );
+    if (pathname === '/') {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname]);
 
-    // 서브섹션 요소 등록
-    khwSubSections.forEach((subSection) => {
-      const element = document.getElementById(subSection.id);
-      if (element) {
-        khwSubsectionObserver.observe(element);
-      }
-    });
-
-    // 클린업 함수
-    return () => {
-      sectionObserver.disconnect();
-      khwSubsectionObserver.disconnect();
-      
-      if (labelTimeoutRef.current) {
-        clearTimeout(labelTimeoutRef.current);
-      }
-      
-      clearTimeout(initialTimeout);
-    };
-  }, [activeSection, khwActiveSubSection]);
-
-  // 스크롤 이벤트를 사용한 백업 감지 메커니즘
+  // 스크롤 이벤트를 통해 현재 활성 섹션 감지
   useEffect(() => {
     const handleScroll = () => {
-      sectionRefs.current = [
-        document.getElementById('hero-section'),
-        document.getElementById('khw-section'),
-        document.getElementById('yd-section'),
-        document.getElementById('contact-section')
-      ];
+      const heroSection = document.getElementById('hero-section');
+      const khwSection = document.getElementById('khw-section');
+      const ydSection = document.getElementById('yd-section');
+      const contactSection = document.getElementById('contact-section');
       
-      // 각 섹션과 뷰포트의 교차 정도를 계산
-      const viewportHeight = window.innerHeight;
-      const scrollTop = window.scrollY;
+      if (!heroSection || !khwSection || !ydSection || !contactSection) return;
       
-      let maxVisibleRatio = 0;
-      let maxVisibleIndex = activeSection;
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
       
-      sectionRefs.current.forEach((section, index) => {
-        if (section) {
-          const rect = section.getBoundingClientRect();
-          const sectionInViewport = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
-          const visibleRatio = sectionInViewport / viewportHeight;
-          
-          if (visibleRatio > maxVisibleRatio) {
-            maxVisibleRatio = visibleRatio;
-            maxVisibleIndex = index;
-          }
-        }
-      });
+      const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+      const khwBottom = khwSection.offsetTop + khwSection.offsetHeight;
+      const ydBottom = ydSection.offsetTop + ydSection.offsetHeight;
       
-      if (maxVisibleIndex !== activeSection) {
-        setActiveSection(maxVisibleIndex);
+      if (scrollPosition < heroBottom) {
+        setActiveSection('hero');
+      } else if (scrollPosition < khwBottom) {
+        setActiveSection('khw');
+      } else if (scrollPosition < ydBottom) {
+        setActiveSection('yd');
+      } else {
+        setActiveSection('contact');
       }
     };
     
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeSection]);
+    // 스크롤 이벤트를 디바운스하여 성능 개선
+    let timeoutId: NodeJS.Timeout;
+    const debouncedHandleScroll = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(handleScroll, 100);
+    };
+    
+    window.addEventListener('scroll', debouncedHandleScroll);
+    // 초기 로드 시 한 번 실행
+    handleScroll();
+    
+    return () => {
+      window.removeEventListener('scroll', debouncedHandleScroll);
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
-  // 섹션 이동 함수
-  const scrollToSection = (index: number) => {
-    const sectionElement = document.getElementById(`${sections[index].id}-section`);
-    if (sectionElement) {
-      sectionElement.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(index);
-      handleNavInteraction();
+  // 특정 섹션으로 스크롤하는 함수
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  // 서브섹션 이동 함수
-  const scrollToSubSection = (mainIndex: number, subIndex: number) => {
-    let sectionId = '';
-    
-    if (mainIndex === 1) { // KHW 섹션
-      sectionId = khwSubSections[subIndex].id;
-      // 클릭 시 즉시 서브섹션도 활성화
-      setKhwActiveSubSection(sectionId);
-    }
-    
-    const sectionElement = document.getElementById(sectionId);
-    if (sectionElement) {
-      const headerOffset = 50; // 상단 헤더/네비게이션 높이
-      const elementPosition = sectionElement.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-      
-      // 메인 섹션도 활성화
-      setActiveSection(mainIndex);
-      handleNavInteraction();
-    }
-  };
-  
-  // 서브섹션 텍스트 색상 (활성화된 메인 섹션 기준)
-  const subSectionActiveTextClass = currentBgIsDark
-    ? 'text-white font-medium'
-    : 'text-gray-800 font-medium';
-  
-  const subSectionInactiveTextClass = currentBgIsDark
-    ? 'text-white/70 group-hover:text-white'
-    : 'text-gray-800/70 group-hover:text-gray-800';
 
   return (
-    <main className="w-full h-screen overflow-y-auto scroll-smooth snap-y snap-mandatory">
+    <main ref={mainRef} className="w-full min-h-screen">
       {/* 메인 콘텐츠 */}
-      <section id="hero-section" className="h-screen w-full snap-start">
-        <HeroSection hideScrollIndicator={true} />
+      <section id="hero-section" className="min-h-screen w-full">
+        <HeroSection />
+      </section>
+      
+      <section id="khw-section" className="min-h-screen w-full">
+        <KhwSection />
+      </section>
+      
+      <section id="yd-section" className="min-h-screen w-full">
+        <YDSection isActive={activeSection === 'yd'} />
+      </section>
+      
+      <section id="contact-section" className="min-h-screen w-full pb-16">
+        <ContactSection showHeader={false} />
       </section>
 
-      <section id="khw-section" className="h-screen w-full snap-start">
-        <KhwSection hideScrollIndicator={true} />
-      </section>
-
-      <section id="yd-section" className="h-screen w-full snap-start">
-        <YDSection isStandalone={true} hideScrollIndicator={true} />
-      </section>
-
-      <section id="contact-section" className="h-screen w-full snap-start">
-        <ContactSection hideScrollIndicator={true} />
-      </section>
-
+      {/* 하단 네비게이션 */}
       <BottomNav />
     </main>
   );

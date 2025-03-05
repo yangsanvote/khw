@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { ArrowRight, Building2, Utensils, Lightbulb, Shield, Sparkles, Briefcase } from 'lucide-react';
-import ScrollIndicator from '../ScrollIndicator';
 
 const supportItems = [
   {
@@ -115,12 +114,6 @@ export default function SupportSection({ isStandalone = false, hideScrollIndicat
           </a>
         </motion.div>
       </div>
-
-      {!hideScrollIndicator && (
-        <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
-          <ScrollIndicator isDark={false} />
-        </div>
-      )}
     </section>
   );
 } 

@@ -6,9 +6,11 @@ import Link from 'next/link';
 import { event } from '@/lib/gtag';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import ScrollIndicator from '../ScrollIndicator';
 
 interface ContactSectionProps {
   hideScrollIndicator?: boolean;
+  showHeader?: boolean;
 }
 
 interface ContactInfo {
@@ -65,7 +67,7 @@ const handleSocialClick = (platform: string) => {
   });
 };
 
-export default function ContactSection({ hideScrollIndicator = false }: ContactSectionProps) {
+export default function ContactSection({ hideScrollIndicator = false, showHeader = false }: ContactSectionProps) {
   const [showAccount, setShowAccount] = useState(false);
 
   // URL 해시 체크하여 모달 표시
@@ -89,13 +91,27 @@ export default function ContactSection({ hideScrollIndicator = false }: ContactS
 
   return (
     <section className="h-screen snap-start relative flex flex-col items-center justify-center bg-gradient-to-br from-emerald-950 via-slate-900 to-emerald-950 px-4 text-white overflow-x-hidden">
+      {showHeader && (
+        <motion.div
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="fixed top-0 left-0 w-full bg-gradient-to-r from-emerald-800 to-emerald-600 text-white py-6 z-50 shadow-md"
+        >
+          <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-4 md:mb-0" style={{ fontFamily: 'Giants-Bold' }}>함께 만들어가요</h2>
+          </div>
+        </motion.div>
+      )}
+
       <div className="w-full max-w-4xl mx-auto -mt-8 md:-mt-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-black text-center mb-8 font-giants"
+          className="text-3xl md:text-5xl font-black text-center mb-8"
+          style={{ fontFamily: 'Giants-Bold' }}
         >
           함께 만들어가요
         </motion.h2>
@@ -169,7 +185,7 @@ export default function ContactSection({ hideScrollIndicator = false }: ContactS
                   className="flex items-center justify-between w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-6 py-3 transition-colors"
                   onClick={handleBandClick}
                 >
-                  <span className="font-medium">네이버 밴드 구경하기</span>
+                  <span className="font-medium">네이버 밴드</span>
                   <span className="text-sm opacity-75">권현우와 함께하는 사람들</span>
                 </Link>
 
@@ -186,6 +202,8 @@ export default function ContactSection({ hideScrollIndicator = false }: ContactS
         </div>
       </div>
 
+      {/* 스크롤 인디케이터 추가 */}
+      {!hideScrollIndicator && <ScrollIndicator className="absolute bottom-20 left-1/2 transform -translate-x-1/2" />}
 
       {showAccount && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">

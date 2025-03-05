@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Footprints, Users, Trophy } from 'lucide-react';
-import ScrollIndicator from '../ScrollIndicator';
 import Image from 'next/image';
 
 const careers = [
@@ -142,18 +141,6 @@ export default function CandidateSection({ isStandalone = false }: CandidateSect
               >
                 <ChevronRight className="w-6 h-6" />
               </button>
-
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                {profileImages.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentImageIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                      index === currentImageIndex ? 'bg-white scale-125' : 'bg-white/50'
-                    }`}
-                  />
-                ))}
-              </div>
             </motion.div>
           </div>
 
@@ -359,14 +346,6 @@ export default function CandidateSection({ isStandalone = false }: CandidateSect
           </div>
         </div>
       </div>
-
-        {/* 스크롤 화살표 - 항상 표시 */}
-        <div className="absolute bottom-[10%] left-0 right-0 z-[80] flex flex-col items-center justify-center">
-          <p className="text-xs text-gray-700 mb-1">아래로 스크롤</p>
-          <div className="relative h-12 w-full flex justify-center">
-            <ScrollIndicator isDark={true} color="text-gray-900" />
-          </div>
-        </div>
     </section>
   );
 } 

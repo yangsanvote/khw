@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { Newspaper } from 'lucide-react';
-import ScrollIndicator from '../ScrollIndicator';
+import { useState } from 'react';
+import Link from 'next/link';
 
 // PressItem 인터페이스를 Article 인터페이스와 통합
 interface PressItem {
@@ -135,16 +136,6 @@ export default function PressSection({ isStandalone }: PressSectionProps = {}) {
           </div>
         </div>
       </div>
-
-        {/* 스크롤 화살표 - 항상 표시 */}
-        <div className="absolute bottom-[10%] left-0 right-0 z-[80] flex flex-col items-center justify-center">
-          <p className="text-xs text-white mb-1">아래로 스크롤</p>
-          <div className="relative h-12 w-full flex justify-center">
-            <div className="text-white">
-              <ScrollIndicator isDark={false} color="text-white" className="[&>svg]:text-white" />
-            </div>
-          </div>
-        </div>
     </section>
   );
 } 

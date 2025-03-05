@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { Percent, Briefcase } from 'lucide-react';
-import ScrollIndicator from '../ScrollIndicator';
 
 const workerItems = [
   {
@@ -82,13 +81,6 @@ export default function WorkerSection({ hideScrollIndicator = false }: WorkerSec
           ))}
         </div>
       </div>
-
-      {/* 스크롤 화살표 - hideScrollIndicator가 false일 때만 표시 */}
-      {!hideScrollIndicator && (
-        <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
-          <ScrollIndicator isDark={true} />
-        </div>
-      )}
     </section>
   );
 } 

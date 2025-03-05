@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { Heart, Utensils } from 'lucide-react';
-import ScrollIndicator from '../ScrollIndicator';
 import Image from 'next/image';
 
 const careItems = [
@@ -87,13 +86,6 @@ export default function CareSection({ hideScrollIndicator = false }: CareSection
           ))}
         </div>
       </div>
-
-      {/* 스크롤 화살표 - hideScrollIndicator가 false일 때만 표시 */}
-      {!hideScrollIndicator && (
-        <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex justify-center">
-          <ScrollIndicator isDark={false} />
-        </div>
-      )}
     </section>
   );
 } 

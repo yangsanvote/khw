@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import ScrollIndicator from '../ScrollIndicator';
 import { event } from '@/lib/gtag';
 import Image from 'next/image';
 
@@ -123,14 +122,6 @@ export default function DeclarationSection({ isStandalone }: DeclarationSectionP
           </div>
         </div>
       )}
-
-        {/* 스크롤 화살표 - 항상 표시 */}
-        <div className="absolute bottom-[20%] left-0 right-0 z-[80] flex flex-col items-center justify-center">
-          <p className="text-xs text-gray-700 mb-1">아래로 스크롤</p>
-          <div className="relative h-12 w-full flex justify-center">
-            <ScrollIndicator isDark={true} color="text-gray-900" />
-          </div>
-        </div>
     </section>
   );
 } 

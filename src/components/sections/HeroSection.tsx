@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import CountdownTimer from '../CountdownTimer';
-import ScrollIndicator from '../ScrollIndicator';
 import VisitorCounter from '../VisitorCounter';
+import ScrollIndicator from '../ScrollIndicator';
 
 // 폰트 스타일 정의
 const fontsStyle = `
@@ -34,11 +34,7 @@ const fontsStyle = `
   }
 `;
 
-interface HeroSectionProps {
-  hideScrollIndicator?: boolean;
-}
-
-export default function HeroSection({ hideScrollIndicator = false }: HeroSectionProps) {
+export default function HeroSection() {
   return (
     <>
       {/* Pretendard 폰트 스타일 적용 */}
@@ -123,6 +119,7 @@ export default function HeroSection({ hideScrollIndicator = false }: HeroSection
                     src="/images/profile.png"
                     alt="권현우 후보"
                     fill
+                    sizes="(max-width: 768px) 20rem, (max-width: 1024px) 22rem, (max-width: 1280px) 25rem, (max-width: 1536px) 28rem, 30rem"
                     className="object-contain"
                     priority
                   />
@@ -166,16 +163,9 @@ export default function HeroSection({ hideScrollIndicator = false }: HeroSection
           {/* 하단 요소들 수정 */}
           <div className="w-full flex flex-col items-center justify-center">
             <VisitorCounter className="px-4" />
-          </div>
-        </div>
-
-        {/* 스크롤 화살표 - 항상 표시 */}
-        <div className="absolute bottom-[10%] left-0 right-0 z-[100] flex flex-col items-center justify-center">
-          <p className="text-xs text-gray-800 mb-1">아래로 스크롤</p>
-          <div className="relative h-12 w-full flex justify-center">
-            <div className="text-gray-800">
-              <ScrollIndicator isDark={true} color="text-gray-800" className="[&>svg]:text-gray-800" />
-            </div>
+            
+            {/* 스크롤 인디케이터 추가 */}
+            <ScrollIndicator className="mt-4" />
           </div>
         </div>
       </section>

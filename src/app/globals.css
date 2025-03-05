@@ -43,3 +43,46 @@ body {
   background: var(--background);
   font-family: 'Pretendard-Regular', Arial, Helvetica, sans-serif;
 }
+
+/* 스냅 스크롤 스타일 */
+.snap-container {
+  /* 스냅 스크롤 비활성화 */
+  /* scroll-snap-type: y proximity; */
+  overflow-y: auto;
+  height: 100vh;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* iOS에서 부드러운 스크롤 지원 */
+}
+
+.snap-section {
+  /* 스냅 스크롤 비활성화 */
+  /* scroll-snap-align: start; */
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* 모바일 환경에서 스크롤 개선 */
+@media (max-width: 768px) {
+  .snap-container {
+    /* scroll-snap-type: y proximity; */
+  }
+  
+  .snap-section {
+    /* scroll-snap-stop: normal; */
+  }
+}
+
+/* 이 부분은 Tailwind CSS의 JIT 컴파일러에서 생성된 것으로 보입니다.
+   일반 CSS에서는 작동하지 않으므로 주석 처리하고 올바른 문법으로 대체합니다. */
+/*
+.\[&>svg\]:text-gray-800 {
+  &>svg {
+    color: var(--color-gray-800);
+  }
+}
+*/
+
+/* 올바른 CSS 문법으로 대체 */
+.svg-gray-800 svg {
+  color: var(--color-gray-800);
+}
