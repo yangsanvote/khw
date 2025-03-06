@@ -392,8 +392,29 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
     
     const element = document.getElementById(targetId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // 특정 요소에 대해 추가 오프셋 적용
+      const extraOffset = elementId === 'issues' ? 20 : 0;
+      scrollToElementWithOffset(element, extraOffset);
     }
+  };
+  
+  // 헤더 높이를 고려한 스크롤 함수
+  const scrollToElementWithOffset = (element: HTMLElement, extraOffset = 0) => {
+    const headerHeight = 80; // 헤더 높이 (픽셀) - 여유 있게 설정
+    
+    // 요소의 절대 위치 계산
+    const rect = element.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const elementTop = rect.top + scrollTop;
+    
+    // 헤더 높이와 추가 오프셋을 고려한 위치 계산
+    const offsetPosition = elementTop - headerHeight - extraOffset;
+    
+    // 부드러운 스크롤 적용
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
   };
 
   // 스크롤 이벤트 - 헤더 표시 관련

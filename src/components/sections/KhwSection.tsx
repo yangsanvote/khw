@@ -472,7 +472,7 @@ export default function KhwSection({
           // 다음 렌더링 사이클에서 스크롤 시도
           setTimeout(() => {
             if (bioSectionRef.current) {
-              bioSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+              scrollToSectionWithOffset(bioSectionRef.current);
             }
           }, 100);
         } else {
@@ -480,24 +480,25 @@ export default function KhwSection({
         }
         break;
       case 'sns':
-        if (!snsSectionRef.current) {
-          // sns 섹션이 아직 렌더링되지 않았으면 먼저 상태 업데이트
-          setActiveButton('sns');
-          // 다음 렌더링 사이클에서 스크롤 시도
-          setTimeout(() => {
-            if (snsSectionRef.current) {
-              snsSectionRef.current.scrollIntoView({ behavior: 'smooth' });
-            }
-          }, 100);
-        } else {
-          targetSection = snsSectionRef.current;
-        }
+        targetSection = snsSectionRef.current;
         break;
     }
     
     if (targetSection) {
-      targetSection.scrollIntoView({ behavior: 'smooth' });
+      scrollToSectionWithOffset(targetSection);
     }
+  };
+  
+  // 헤더 높이를 고려한 스크롤 함수
+  const scrollToSectionWithOffset = (element: HTMLElement) => {
+    const headerHeight = 60; // 헤더 높이 (픽셀)
+    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+    const offsetPosition = elementPosition - headerHeight;
+    
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
   };
 
   if (!isMounted && activeButton === 'bio') {

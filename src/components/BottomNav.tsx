@@ -85,8 +85,12 @@ export default function BottomNav() {
     // 항상 메인 페이지에서 스크롤로 이동
     const section = document.getElementById(sectionId);
     if (section) {
+      const headerHeight = 60; // 헤더 높이 (픽셀)
+      const elementPosition = section.offsetTop;
+      const offsetPosition = elementPosition - headerHeight;
+      
       window.scrollTo({
-        top: section.offsetTop,
+        top: offsetPosition,
         behavior: 'smooth'
       });
       // 클릭 시 활성 섹션 즉시 업데이트
