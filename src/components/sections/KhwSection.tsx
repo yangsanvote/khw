@@ -175,6 +175,7 @@ export default function KhwSection({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [lastClickTime, setLastClickTime] = useState(0);
   
   // 페이지 로드 시 스크롤을 상단으로 이동
   useEffect(() => {
@@ -235,9 +236,23 @@ export default function KhwSection({
       const sectionHeight = sectionRef.current.offsetHeight;
       const windowHeight = window.innerHeight;
       
-      // KhwSection이 화면의 1/3 이상 보이면 헤더를 표시
+      // YDSection 요소 가져오기
+      const ydSection = document.getElementById('yd-section');
+      
+      // KhwSection이 화면의 1/3 이상 보이고, YDSection이 화면의 1/2를 넘지 않았을 때만 헤더를 표시
       if (sectionTop <= windowHeight / 3 && sectionTop > -sectionHeight + 100) {
-        setShowStickyHeader(true);
+        // YDSection이 있고, 화면의 1/2를 넘어갔는지 확인
+        if (ydSection) {
+          const ydSectionTop = ydSection.getBoundingClientRect().top;
+          // YDSection이 화면의 1/2보다 위에 있으면 헤더를 숨김
+          if (ydSectionTop < windowHeight / 2) {
+            setShowStickyHeader(false);
+          } else {
+            setShowStickyHeader(true);
+          }
+        } else {
+          setShowStickyHeader(true);
+        }
       } else {
         setShowStickyHeader(false);
       }
@@ -388,6 +403,40 @@ export default function KhwSection({
     setIsModalOpen(false);
   };
 
+  const handleContentClick = (e: React.MouseEvent) => {
+    const currentTime = new Date().getTime();
+    const timeDiff = currentTime - lastClickTime;
+    
+    // 300ms 이내의 클릭은 더블 클릭으로 간주
+    if (timeDiff < 300 && timeDiff > 0) {
+      handleCloseModal();
+    }
+    
+    setLastClickTime(currentTime);
+    
+    // 텍스트 선택 중이면 모달 닫기 방지
+    const selection = window.getSelection();
+    if (selection && selection.toString().length > 0) {
+      e.stopPropagation();
+    }
+  };
+
+  // 모달이 열렸을 때 body 스크롤 방지
+  useEffect(() => {
+    if (isModalOpen && declarationSectionRef.current) {
+      // body 스크롤은 유지하고 섹션 내부만 제어
+      declarationSectionRef.current.style.overflow = 'hidden';
+    } else if (declarationSectionRef.current) {
+      declarationSectionRef.current.style.overflow = '';
+    }
+    
+    return () => {
+      if (declarationSectionRef.current) {
+        declarationSectionRef.current.style.overflow = '';
+      }
+    };
+  }, [isModalOpen]);
+
   // 이미지 슬라이더 기능 추가
   const pauseAutoPlay = () => setIsAutoPlaying(false);
   const resumeAutoPlay = () => setIsAutoPlaying(true);
@@ -537,7 +586,7 @@ export default function KhwSection({
       <div ref={declarationSectionRef} className="w-full bg-yellow-100 text-white relative overflow-hidden pb-20">
         <div className="absolute inset-0 bg-grid-white/[0.08] bg-[length:28px_28px]"></div>
         
-        <div className="relative z-10 pt-8 pb-10 px-8 md:px-4 container mx-auto">
+        <div className="relative z-10 pt-8 md:pt-16 pb-10 px-8 md:px-4 container mx-auto">
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -584,25 +633,50 @@ export default function KhwSection({
               >
                 전문 보기
               </button>
+              
+              {/* 스크롤 인디케이터 추가 */}
+              <div className="mt-25 mb-4 flex justify-center">
+                <ScrollIndicator isFixed={false} color="text-yellow-700" />
+              </div>
             </div>
           </div>
           
           {isModalOpen && (
-            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-2xl p-6 md:p-8 max-w-4xl max-h-[90vh] overflow-y-auto">
-                <div className="prose prose-base">
+            <div className="absolute inset-0 bg-black/80 z-[9999] flex items-center justify-center p-4 overflow-hidden" onClick={handleCloseModal}>
+              <div 
+                className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-4xl max-h-[80vh] overflow-y-auto text-gray-800 shadow-2xl"
+                style={{ maxHeight: 'calc(100% - 2rem)' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">출마선언문 전문</h3>
+                    <p className="text-xs text-gray-500 mt-1">(내용을 더블 클릭하거나 빠르게 두 번 탭하면 닫힙니다)</p>
+                  </div>
+                  <button 
+                    onClick={handleCloseModal}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+                <div className="prose prose-base max-w-none" onClick={handleContentClick}>
                   {fullText.split('\n').map((line, index) => (
-                    <p key={index} className="text-base md:text-lg mb-3">
+                    <p key={index} className="text-base md:text-lg mb-3 text-gray-800">
                       {line || <br />}
                     </p>
                   ))}
                 </div>
-                <button
-                  onClick={handleCloseModal}
-                  className="mt-6 px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors"
-                >
-                  닫기
-                </button>
+                <div className="mt-6 text-center">
+                  <button
+                    onClick={handleCloseModal}
+                    className="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors"
+                  >
+                    닫기
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -610,7 +684,7 @@ export default function KhwSection({
       </div>
 
       {/* 청어람 마을 콘텐츠 영역 */}
-      <div ref={chungeoramsectionRef} className="w-full bg-blue-50 text-gray-800 relative overflow-hidden pb-20">
+      <div ref={chungeoramsectionRef} className="w-full bg-slate-100 text-gray-800 relative overflow-hidden pb-20">
         <div className="absolute inset-0 bg-grid-white/[0.08] bg-[length:28px_28px]"></div>
         
         {/* 배경 이미지 추가 */}
@@ -620,11 +694,11 @@ export default function KhwSection({
             backgroundImage: 'url(/images/BAH07186.JPG)', 
             backgroundSize: 'cover', 
             backgroundPosition: 'center',
-            filter: 'blur(1px)'
+            filter: 'blur(1px) grayscale(30%)'
           }}
         ></div>
         
-        <div className="relative z-10 pt-8 pb-10 px-8 md:px-4 container mx-auto">
+        <div className="relative z-10 pt-8 md:pt-16 pb-10 px-8 md:px-4 container mx-auto">
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -633,7 +707,7 @@ export default function KhwSection({
               viewport={{ once: true }}
               className="text-center mb-6 md:mb-8"
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-blue-700" style={{ fontFamily: 'Giants-Bold, sans-serif' }}>
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-700" style={{ fontFamily: 'Giants-Bold, sans-serif' }}>
                 청어람 마을
               </h2>
             </motion.div>
@@ -646,7 +720,7 @@ export default function KhwSection({
               className="space-y-4 md:space-y-6"
             >
               <div className="text-center mb-6">
-                <p className="text-xl md:text-2xl font-semibold text-blue-800 italic">
+                <p className="text-xl md:text-2xl font-semibold text-slate-700 italic">
                   "아파트의 개념을 새로 쓴 사람"
                 </p>
                 <p className="text-base md:text-lg mt-2">
@@ -662,13 +736,14 @@ export default function KhwSection({
                 그저 재미있는 마을을 만들고 싶었습니다. 함께 하니 재미있었고, 함께 하다보니 의미있는 일들도 하고 싶었습니다. 이 과정에서 지속가능한 마을을 위한 묘미들을 찾아내었습니다.
               </p>
               
-              <div className="bg-blue-100 bg-opacity-80 p-4 md:p-6 rounded-xl my-4 md:my-6 border border-blue-200">
-                <p className="text-base md:text-lg font-medium text-blue-900">
-                  재미와 의미, 그리고 묘미. 청어람의 삼미(三味)입니다. 이것으로 국토교통부 전국 최우수 관리단지에 선정되었습니다.
+              <div className="bg-slate-200 bg-opacity-80 p-4 md:p-6 rounded-xl my-4 md:my-6 border border-slate-300">
+                <p className="text-base md:text-lg font-medium text-slate-800">
+                  재미와 의미, 그리고 묘미. 청어람의 삼미(三味)입니다. 
                 </p>
+                <p className="text-base md:text-lg font-medium text-slate-800">이것으로 국토교통부 전국 최우수 관리단지에 선정되었습니다.</p>
               </div>
               
-              <p className="text-base md:text-lg font-semibold text-blue-800">
+              <p className="text-base md:text-lg font-semibold text-slate-700">
                 청출어람 청어람. 청어람 마을은 항상 내일이 더 좋을 것입니다.
               </p>
               
@@ -676,9 +751,15 @@ export default function KhwSection({
                 그리고 저도 청어람에서 배운대로 앞으로 한걸음 더 나아갑니다.
               </p>
             </motion.div>
+            
+            {/* 스크롤 인디케이터 추가 */}
+            <div className="mt-26 mb-4 flex justify-center">
+              <ScrollIndicator isFixed={false} color="text-slate-700" />
+            </div>
           </div>
         </div>
-      </div>
+        
+        </div>
 
       {/* 언론 콘텐츠 영역 - 항상 표시 */}
       <div ref={pressSectionRef} className="w-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white relative overflow-hidden pb-20">
@@ -732,6 +813,11 @@ export default function KhwSection({
                 ))}
               </div>
             </div>
+          </div>
+          
+          {/* 스크롤 인디케이터 추가 */}
+          <div className="mt-26 mb-4 flex justify-center">
+            <ScrollIndicator isFixed={false} color="text-white" />
           </div>
         </div>
       </div>
@@ -972,6 +1058,11 @@ export default function KhwSection({
               </div>
             </div>
           </div>
+          
+          {/* 스크롤 인디케이터 추가 */}
+          <div className="mt-26 mb-4 flex justify-center">
+            <ScrollIndicator isFixed={false} color="text-gray-700" />
+          </div>
         </div>
       </div>
 
@@ -1104,6 +1195,11 @@ export default function KhwSection({
                 </motion.div>
               )}
             </div>
+          </div>
+          
+          {/* 스크롤 인디케이터 추가 */}
+          <div className="mt-26 mb-4 flex justify-center">
+            <ScrollIndicator isFixed={false} color="text-white" />
           </div>
         </div>
       </div>

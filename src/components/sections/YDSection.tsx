@@ -633,7 +633,15 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
           className="fixed top-0 left-0 w-full bg-gradient-to-r from-[#623D91] to-[#8757D9] text-white py-6 z-50 shadow-md"
         >
           <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4 md:mb-0" style={{ fontFamily: 'Giants-Bold' }}>권현우의 양동작전</h2>
+            <div className="flex flex-col items-center md:items-start">
+              <h2 className="text-3xl md:text-4xl font-extrabold mb-2 md:mb-1" style={{ fontFamily: 'Giants-Bold' }}>권현우의 양동작전</h2>
+              <p className="text-sm md:text-base mb-3 md:mb-0">
+                <span className="font-bold text-base md:text-lg text-white">양</span>주동과 
+                <span className="font-bold text-base md:text-lg text-white"> 동</span>면의 
+                <span className="font-bold text-base md:text-lg text-white"> 작</span>지만 소중한 
+                <span className="font-bold text-base md:text-lg text-white"> 전</span>망
+              </p>
+            </div>
             <div className="flex flex-wrap gap-2 justify-center md:justify-end">
               <button 
                 onClick={() => handleSmoothScroll('alternative')}
@@ -661,36 +669,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
       ) : null}
       
       <div className={`max-w-7xl mx-auto px-8 md:px-6 ${(showHeader || showStickyHeader) ? 'pt-[100px] md:pt-[90px]' : ''}`}>
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-4 text-center"
-        >
-          <p 
-            className="text-xl md:text-4xl mb-2 md:mb-3 leading-tight font-extrabold"
-            style={{ 
-                  textShadow: '1px 1px 1px rgba(0,0,0,0.1)',
-                  fontFamily: 'Giants-Bold'
-                }}>
-            <span className="text-[#623D91] font-bold"  style={{ 
-                  fontFamily: 'Giants-Bold', 
-                  fontWeight: 200
-                }}>양</span>주동과 
-            <span className="text-[#623D91] font-bold"  style={{ 
-                  fontFamily: 'Giants-Bold', 
-                  fontWeight: 200
-                }}> 동</span>면의 
-            <span className="text-[#623D91] font-bold" style={{ 
-                  fontFamily: 'Giants-Bold', 
-                  fontWeight: 200
-                }}> 작</span>지만 소중한 
-            <span className="text-[#623D91] font-bold" style={{ 
-                  fontFamily: 'Giants-Bold', 
-                  fontWeight: 200
-                }}> 전</span>망
-          </p>
-        </motion.div>
+
 
         <div className="mt-8">
           <div className="grid grid-cols-1 gap-4 md:gap-8">
@@ -941,39 +920,29 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
       </div>
       
       {/* 하단 여백 추가 */}
-      <div className="h-[250px] md:h-[350px]"></div>
+      <div className="h-[250px] md:h-[350px] flex flex-col justify-end">
+        {/* 스크롤 인디케이터 추가 */}
+        {!hideScrollIndicator && (
+          <motion.div 
+            className="mb-4 flex justify-center"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0,
+              transition: { 
+                duration: 0.5,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }
+            }}
+          >
+            <ScrollIndicator isFixed={false} color="text-purple-700" />
+          </motion.div>
+        )}
+      </div>
       
       <div id="regional-outlook" ref={regionalOutlookRef} className="mt-0 max-w-7xl mx-auto px-8 md:px-6">
-      <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-4 text-center"
-        >
-          <p 
-            className="text-xl md:text-4xl mb-2 md:mb-3 leading-tight font-extrabold"
-            style={{ 
-                  textShadow: '1px 1px 1px rgba(0,0,0,0.1)',
-                  fontFamily: 'Giants-Bold'
-                }}>
-            <span className="text-[#623D91] font-bold"  style={{ 
-                  fontFamily: 'Giants-Bold', 
-                  fontWeight: 200
-                }}>양</span>주동과 
-            <span className="text-[#623D91] font-bold"  style={{ 
-                  fontFamily: 'Giants-Bold', 
-                  fontWeight: 200
-                }}> 동</span>면의 
-            <span className="text-[#623D91] font-bold" style={{ 
-                  fontFamily: 'Giants-Bold', 
-                  fontWeight: 200
-                }}> 작</span>지만 소중한 
-            <span className="text-[#623D91] font-bold" style={{ 
-                  fontFamily: 'Giants-Bold', 
-                  fontWeight: 200
-                }}> 전</span>망
-          </p>
-        </motion.div>
+
         
         {/* 필터 영역을 가운데로 배치 */}
         <div className="flex flex-col items-center justify-center gap-3 mb-8">
