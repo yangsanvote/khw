@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import CountdownTimer from '../CountdownTimer';
 import VisitorCounter from '../VisitorCounter';
+import ScrollIndicator from '../ScrollIndicator';
 
 // 폰트 스타일 정의
 const fontsStyle = `
@@ -163,6 +164,11 @@ export default function HeroSection() {
           <div className="w-full flex flex-col items-center justify-center">
             <VisitorCounter className="px-4" />
           </div>
+        </div>
+        
+        {/* 스크롤 인디케이터 추가 */}
+        <div className="absolute bottom-10 left-0 right-0 flex justify-center">
+          <ScrollIndicator isFixed={false} color="text-gray-700" />
         </div>
       </section>
     </>

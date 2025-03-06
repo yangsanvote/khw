@@ -169,6 +169,7 @@ export default function KhwSection({
   const pressSectionRef = useRef<HTMLDivElement>(null);
   const bioSectionRef = useRef<HTMLDivElement>(null);
   const snsSectionRef = useRef<HTMLDivElement>(null);
+  const chungeoramsectionRef = useRef<HTMLDivElement>(null); // 청어람 마을 섹션 참조 추가
   
   // 살아온 길 섹션을 위한 상태 추가
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -243,26 +244,52 @@ export default function KhwSection({
       
       // 현재 화면에 가장 많이 보이는 섹션을 찾아 활성 버튼 업데이트
       const updateActiveSection = () => {
-        if (!declarationSectionRef.current || !pressSectionRef.current) return;
-        
-        const declarationRect = declarationSectionRef.current.getBoundingClientRect();
-        const pressRect = pressSectionRef.current.getBoundingClientRect();
-        
-        // 섹션이 화면에 얼마나 보이는지 계산 (음수는 0으로 처리)
-        const declarationVisible = Math.max(0, 
-          Math.min(declarationRect.bottom, windowHeight) - 
-          Math.max(declarationRect.top, 0)
-        );
-        
-        const pressVisible = Math.max(0, 
-          Math.min(pressRect.bottom, windowHeight) - 
-          Math.max(pressRect.top, 0)
-        );
-        
-        // bio와 sns는 조건부로 존재할 수 있으므로 별도 처리
+        // 각 섹션의 가시성 계산
+        let declarationVisible = 0;
+        let chungeoramsectionVisible = 0;
+        let pressVisible = 0;
         let bioVisible = 0;
         let snsVisible = 0;
         
+        // 선언문 섹션 가시성 계산
+        if (declarationSectionRef.current) {
+          const declarationRect = declarationSectionRef.current.getBoundingClientRect();
+          declarationVisible = Math.max(0, 
+            Math.min(declarationRect.bottom, windowHeight) - 
+            Math.max(declarationRect.top, 0)
+          );
+        }
+        
+        // 청어람마을 섹션 가시성 계산
+        if (chungeoramsectionRef.current) {
+          const chungeoramsectionRect = chungeoramsectionRef.current.getBoundingClientRect();
+          chungeoramsectionVisible = Math.max(0, 
+            Math.min(chungeoramsectionRect.bottom, windowHeight) - 
+            Math.max(chungeoramsectionRect.top, 0)
+          );
+          
+          // 청어람마을 섹션이 화면에 조금이라도 보이면 가시성 점수를 높임
+          if (chungeoramsectionVisible > 0) {
+            // 섹션의 중앙이 화면의 중앙에 가까울수록 가시성 점수를 높임
+            const sectionCenter = (chungeoramsectionRect.top + chungeoramsectionRect.bottom) / 2;
+            const viewportCenter = windowHeight / 2;
+            const distanceFromCenter = Math.abs(sectionCenter - viewportCenter);
+            const centerBonus = Math.max(0, 1 - distanceFromCenter / (windowHeight / 2)) * 100;
+            
+            chungeoramsectionVisible += centerBonus;
+          }
+        }
+        
+        // 언론 섹션 가시성 계산
+        if (pressSectionRef.current) {
+          const pressRect = pressSectionRef.current.getBoundingClientRect();
+          pressVisible = Math.max(0, 
+            Math.min(pressRect.bottom, windowHeight) - 
+            Math.max(pressRect.top, 0)
+          );
+        }
+        
+        // 살아온 길 섹션 가시성 계산
         if (bioSectionRef.current) {
           const bioRect = bioSectionRef.current.getBoundingClientRect();
           bioVisible = Math.max(0, 
@@ -271,6 +298,7 @@ export default function KhwSection({
           );
         }
         
+        // SNS 섹션 가시성 계산
         if (snsSectionRef.current) {
           const snsRect = snsSectionRef.current.getBoundingClientRect();
           snsVisible = Math.max(0, 
@@ -280,16 +308,33 @@ export default function KhwSection({
         }
         
         // 가장 많이 보이는 섹션을 활성화
-        const maxVisible = Math.max(declarationVisible, pressVisible, bioVisible, snsVisible);
+        const visibilities = [
+          { id: 'declaration', visible: declarationVisible },
+          { id: 'chungeoram', visible: chungeoramsectionVisible },
+          { id: 'press', visible: pressVisible },
+          { id: 'bio', visible: bioVisible },
+          { id: 'sns', visible: snsVisible }
+        ];
         
-        if (maxVisible === declarationVisible && maxVisible > 0) {
-          setActiveButton('declaration');
-        } else if (maxVisible === pressVisible && maxVisible > 0) {
-          setActiveButton('press');
-        } else if (maxVisible === bioVisible && maxVisible > 0) {
-          setActiveButton('bio');
-        } else if (maxVisible === snsVisible && maxVisible > 0) {
-          setActiveButton('sns');
+        // 디버깅을 위한 콘솔 로그
+        console.log('Visibilities:', {
+          declaration: declarationVisible,
+          chungeoram: chungeoramsectionVisible,
+          press: pressVisible,
+          bio: bioVisible,
+          sns: snsVisible
+        });
+        
+        // 가시성이 0보다 큰 항목 중 가장 많이 보이는 섹션 찾기
+        const visibleSections = visibilities.filter(item => item.visible > 0);
+        if (visibleSections.length > 0) {
+          const maxVisibleSection = visibleSections.reduce((max, current) => 
+            current.visible > max.visible ? current : max, visibleSections[0]);
+          
+          console.log('Max visible section:', maxVisibleSection.id, 'with visibility:', maxVisibleSection.visible);
+          
+          // 활성 버튼 설정
+          setActiveButton(maxVisibleSection.id);
         }
       };
       
@@ -365,6 +410,9 @@ export default function KhwSection({
       case 'declaration':
         targetSection = declarationSectionRef.current;
         break;
+      case 'chungeoram':
+        targetSection = chungeoramsectionRef.current;
+        break;
       case 'press':
         targetSection = pressSectionRef.current;
         break;
@@ -422,46 +470,63 @@ export default function KhwSection({
               </h1>
               
               <div className="flex flex-wrap gap-2 justify-center md:justify-end">
-                <button 
-                  className={`px-4 py-2 rounded-full font-bold text-sm transition ${
-                    activeButton === 'declaration' 
-                      ? 'bg-[#006D44] text-white' 
-                      : 'bg-white text-[#00A367] hover:bg-gray-100'
-                  }`}
-                  onClick={() => handleButtonClick('declaration')}
-                >
-                  출마선언
-                </button>
-                <button 
-                  className={`px-4 py-2 rounded-full font-bold text-sm transition ${
-                    activeButton === 'press' 
-                      ? 'bg-[#006D44] text-white' 
-                      : 'bg-white text-[#00A367] hover:bg-gray-100'
-                  }`}
-                  onClick={() => handleButtonClick('press')}
-                >
-                  언론
-                </button>
-                <button 
-                  className={`px-4 py-2 rounded-full font-bold text-sm transition ${
-                    activeButton === 'bio' 
-                      ? 'bg-[#006D44] text-white' 
-                      : 'bg-white text-[#00A367] hover:bg-gray-100'
-                  }`}
-                  onClick={() => handleButtonClick('bio')}
-                >
-                  살아온 길
-                </button>
-                <button 
-                  className={`px-4 py-2 rounded-full font-bold text-sm transition ${
-                    activeButton === 'sns' 
-                      ? 'bg-[#006D44] text-white' 
-                      : 'bg-white text-[#00A367] hover:bg-gray-100'
-                  }`}
-                  onClick={() => handleButtonClick('sns')}
-                >
-                  SNS
-                </button>
+                {/* 첫 번째 줄 버튼 그룹 */}
+                <div className="flex flex-wrap gap-2 justify-center">
+                  <button 
+                    className={`px-4 py-2 rounded-full font-bold text-sm transition ${
+                      activeButton === 'declaration' 
+                        ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
+                        : 'bg-white text-[#00A367] hover:bg-gray-100'
+                    }`}
+                    onClick={() => handleButtonClick('declaration')}
+                  >
+                    출마 선언
+                  </button>
+                  <button 
+                    className={`px-4 py-2 rounded-full font-bold text-sm transition ${
+                      activeButton === 'chungeoram' 
+                        ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
+                        : 'bg-white text-[#00A367] hover:bg-gray-100'
+                    }`}
+                    onClick={() => handleButtonClick('chungeoram')}
+                  >
+                    청어람 마을
+                  </button>
+                  <button 
+                    className={`px-4 py-2 rounded-full font-bold text-sm transition ${
+                      activeButton === 'press' 
+                        ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
+                        : 'bg-white text-[#00A367] hover:bg-gray-100'
+                    }`}
+                    onClick={() => handleButtonClick('press')}
+                  >
+                    언론
+                  </button>
+                </div>
+                
+                {/* 두 번째 줄 버튼 그룹 */}
+                <div className="flex flex-wrap gap-2 justify-center w-full md:w-auto mt-2 md:mt-0">
+                  <button 
+                    className={`px-4 py-2 rounded-full font-bold text-sm transition ${
+                      activeButton === 'bio' 
+                        ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
+                        : 'bg-white text-[#00A367] hover:bg-gray-100'
+                    }`}
+                    onClick={() => handleButtonClick('bio')}
+                  >
+                    살아온 길
+                  </button>
+                  <button 
+                    className={`px-4 py-2 rounded-full font-bold text-sm transition ${
+                      activeButton === 'sns' 
+                        ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
+                        : 'bg-white text-[#00A367] hover:bg-gray-100'
+                    }`}
+                    onClick={() => handleButtonClick('sns')}
+                  >
+                    SNS
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -481,7 +546,7 @@ export default function KhwSection({
               viewport={{ once: true }}
               className="text-center mb-2 md:mb-3"
             >
-              <p className="text-lg md:text-xl text-yellow-700">권현우 양산시의원 후보 출마 기자회견</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-yellow-800" style={{ fontFamily: 'Giants-Bold, sans-serif' }}>양산시의원 출마 기자회견</h2>
             </motion.div>
 
             <motion.div
@@ -491,12 +556,11 @@ export default function KhwSection({
               viewport={{ once: true }}
               className="space-y-2 md:space-y-3 text-gray-800"
             >
-              <p className="text-base md:text-lg">존경하는 양주동면 주민 여러분, 그리고 양산시민 여러분.</p>
+              <p className="text-base md:text-lg">존경하는 양주동, 동면 주민 여러분, 그리고 양산시민 여러분.</p>
               <p className="text-base md:text-lg">안녕하십니까? </p>
               <p className="text-base md:text-lg">저는 이번 4월 2일 양산시의원 보궐선거에 출마하는 정의당 권현우입니다.</p>
 
               <div className="bg-yellow-50 p-2.5 md:p-3 rounded-xl my-2.5 md:my-4 border border-yellow-200">
-                <p className="text-base md:text-lg font-medium">아파트를 바꾸겠다고 했더니, 저와 제 이웃의 삶이 바뀌었습니다.</p>
                 <p className="text-base md:text-lg font-medium">주거, 돌봄, 일자리가 함께 어우러지는 양주동과 동면을 만들겠습니다.</p>
                 <p className="text-base md:text-lg font-medium">아파트로 전국 1등을 해 봤습니다.</p>
                 <p className="text-base md:text-lg font-medium">이제는 양산시를 전국 1등으로 만들어 보겠습니다.</p>
@@ -543,9 +607,77 @@ export default function KhwSection({
             </div>
           )}
         </div>
+      </div>
+
+      {/* 청어람 마을 콘텐츠 영역 */}
+      <div ref={chungeoramsectionRef} className="w-full bg-blue-50 text-gray-800 relative overflow-hidden pb-20">
+        <div className="absolute inset-0 bg-grid-white/[0.08] bg-[length:28px_28px]"></div>
         
-        {/* 스크롤 인디케이터 추가 */}
-        {activeButton === 'declaration' && <ScrollIndicator className="absolute bottom-4 left-1/2 transform -translate-x-1/2" isFixed={false} />}
+        {/* 배경 이미지 추가 */}
+        <div 
+          className="absolute inset-0 opacity-15" 
+          style={{ 
+            backgroundImage: 'url(/images/BAH07186.JPG)', 
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center',
+            filter: 'blur(1px)'
+          }}
+        ></div>
+        
+        <div className="relative z-10 pt-8 pb-10 px-8 md:px-4 container mx-auto">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mb-6 md:mb-8"
+            >
+              <h2 className="text-2xl md:text-3xl font-bold text-blue-700" style={{ fontFamily: 'Giants-Bold, sans-serif' }}>
+                청어람 마을
+              </h2>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="space-y-4 md:space-y-6"
+            >
+              <div className="text-center mb-6">
+                <p className="text-xl md:text-2xl font-semibold text-blue-800 italic">
+                  "아파트의 개념을 새로 쓴 사람"
+                </p>
+                <p className="text-base md:text-lg mt-2">
+                  함께 일하는 청어람 작은도서관 활동가가 저에 대해 한 말입니다.
+                </p>
+              </div>
+              
+              <p className="text-base md:text-lg">
+                하지만 저는 그렇게 새롭고 별스러운 일을 하지는 않았습니다.
+              </p>
+              
+              <p className="text-base md:text-lg">
+                그저 재미있는 마을을 만들고 싶었습니다. 함께 하니 재미있었고, 함께 하다보니 의미있는 일들도 하고 싶었습니다. 이 과정에서 지속가능한 마을을 위한 묘미들을 찾아내었습니다.
+              </p>
+              
+              <div className="bg-blue-100 bg-opacity-80 p-4 md:p-6 rounded-xl my-4 md:my-6 border border-blue-200">
+                <p className="text-base md:text-lg font-medium text-blue-900">
+                  재미와 의미, 그리고 묘미. 청어람의 삼미(三味)입니다. 이것으로 국토교통부 전국 최우수 관리단지에 선정되었습니다.
+                </p>
+              </div>
+              
+              <p className="text-base md:text-lg font-semibold text-blue-800">
+                청출어람 청어람. 청어람 마을은 항상 내일이 더 좋을 것입니다.
+              </p>
+              
+              <p className="text-base md:text-lg">
+                그리고 저도 청어람에서 배운대로 앞으로 한걸음 더 나아갑니다.
+              </p>
+            </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* 언론 콘텐츠 영역 - 항상 표시 */}
@@ -559,37 +691,37 @@ export default function KhwSection({
               viewport={{ once: true }}
               className="text-center mb-6"
             >
-              <h3 className="text-xl md:text-2xl font-medium text-white mb-1">
-                언론이 본 권현우
-              </h3>
+              <h2 className="text-2xl md:text-3xl font-bold text-white-700" style={{ fontFamily: 'Giants-Bold, sans-serif' }}>
+                언론 보도
+              </h2>
             </motion.div>
 
-            <div className="relative overflow-hidden">
-              <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-slate-900 to-transparent z-10" />
-              <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-slate-900 to-transparent z-10" />
+            <div className="relative">
+              {/* 그라데이션 오버레이 제거 */}
               
-              <div className="space-y-4 max-h-[60vh] overflow-y-auto px-8 md:px-4 hide-scrollbar">
+              {/* 내부 스크롤 제거하고 그리드 레이아웃으로 변경 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 px-2">
                 {sortedPressItems.map((item, index) => (
                   <motion.a
                     key={index}
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    initial={{ opacity: 0, x: -50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="block bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg hover:bg-white/20 transition-all group border border-white/10"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.5) }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    className="block bg-white/10 backdrop-blur-sm rounded-lg p-3 shadow-lg hover:bg-white/20 transition-all group border border-white/10"
                   >
-                    <div className="flex items-start gap-4">
-                      <div className="p-2 bg-white/10 rounded-lg text-white/80 mt-1">
-                        <Newspaper className="w-5 h-5" />
+                    <div className="flex items-start gap-3">
+                      <div className="p-1.5 bg-white/10 rounded-lg text-white/80 mt-0.5">
+                        <Newspaper className="w-4 h-4" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg md:text-xl font-bold text-white group-hover:text-yellow-400 transition-colors">
+                        <h3 className="text-base md:text-lg font-bold text-white group-hover:text-yellow-400 transition-colors line-clamp-1">
                           {item.title}
                         </h3>
-                        <div className="flex items-center gap-2 mt-2 text-sm text-white/60">
+                        <div className="flex items-center gap-2 mt-1 text-xs text-white/60">
                           <span>{item.source}</span>
                           <span>•</span>
                           <span>{item.date}</span>
@@ -645,15 +777,9 @@ export default function KhwSection({
               </div>
 
               {/* 제목 */}
-              <motion.h2
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="text-xl md:text-2xl font-bold text-center mb-2 md:mb-4 text-gray-600"
-              >
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-center mb-6" style={{ fontFamily: 'Giants-Bold, sans-serif' }}>
                 권현우 살아온 길
-              </motion.h2>
+              </h2>
 
               {/* 모바일 버전 */}
               <div className="block md:hidden flex-1">
@@ -853,15 +979,9 @@ export default function KhwSection({
       <div ref={snsSectionRef} className="w-full bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-800 text-white relative overflow-hidden pb-20">
         <div className="relative z-10 pt-8 pb-10 px-8 md:px-4 container mx-auto">
           <div className="w-full max-w-6xl mx-auto relative mt-0 pt-0">
-            <motion.h2
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8 text-white"
-            >
-              권현우를 더 가깝게 만나보세요
-            </motion.h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-white-700 text-center mb-6" style={{ fontFamily: 'Giants-Bold, sans-serif' }}>
+                권현우를 더 가깝게 만나보세요
+              </h2>
 
             {/* SNS 탭 버튼 */}
             <div className="flex justify-center gap-4 mb-6">

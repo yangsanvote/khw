@@ -1087,7 +1087,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
               : "카테고리나 지역을 선택하시면 공약이 표시됩니다"}
           </h3>
           
-          <div className="max-h-[60vh] overflow-y-auto px-2 pb-4 overscroll-contain">
+          <div className="px-2 pb-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {filteredPromises.map(promise => (
                 <PromiseCard 
@@ -1097,8 +1097,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
                 />
               ))}
             </div>
-            {/* 스크롤 버퍼 공간 추가 */}
-            <div className="h-32 md:h-40"></div>
+            {/* 스크롤 버퍼 공간 제거 */}
           </div>
         </motion.div>
         

@@ -31,37 +31,39 @@ export default function Home() {
       
       if (!heroSection || !khwSection || !ydSection || !contactSection) return;
       
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
       
-      const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-      const khwBottom = khwSection.offsetTop + khwSection.offsetHeight;
-      const ydBottom = ydSection.offsetTop + ydSection.offsetHeight;
+      const heroTop = heroSection.offsetTop;
+      const khwTop = khwSection.offsetTop;
+      const ydTop = ydSection.offsetTop;
+      const contactTop = contactSection.offsetTop;
       
-      if (scrollPosition < heroBottom) {
+      const heroBottom = heroTop + heroSection.offsetHeight;
+      const khwBottom = khwTop + khwSection.offsetHeight;
+      const ydBottom = ydTop + ydSection.offsetHeight;
+      
+      // 현재 활성 섹션 감지
+      const viewportMiddle = scrollPosition + windowHeight / 2;
+      if (viewportMiddle < heroBottom) {
         setActiveSection('hero');
-      } else if (scrollPosition < khwBottom) {
+      } else if (viewportMiddle < khwBottom) {
         setActiveSection('khw');
-      } else if (scrollPosition < ydBottom) {
+      } else if (viewportMiddle < ydBottom) {
         setActiveSection('yd');
       } else {
         setActiveSection('contact');
       }
     };
     
-    // 스크롤 이벤트를 디바운스하여 성능 개선
-    let timeoutId: NodeJS.Timeout;
-    const debouncedHandleScroll = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(handleScroll, 100);
-    };
+    // 스크롤 이벤트 리스너 등록
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
-    window.addEventListener('scroll', debouncedHandleScroll);
     // 초기 로드 시 한 번 실행
     handleScroll();
     
     return () => {
-      window.removeEventListener('scroll', debouncedHandleScroll);
-      clearTimeout(timeoutId);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
