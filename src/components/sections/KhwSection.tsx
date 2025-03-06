@@ -153,6 +153,7 @@ declare global {
         process(): void;
       };
     };
+    scrollToKhwDeclaration?: () => void;
   }
 }
 
@@ -160,7 +161,7 @@ export default function KhwSection({
   isStandalone = false,
   showHeader = false
 }: KhwSectionProps) {
-  const [activeButton, setActiveButton] = useState('declaration');
+  const [activeButton, setActiveButton] = useState<string>('declaration');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showStickyHeader, setShowStickyHeader] = useState(false);
   const [activeSnsTab, setActiveSnsTab] = useState('facebook'); // 'facebook' 또는 'instagram'
@@ -176,6 +177,9 @@ export default function KhwSection({
   const [isMounted, setIsMounted] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [lastClickTime, setLastClickTime] = useState(0);
+  
+  // 버튼 컨테이너에 대한 ref 추가
+  const buttonContainerRef = useRef<HTMLDivElement>(null);
   
   // 페이지 로드 시 스크롤을 상단으로 이동
   useEffect(() => {
@@ -227,6 +231,45 @@ export default function KhwSection({
     return () => clearInterval(timer);
   }, [isAutoPlaying]);
 
+  // 버튼 스크롤 업데이트 함수 분리
+  const updateButtonScroll = (buttonId: string) => {
+    setTimeout(() => {
+      if (buttonContainerRef.current) {
+        const buttonElement = document.getElementById(`khw-button-${buttonId}`);
+        if (buttonElement) {
+          console.log(`Scrolling to button: ${buttonId}`);
+          
+          // 버튼의 상대적 위치 계산
+          const containerRect = buttonContainerRef.current.getBoundingClientRect();
+          const buttonRect = buttonElement.getBoundingClientRect();
+          const buttonOffsetTop = buttonElement.offsetTop;
+          
+          console.log(`Button offset top: ${buttonOffsetTop}`);
+          console.log(`Container height: ${containerRect.height}`);
+          
+          // 버튼 인덱스 계산 (0부터 시작)
+          const buttonIndex = ['declaration', 'chungeoram', 'press', 'bio', 'sns'].indexOf(buttonId);
+          
+          // 버튼 인덱스에 따라 스크롤 위치 조정 (버튼 높이 + 간격 고려)
+          // 버튼 높이는 약 36px (py-2), 간격은 gap-6 (24px)
+          const buttonHeight = 36;
+          const buttonGap = 24;
+          const scrollTop = buttonIndex * (buttonHeight + buttonGap);
+          
+          // 스크롤 위치 설정
+          buttonContainerRef.current.scrollTop = scrollTop;
+          
+          console.log(`Set scrollTop to: ${scrollTop}`);
+        }
+      }
+    }, 100);
+  };
+
+  // activeButton 상태가 변경될 때마다 해당 버튼이 보이도록 스크롤 위치 조정
+  useEffect(() => {
+    updateButtonScroll(activeButton);
+  }, [activeButton]);
+
   // 스크롤 위치를 감지하여 헤더 표시 여부 결정 및 활성 버튼 업데이트
   useEffect(() => {
     const handleScroll = () => {
@@ -273,6 +316,18 @@ export default function KhwSection({
             Math.min(declarationRect.bottom, windowHeight) - 
             Math.max(declarationRect.top, 0)
           );
+          
+          // 출마선언 섹션이 화면 상단에 가까울 때 가시성 점수를 크게 높임
+          if (declarationVisible > 0) {
+            // 섹션이 화면 상단에 있을 때 가시성 점수를 높임
+            if (declarationRect.top <= 0 && declarationRect.bottom > 0) {
+              declarationVisible += 500; // 상단에 있을 때 매우 높은 가중치 부여
+            } else {
+              // 일반적인 가시성 점수 계산
+              const topVisibility = Math.max(0, 1 - Math.abs(declarationRect.top) / windowHeight);
+              declarationVisible += topVisibility * 200; // 가중치 증가
+            }
+          }
         }
         
         // 청어람마을 섹션 가시성 계산
@@ -283,15 +338,12 @@ export default function KhwSection({
             Math.max(chungeoramsectionRect.top, 0)
           );
           
-          // 청어람마을 섹션이 화면에 조금이라도 보이면 가시성 점수를 높임
+          // 가시성 점수 조정
           if (chungeoramsectionVisible > 0) {
-            // 섹션의 중앙이 화면의 중앙에 가까울수록 가시성 점수를 높임
-            const sectionCenter = (chungeoramsectionRect.top + chungeoramsectionRect.bottom) / 2;
-            const viewportCenter = windowHeight / 2;
-            const distanceFromCenter = Math.abs(sectionCenter - viewportCenter);
-            const centerBonus = Math.max(0, 1 - distanceFromCenter / (windowHeight / 2)) * 100;
-            
-            chungeoramsectionVisible += centerBonus;
+            // 섹션이 화면 상단에 있을 때 가시성 점수를 높임
+            if (chungeoramsectionRect.top <= 0 && chungeoramsectionRect.bottom > 0) {
+              chungeoramsectionVisible += 300;
+            }
           }
         }
         
@@ -302,6 +354,14 @@ export default function KhwSection({
             Math.min(pressRect.bottom, windowHeight) - 
             Math.max(pressRect.top, 0)
           );
+          
+          // 가시성 점수 조정
+          if (pressVisible > 0) {
+            // 섹션이 화면 상단에 있을 때 가시성 점수를 높임
+            if (pressRect.top <= 0 && pressRect.bottom > 0) {
+              pressVisible += 300;
+            }
+          }
         }
         
         // 살아온 길 섹션 가시성 계산
@@ -311,6 +371,14 @@ export default function KhwSection({
             Math.min(bioRect.bottom, windowHeight) - 
             Math.max(bioRect.top, 0)
           );
+          
+          // 가시성 점수 조정
+          if (bioVisible > 0) {
+            // 섹션이 화면 상단에 있을 때 가시성 점수를 높임
+            if (bioRect.top <= 0 && bioRect.bottom > 0) {
+              bioVisible += 300;
+            }
+          }
         }
         
         // SNS 섹션 가시성 계산
@@ -320,18 +388,16 @@ export default function KhwSection({
             Math.min(snsRect.bottom, windowHeight) - 
             Math.max(snsRect.top, 0)
           );
+          
+          // 가시성 점수 조정
+          if (snsVisible > 0) {
+            // 섹션이 화면 상단에 있을 때 가시성 점수를 높임
+            if (snsRect.top <= 0 && snsRect.bottom > 0) {
+              snsVisible += 300;
+            }
+          }
         }
         
-        // 가장 많이 보이는 섹션을 활성화
-        const visibilities = [
-          { id: 'declaration', visible: declarationVisible },
-          { id: 'chungeoram', visible: chungeoramsectionVisible },
-          { id: 'press', visible: pressVisible },
-          { id: 'bio', visible: bioVisible },
-          { id: 'sns', visible: snsVisible }
-        ];
-        
-        // 디버깅을 위한 콘솔 로그
         console.log('Visibilities:', {
           declaration: declarationVisible,
           chungeoram: chungeoramsectionVisible,
@@ -340,16 +406,42 @@ export default function KhwSection({
           sns: snsVisible
         });
         
-        // 가시성이 0보다 큰 항목 중 가장 많이 보이는 섹션 찾기
-        const visibleSections = visibilities.filter(item => item.visible > 0);
-        if (visibleSections.length > 0) {
-          const maxVisibleSection = visibleSections.reduce((max, current) => 
-            current.visible > max.visible ? current : max, visibleSections[0]);
-          
-          console.log('Max visible section:', maxVisibleSection.id, 'with visibility:', maxVisibleSection.visible);
-          
-          // 활성 버튼 설정
-          setActiveButton(maxVisibleSection.id);
+        // 가장 많이 보이는 섹션에 따라 활성 버튼 업데이트
+        const maxVisible = Math.max(
+          declarationVisible,
+          chungeoramsectionVisible,
+          pressVisible,
+          bioVisible,
+          snsVisible
+        );
+        
+        console.log('Max visibility:', maxVisible);
+        
+        let newActiveButton = activeButton;
+        
+        if (maxVisible === declarationVisible && declarationVisible > 0) {
+          newActiveButton = 'declaration';
+          console.log('Setting active button to declaration');
+        } else if (maxVisible === chungeoramsectionVisible && chungeoramsectionVisible > 0) {
+          newActiveButton = 'chungeoram';
+          console.log('Setting active button to chungeoram');
+        } else if (maxVisible === pressVisible && pressVisible > 0) {
+          newActiveButton = 'press';
+          console.log('Setting active button to press');
+        } else if (maxVisible === bioVisible && bioVisible > 0) {
+          newActiveButton = 'bio';
+          console.log('Setting active button to bio');
+        } else if (maxVisible === snsVisible && snsVisible > 0) {
+          newActiveButton = 'sns';
+          console.log('Setting active button to sns');
+        }
+        
+        console.log('New active button:', newActiveButton);
+        
+        // 활성 버튼이 변경되었을 때만 상태 업데이트 및 버튼 스크롤 업데이트
+        if (newActiveButton !== activeButton) {
+          setActiveButton(newActiveButton);
+          // 버튼 스크롤 업데이트는 activeButton 상태 변경 시 useEffect에서 처리됨
         }
       };
       
@@ -362,6 +454,62 @@ export default function KhwSection({
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
+  }, []);
+
+  // 커스텀 이벤트 처리를 위한 useEffect
+  useEffect(() => {
+    const handleSetActiveButton = (event: CustomEvent) => {
+      const { buttonId } = event.detail;
+      if (buttonId) {
+        setActiveButton(buttonId);
+      }
+    };
+
+    const handleNavigateToDeclaration = () => {
+      // 출마선언 버튼 클릭과 동일한 효과
+      handleButtonClick('declaration');
+    };
+
+    // 이벤트 리스너 등록
+    const sectionElement = document.getElementById('khw-section');
+    if (sectionElement) {
+      sectionElement.addEventListener('setActiveButton', handleSetActiveButton as EventListener);
+      sectionElement.addEventListener('navigateToDeclaration', handleNavigateToDeclaration as EventListener);
+    }
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      if (sectionElement) {
+        sectionElement.removeEventListener('setActiveButton', handleSetActiveButton as EventListener);
+        sectionElement.removeEventListener('navigateToDeclaration', handleNavigateToDeclaration as EventListener);
+      }
+    };
+  }, []);
+
+  // 컴포넌트 마운트 시 전역 함수 등록
+  useEffect(() => {
+    // 전역 함수 등록 - 외부에서 출마선언 섹션으로 스크롤할 수 있도록 함
+    window.scrollToKhwDeclaration = () => {
+      handleButtonClick('declaration');
+    };
+    
+    // 컴포넌트 언마운트 시 전역 함수 제거
+    return () => {
+      delete window.scrollToKhwDeclaration;
+    };
+  }, []);
+
+  // 컴포넌트 마운트 시 출마선언 버튼 활성화 및 스크롤 업데이트
+  useEffect(() => {
+    // 컴포넌트 마운트 시 출마선언 버튼 활성화
+    setActiveButton('declaration');
+    
+    // 약간의 지연 후 버튼 스크롤 업데이트 (DOM이 완전히 렌더링된 후)
+    const timer = setTimeout(() => {
+      updateButtonScroll('declaration');
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const fullText = `
@@ -491,9 +639,23 @@ export default function KhwSection({
   
   // 헤더 높이를 고려한 스크롤 함수
   const scrollToSectionWithOffset = (element: HTMLElement) => {
-    const headerHeight = 60; // 헤더 높이 (픽셀)
-    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-    const offsetPosition = elementPosition - headerHeight;
+    // 모바일과 데스크탑에서 다른 헤더 높이 적용
+    const isMobile = window.innerWidth < 768; // 768px 미만을 모바일로 간주
+    const headerHeight = isMobile ? 160 : 80; // 모바일에서 훨씬 더 큰 오프셋 적용
+    
+    // 출마선언 섹션인 경우 특별 처리
+    const isDeclarationSection = element === declarationSectionRef.current;
+    
+    let offsetPosition;
+    if (isDeclarationSection) {
+      // 출마선언 섹션은 offsetTop 사용
+      const elementPosition = element.offsetTop;
+      offsetPosition = elementPosition - headerHeight;
+    } else {
+      // 다른 섹션은 기존 방식 유지
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      offsetPosition = elementPosition - headerHeight;
+    }
     
     window.scrollTo({
       top: offsetPosition,
@@ -509,73 +671,84 @@ export default function KhwSection({
     <main ref={sectionRef} className={`w-full min-h-screen bg-white ${showStickyHeader ? 'pt-[100px] md:pt-[90px]' : ''}`}>
       {/* 녹색 헤더 영역 - KhwSection이 화면에 보일 때만 표시 */}
       {showStickyHeader && (
-        <div className="bg-[#00A367] text-white fixed top-0 left-0 right-0 z-50 py-6 shadow-md">
+        <div className="bg-[#00A367] text-white fixed top-0 left-0 right-0 z-50 py-4 shadow-md">
             <div className="container mx-auto px-8 md:px-4">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <h1 
-                className="text-3xl md:text-4xl font-extrabold text-white mb-4 md:mb-0" 
-                style={{ fontFamily: 'Giants-Bold, sans-serif' }}
-              >
-                권현우를 소개합니다
-              </h1>
+            <div className="flex md:flex-row justify-between items-center">
+              <div className="flex flex-col items-start">
+                <h1 
+                  className="text-2xl md:text-3xl font-extrabold text-white mb-0" 
+                  style={{ fontFamily: 'Giants-Bold, sans-serif' }}
+                >
+                  후보소개
+                </h1>
+                <p className="text-sm md:text-base mb-2 md:mb-0">
+                  권현우를 소개합니다
+                </p>
+              </div>
               
-              <div className="flex flex-wrap gap-2 justify-center md:justify-end">
-                {/* 첫 번째 줄 버튼 그룹 */}
-                <div className="flex flex-wrap gap-2 justify-center">
-                  <button 
-                    className={`px-4 py-2 rounded-full font-bold text-sm transition ${
-                      activeButton === 'declaration' 
-                        ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
-                        : 'bg-white text-[#00A367] hover:bg-gray-100'
-                    }`}
-                    onClick={() => handleButtonClick('declaration')}
-                  >
-                    출마 선언
-                  </button>
-                  <button 
-                    className={`px-4 py-2 rounded-full font-bold text-sm transition ${
-                      activeButton === 'chungeoram' 
-                        ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
-                        : 'bg-white text-[#00A367] hover:bg-gray-100'
-                    }`}
-                    onClick={() => handleButtonClick('chungeoram')}
-                  >
-                    청어람 마을
-                  </button>
-                  <button 
-                    className={`px-4 py-2 rounded-full font-bold text-sm transition ${
-                      activeButton === 'press' 
-                        ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
-                        : 'bg-white text-[#00A367] hover:bg-gray-100'
-                    }`}
-                    onClick={() => handleButtonClick('press')}
-                  >
-                    언론
-                  </button>
-                </div>
-                
-                {/* 두 번째 줄 버튼 그룹 */}
-                <div className="flex flex-wrap gap-2 justify-center w-full md:w-auto mt-2 md:mt-0">
-                  <button 
-                    className={`px-4 py-2 rounded-full font-bold text-sm transition ${
-                      activeButton === 'bio' 
-                        ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
-                        : 'bg-white text-[#00A367] hover:bg-gray-100'
-                    }`}
-                    onClick={() => handleButtonClick('bio')}
-                  >
-                    살아온 길
-                  </button>
-                  <button 
-                    className={`px-4 py-2 rounded-full font-bold text-sm transition ${
-                      activeButton === 'sns' 
-                        ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
-                        : 'bg-white text-[#00A367] hover:bg-gray-100'
-                    }`}
-                    onClick={() => handleButtonClick('sns')}
-                  >
-                    SNS
-                  </button>
+              {/* 모바일에서는 세로 스크롤, 데스크탑에서는 가로로 펼쳐지는 버튼 컨테이너 */}
+              <div className="flex flex-col md:flex-row">
+                <div 
+                  ref={buttonContainerRef}
+                  className="w-[100px] h-[40px] overflow-y-auto md:w-auto md:h-auto md:overflow-visible hide-scrollbar py-0 -mt-1"
+                >
+                  <div className="flex flex-col md:flex-row gap-6 md:gap-3 pt-0 pb-0 md:p-0">
+                    <button 
+                      id="khw-button-declaration"
+                      className={`px-3 py-2 rounded-full font-bold text-sm transition max-w-full ${
+                        activeButton === 'declaration' 
+                          ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
+                          : 'bg-white text-[#00A367] hover:bg-gray-100'
+                      }`}
+                      onClick={() => handleButtonClick('declaration')}
+                    >
+                      출마 선언
+                    </button>
+                    <button 
+                      id="khw-button-chungeoram"
+                      className={`px-3 py-2 rounded-full font-bold text-sm transition max-w-full ${
+                        activeButton === 'chungeoram' 
+                          ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
+                          : 'bg-white text-[#00A367] hover:bg-gray-100'
+                      }`}
+                      onClick={() => handleButtonClick('chungeoram')}
+                    >
+                      청어람 마을
+                    </button>
+                    <button 
+                      id="khw-button-press"
+                      className={`px-3 py-2 rounded-full font-bold text-sm transition max-w-full ${
+                        activeButton === 'press' 
+                          ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
+                          : 'bg-white text-[#00A367] hover:bg-gray-100'
+                      }`}
+                      onClick={() => handleButtonClick('press')}
+                    >
+                      언론
+                    </button>
+                    <button 
+                      id="khw-button-bio"
+                      className={`px-3 py-2 rounded-full font-bold text-sm transition max-w-full ${
+                        activeButton === 'bio' 
+                          ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
+                          : 'bg-white text-[#00A367] hover:bg-gray-100'
+                      }`}
+                      onClick={() => handleButtonClick('bio')}
+                    >
+                      살아온 길
+                    </button>
+                    <button 
+                      id="khw-button-sns"
+                      className={`px-3 py-2 rounded-full font-bold text-sm transition max-w-full ${
+                        activeButton === 'sns' 
+                          ? 'bg-[#006D44] text-white border-2 border-white shadow-lg' 
+                          : 'bg-white text-[#00A367] hover:bg-gray-100'
+                      }`}
+                      onClick={() => handleButtonClick('sns')}
+                    >
+                      SNS
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -584,7 +757,7 @@ export default function KhwSection({
       )}
 
       {/* 출마선언 콘텐츠 영역 - 항상 표시 */}
-      <div ref={declarationSectionRef} className="w-full bg-yellow-100 text-white relative overflow-hidden pb-20">
+      <div ref={declarationSectionRef} id="declaration-section" data-section="declaration" className="w-full bg-yellow-100 text-white relative overflow-hidden pb-20">
         <div className="absolute inset-0 bg-grid-white/[0.08] bg-[length:28px_28px]"></div>
         
         <div className="relative z-10 pt-8 md:pt-16 pb-10 px-8 md:px-4 container mx-auto">
@@ -606,8 +779,7 @@ export default function KhwSection({
               viewport={{ once: true }}
               className="space-y-2 md:space-y-3 text-gray-800"
             >
-              <p className="text-base md:text-lg">존경하는 양주동, 동면 주민 여러분, 그리고 양산시민 여러분.</p>
-              <p className="text-base md:text-lg">안녕하십니까? </p>
+              <p className="text-base md:text-lg">존경하는 양주동, 동면 주민 여러분, 그리고 양산시민 여러분. 안녕하십니까? </p>
               <p className="text-base md:text-lg">저는 이번 4월 2일 양산시의원 보궐선거에 출마하는 정의당 권현우입니다.</p>
 
               <div className="bg-yellow-50 p-2.5 md:p-3 rounded-xl my-2.5 md:my-4 border border-yellow-200">
@@ -873,7 +1045,7 @@ export default function KhwSection({
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.3 }}
                   viewport={{ once: true }}
                   className="bg-white rounded-xl p-3 shadow-lg h-[40vh]"
                 >
@@ -892,7 +1064,7 @@ export default function KhwSection({
                             key={index}
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            transition={{ duration: 0.3, delay: index * 0.03 }}
                             viewport={{ once: true }}
                             className="flex items-start gap-2"
                           >
@@ -917,7 +1089,7 @@ export default function KhwSection({
                             key={index}
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            transition={{ duration: 0.3, delay: index * 0.03 }}
                             viewport={{ once: true }}
                             className="flex items-start gap-2"
                           >
@@ -942,7 +1114,7 @@ export default function KhwSection({
                             key={index}
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3, delay: index * 0.05 }}
+                            transition={{ duration: 0.3, delay: index * 0.03 }}
                             viewport={{ once: true, margin: "-10%" }}
                             className="flex items-start gap-2"
                           >
@@ -1072,7 +1244,7 @@ export default function KhwSection({
         <div className="relative z-10 pt-8 pb-10 px-8 md:px-4 container mx-auto">
           <div className="w-full max-w-6xl mx-auto relative mt-0 pt-0">
           <h2 className="text-2xl md:text-3xl font-bold text-white-700 text-center mb-6" style={{ fontFamily: 'Giants-Bold, sans-serif' }}>
-                권현우를 더 가깝게 만나보세요
+                권현우를 더 알아보세요
               </h2>
 
             {/* SNS 탭 버튼 */}

@@ -167,7 +167,7 @@ export default function HeroSection() {
         </div>
         
         {/* 스크롤 인디케이터 추가 */}
-        <div className="absolute bottom-10 left-0 right-0 flex justify-center">
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center">
           <ScrollIndicator isFixed={false} color="text-gray-700" />
         </div>
       </section>

@@ -267,6 +267,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
   const firstAnimationRef = useRef<HTMLDivElement>(null);
   const secondAnimationRef = useRef<HTMLDivElement>(null);
   const regionalOutlookRef = useRef<HTMLDivElement>(null);
+  const buttonContainerRef = useRef<HTMLDivElement>(null);
 
   // 화면 크기 감지를 위한 useEffect
   useEffect(() => {
@@ -380,27 +381,71 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
     };
   }, []);
 
+  // 버튼 스크롤 업데이트 함수 추가
+  const updateButtonScroll = (buttonId: string) => {
+    setTimeout(() => {
+      if (buttonContainerRef.current) {
+        const buttonElement = document.getElementById(`yd-button-${buttonId}`);
+        if (buttonElement) {
+          // 버튼의 상대적 위치 계산
+          const containerRect = buttonContainerRef.current.getBoundingClientRect();
+          const buttonRect = buttonElement.getBoundingClientRect();
+          const buttonOffsetTop = buttonElement.offsetTop;
+          
+          // 버튼 인덱스 계산 (0부터 시작)
+          const buttonIndex = ['alternative', 'issues'].indexOf(buttonId);
+          
+          // 버튼 인덱스에 따라 스크롤 위치 조정 (버튼 높이 + 간격 고려)
+          // 버튼 높이는 약 36px (py-2), 간격은 gap-2 (8px)
+          const buttonHeight = 36;
+          const buttonGap = 8;
+          const scrollTop = buttonIndex * (buttonHeight + buttonGap);
+          
+          // 스크롤 위치 설정
+          buttonContainerRef.current.scrollTop = scrollTop;
+        }
+      }
+    }, 100);
+  };
+
+  // 컴포넌트 마운트 시 초기 버튼 위치 설정
+  useEffect(() => {
+    // 초기 버튼을 '현안 진단'으로 설정
+    setActiveButton('alternative');
+  }, []);
+
+  // activeButton 상태가 변경될 때마다 해당 버튼이 보이도록 스크롤 위치 조정
+  useEffect(() => {
+    updateButtonScroll(activeButton);
+  }, [activeButton]);
+
   // 스크롤 관련 핸들러
   const handleSmoothScroll = (elementId: string) => {
     setActiveButton(elementId);
     
-    // elementId가 'alternative'나 'issues'인 경우 해당 요소로 스크롤
-    let targetId = elementId;
-    if (elementId === 'issues') {
-      targetId = 'regional-outlook';
+    // 각 버튼에 해당하는 섹션으로 스크롤
+    let targetElement = null;
+    
+    if (elementId === 'alternative') {
+      // 현안진단 섹션으로 스크롤
+      targetElement = firstAnimationRef.current;
+    } else if (elementId === 'issues') {
+      // 새로운 전망 섹션으로 스크롤
+      targetElement = secondAnimationRef.current;
     }
     
-    const element = document.getElementById(targetId);
-    if (element) {
+    if (targetElement) {
       // 특정 요소에 대해 추가 오프셋 적용
       const extraOffset = elementId === 'issues' ? 20 : 0;
-      scrollToElementWithOffset(element, extraOffset);
+      scrollToElementWithOffset(targetElement, extraOffset);
     }
   };
   
   // 헤더 높이를 고려한 스크롤 함수
   const scrollToElementWithOffset = (element: HTMLElement, extraOffset = 0) => {
-    const headerHeight = 80; // 헤더 높이 (픽셀) - 여유 있게 설정
+    // 모바일과 데스크탑에서 다른 헤더 높이 적용
+    const isMobile = window.innerWidth < 768; // 768px 미만을 모바일로 간주
+    const headerHeight = isMobile ? 160 : 80; // 모바일에서 더 큰 오프셋 적용
     
     // 요소의 절대 위치 계산
     const rect = element.getBoundingClientRect();
@@ -430,6 +475,74 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
       // 추가로 isActive가 true일 때만 헤더 표시
       if (isActive && sectionRect.top <= windowHeight / 3 && sectionRect.top > -sectionHeight + 100) {
         setShowStickyHeader(true);
+        
+        // 현재 화면에 가장 많이 보이는 섹션을 찾아 활성 버튼 업데이트
+        const updateActiveSection = () => {
+          // 각 섹션의 가시성 계산
+          let alternativeVisible = 0;
+          let issuesVisible = 0;
+          
+          // 현안진단 섹션 가시성 계산
+          if (firstAnimationRef.current) {
+            const alternativeRect = firstAnimationRef.current.getBoundingClientRect();
+            alternativeVisible = Math.max(0, 
+              Math.min(alternativeRect.bottom, windowHeight) - 
+              Math.max(alternativeRect.top, 0)
+            );
+            
+            // 섹션이 화면 상단에 있을 때 가시성 점수를 높임
+            if (alternativeVisible > 0) {
+              if (alternativeRect.top <= 0 && alternativeRect.bottom > 0) {
+                alternativeVisible += 800; // 현안진단 섹션에 더 높은 가중치 부여
+              }
+            }
+          }
+          
+          // 새로운 전망 섹션 가시성 계산 - secondAnimationRef 사용
+          if (secondAnimationRef.current) {
+            const issuesRect = secondAnimationRef.current.getBoundingClientRect();
+            issuesVisible = Math.max(0, 
+              Math.min(issuesRect.bottom, windowHeight) - 
+              Math.max(issuesRect.top, 0)
+            );
+            
+            // 섹션이 화면 상단에 있을 때 가시성 점수를 높임
+            if (issuesVisible > 0) {
+              if (issuesRect.top <= 0 && issuesRect.bottom > 0) {
+                issuesVisible += 500;
+              }
+            }
+          }
+          
+          // 지역별 전망 섹션 가시성도 계산하여 새로운 전망 점수에 추가
+          if (regionalOutlookRef.current) {
+            const regionalRect = regionalOutlookRef.current.getBoundingClientRect();
+            const regionalVisible = Math.max(0, 
+              Math.min(regionalRect.bottom, windowHeight) - 
+              Math.max(regionalRect.top, 0)
+            );
+            
+            // 지역별 전망 섹션이 화면에 보이면 새로운 전망 버튼이 활성화되도록 설정
+            if (regionalVisible > 0) {
+              // 지역별 전망 섹션이 화면 상단에 있을 때 가시성 점수를 매우 높게 설정
+              if (regionalRect.top <= 0 && regionalRect.bottom > 0) {
+                issuesVisible = Math.max(issuesVisible, alternativeVisible + 500); // 현안진단보다 높게 설정
+              } else {
+                issuesVisible += regionalVisible * 2; // 가중치 부여
+              }
+            }
+          }
+          
+          // 가장 가시성이 높은 섹션에 따라 활성 버튼 설정
+          if (alternativeVisible > issuesVisible && activeButton !== 'alternative') {
+            setActiveButton('alternative');
+          } else if (issuesVisible > alternativeVisible && activeButton !== 'issues') {
+            setActiveButton('issues');
+          }
+        };
+        
+        // 활성 섹션 업데이트 실행
+        updateActiveSection();
       } else {
         setShowStickyHeader(false);
       }
@@ -440,7 +553,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isActive]);
+  }, [isActive, activeButton]);
 
   // Instagram 임베드 스크립트 로딩
   useEffect(() => {
@@ -645,45 +758,59 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
   };
 
   return (
-    <div ref={sectionRef} id="yd-section" className={`w-full py-3 md:py-4 ${!isStandalone ? 'bg-gradient-to-br from-purple-50 to-purple-100' : ''}`}>
+    <div ref={sectionRef} id="yd-section" className={`w-full py-3 md:py-4 ${!isStandalone ? 'bg-gradient-to-br from-purple-50 to-purple-100' : 'bg-white'}`}>
+      {/* 헤더 영역 - 스크롤 시 고정 */}
       {(showHeader || showStickyHeader) && isActive ? (
         <motion.div
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="fixed top-0 left-0 w-full bg-gradient-to-r from-[#623D91] to-[#8757D9] text-white py-6 z-50 shadow-md"
+          className="fixed top-0 left-0 w-full bg-gradient-to-r from-[#623D91] to-[#8757D9] text-white py-4 z-50 shadow-md"
         >
-          <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-            <div className="flex flex-col items-center md:items-start">
-              <h2 className="text-3xl md:text-4xl font-extrabold mb-2 md:mb-1" style={{ fontFamily: 'Giants-Bold' }}>권현우의 양동작전</h2>
-              <p className="text-sm md:text-base mb-3 md:mb-0">
-                <span className="font-bold text-base md:text-lg text-white">양</span>주동과 
-                <span className="font-bold text-base md:text-lg text-white"> 동</span>면의 
-                <span className="font-bold text-base md:text-lg text-white"> 작</span>지만 소중한 
-                <span className="font-bold text-base md:text-lg text-white"> 전</span>망
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2 justify-center md:justify-end">
-              <button 
-                onClick={() => handleSmoothScroll('alternative')}
-                className={`px-4 py-2 rounded-full font-bold text-sm transition ${
-                  activeButton === 'alternative' 
-                    ? 'bg-[#3A1D6E] text-white border-2 border-white shadow-lg' 
-                    : 'bg-white text-[#623D91]'
-                } hover:bg-opacity-90`}
-              >
-                지역 현안 진단
-              </button>
-              <button 
-                onClick={() => handleSmoothScroll('issues')}
-                className={`px-4 py-2 rounded-full font-bold text-sm transition ${
-                  activeButton === 'issues' 
-                    ? 'bg-[#3A1D6E] text-white border-2 border-white shadow-lg' 
-                    : 'bg-white text-[#623D91]'
-                } hover:bg-opacity-90`}
-              >
-                새로운 전망
-              </button>
+          <div className="container mx-auto px-4">
+            <div className="flex flex-row items-center justify-between">
+              <div className="flex flex-col items-start">
+                <h2 className="text-2xl md:text-3xl font-extrabold mb-1" style={{ fontFamily: 'Giants-Bold' }}>권현우의 양동작전</h2>
+                <p className="text-xs md:text-sm mb-2 md:mb-0">
+                  <span className="font-bold text-sm md:text-base text-yellow-300">양</span>주동과 
+                  <span className="font-bold text-sm md:text-base text-yellow-300"> 동</span>면의 
+                  <span className="font-bold text-sm md:text-base text-yellow-300"> 작</span>지만 소중한 
+                  <span className="font-bold text-sm md:text-base text-yellow-300"> 전</span>망
+                </p>
+              </div>
+              
+              {/* 모바일에서는 세로 스크롤, 데스크탑에서는 가로로 펼쳐지는 버튼 컨테이너 */}
+              <div className="flex flex-col md:flex-row">
+                <div 
+                  ref={buttonContainerRef}
+                  className="w-[100px] h-[36px] overflow-y-auto md:w-auto md:h-auto md:overflow-visible hide-scrollbar py-0 mt-0"
+                >
+                  <div className="flex flex-col md:flex-row gap-2 md:gap-3 pt-0 pb-0 md:p-0">
+                    <button 
+                      id="yd-button-alternative"
+                      onClick={() => handleSmoothScroll('alternative')}
+                      className={`px-3 py-1.5 rounded-full font-bold text-sm transition max-w-full ${
+                        activeButton === 'alternative' 
+                          ? 'bg-[#3A1D6E] text-white border-2 border-white shadow-lg' 
+                          : 'bg-white text-[#623D91] hover:bg-opacity-90'
+                      }`}
+                    >
+                      현안 진단
+                    </button>
+                    <button 
+                      id="yd-button-issues"
+                      onClick={() => handleSmoothScroll('issues')}
+                      className={`px-3 py-1.5 rounded-full font-bold text-sm transition max-w-full ${
+                        activeButton === 'issues' 
+                          ? 'bg-[#3A1D6E] text-white border-2 border-white shadow-lg' 
+                          : 'bg-white text-[#623D91] hover:bg-opacity-90'
+                      }`}
+                    >
+                      새로운 전망
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -771,7 +898,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
                         duration: collisionComplete ? 3 : 1
                       }
                     }}
-                    className={`absolute top-[65%] md:top-[60%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                    className={`absolute top-[95%] md:top-[90%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 
                       w-28 h-28 md:w-44 md:h-44 rounded-full z-20 flex items-center justify-center overflow-hidden
                       bg-yellow-400 shadow-[0_0_20px_10px_rgba(255,204,0,0.6)] border-4 border-yellow-300`}
                   >
@@ -895,7 +1022,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
                     duration: secondCollisionComplete ? 3 : 1
                   }
                 }}
-                className={`absolute top-[65%] md:top-[60%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                className={`absolute top-[95%] md:top-[90%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 
                   w-28 h-28 md:w-44 md:h-44 rounded-full z-20 flex items-center justify-center overflow-hidden
                   bg-yellow-400 shadow-[0_0_20px_10px_rgba(255,204,0,0.6)] border-4 border-yellow-300`}
               >

@@ -5,6 +5,13 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+// TypeScript에서 window 객체에 새 속성 추가를 위한 인터페이스 확장
+declare global {
+  interface Window {
+    scrollToKhwDeclaration?: () => void;
+  }
+}
+
 const navItems = [
   {
     label: '홈',
@@ -83,9 +90,38 @@ export default function BottomNav() {
   
   const handleNavClick = (href: string, sectionId: string) => {
     // 항상 메인 페이지에서 스크롤로 이동
+    if (sectionId === 'khw-section') {
+      // '후보' 버튼 클릭 시 KhwSection의 '출마선언' 섹션으로 직접 이동
+      
+      // KhwSection에서 등록한 전역 함수 호출
+      if (typeof window.scrollToKhwDeclaration === 'function') {
+        window.scrollToKhwDeclaration();
+        
+        // 활성 섹션 업데이트
+        setActiveSection(sectionId);
+        return;
+      }
+      
+      // 전역 함수가 없는 경우 기존 방식으로 이동 (fallback)
+      const khwSection = document.getElementById('khw-section');
+      if (khwSection) {
+        // 커스텀 이벤트를 통해 KhwSection에 알림
+        const event = new CustomEvent('navigateToDeclaration');
+        khwSection.dispatchEvent(event);
+        
+        // 활성 섹션 업데이트
+        setActiveSection(sectionId);
+        return;
+      }
+    }
+    
+    // 기존 로직 (다른 버튼 클릭 시)
     const section = document.getElementById(sectionId);
     if (section) {
-      const headerHeight = 60; // 헤더 높이 (픽셀)
+      // 모바일과 데스크탑에서 다른 헤더 높이 적용
+      const isMobile = window.innerWidth < 768; // 768px 미만을 모바일로 간주
+      const headerHeight = isMobile ? 160 : 80; // 모바일에서 훨씬 더 큰 오프셋 적용
+      
       const elementPosition = section.offsetTop;
       const offsetPosition = elementPosition - headerHeight;
       
