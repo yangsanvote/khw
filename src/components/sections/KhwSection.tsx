@@ -941,8 +941,8 @@ export default function KhwSection({
                             key={index}
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            viewport={{ once: true }}
+                            transition={{ duration: 0.3, delay: index * 0.05 }}
+                            viewport={{ once: true, margin: "-10%" }}
                             className="flex items-start gap-2"
                           >
                             <span className="text-sm text-gray-500 shrink-0 w-14">{career.year}</span>

@@ -924,7 +924,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
         {/* 스크롤 인디케이터 추가 */}
         {!hideScrollIndicator && (
           <motion.div 
-            className="mb-4 flex justify-center"
+            className="mb-4  flex justify-center"
             initial={{ opacity: 0, y: -10 }}
             animate={{ 
               opacity: 1, 
