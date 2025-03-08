@@ -15,7 +15,6 @@ const categories: Category[] = [
   { id: 'business', name: '자영업', icon: Store },
   { id: 'job', name: '일자리', icon: Briefcase },
   { id: 'living', name: '정주여건', icon: Building2 },
-  { id: 'etc', name: '기타', icon: FolderOpen },
 ];
 
 const regions: Region[] = [
@@ -30,7 +29,7 @@ const regions: Region[] = [
 interface PromiseType {
   id: string;
   title: string;
-  category: string;
+  category: string | string[]; // 문자열 또는 문자열 배열로 변경
   subCategory?: string;
   region: string;
   effect: string;
@@ -98,7 +97,7 @@ const promises: PromiseType[] = [
   {
     id: '8',
     title: '노인정 인력 지원: 식사 도우미 지원',
-    category: 'care',
+    category: ['care', 'job'],
     region: 'common',
     effect: '식사 여력이 되지 않는 노인정에 식사 도우미 지원\n돌봄 인력을 지원하여 일자리 창출\n식사를 함께함으로써 시니어 공동체 활성화',
     content: '돌봄과 함께 일자리도 늘리는 일석이조!'
@@ -226,7 +225,7 @@ const promises: PromiseType[] = [
   {
     id: '23',
     title: '마을관리소 설치 운영',
-    category: 'living',
+    category: ['living', 'job'], // 두 개의 카테고리 설정
     region: 'village',
     effect: '생활 민원 처리 : 마을 주민들의 생활 민원을 처리하여 지역 사회의 안정을 도모합니다.\n취약계층 돌보기 : 취약계층을 돌보아 지역 사회의 행복을 증진시킵니다.\n공공 일자리 창출 : 마을 관리소 업무를 맡기면서 일자리를 창출할 수 있습니다.\n지역 경제 활성화 : 생활밀착형 공공서비스를 제공하여 지역 경제를 활성화시킵니다.',
     content: '아파트에는 아파트관리소, 자연마을에는 마을관리소'
@@ -599,9 +598,14 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
     
     // 카테고리 필터링
     if (selectedCategories.length > 0) {
-      filtered = filtered.filter(promise => 
-        selectedCategories.includes(promise.category)
-      );
+      filtered = filtered.filter(promise => {
+        // 카테고리가 배열인 경우와 문자열인 경우를 모두 처리
+        if (Array.isArray(promise.category)) {
+          return promise.category.some(cat => selectedCategories.includes(cat));
+        } else {
+          return selectedCategories.includes(promise.category);
+        }
+      });
     }
     
     // 지역 필터링
@@ -669,11 +673,20 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
         onClick={() => onClick(promise)}
       >
         <div className="p-4">
-          <h3 className="font-bold text-lg mb-2 text-[#623D91]">{promise.title}</h3>
+          <h3 className="font-bold text-lg mb-2 text-gray-800">{promise.title}</h3>
           <div className="flex flex-wrap gap-2 mb-2">
-            <span className={`text-xs px-2 py-1 rounded-full ${getCategoryColor(promise.category)}`}>
-              {getCategoryName(promise.category)}
-            </span>
+            {/* 카테고리가 배열인 경우와 문자열인 경우를 모두 처리 */}
+            {Array.isArray(promise.category) ? (
+              promise.category.map((cat, index) => (
+                <span key={index} className={`text-xs px-2 py-1 rounded-full ${getCategoryColor(cat)}`}>
+                  {getCategoryName(cat)}
+                </span>
+              ))
+            ) : (
+              <span className={`text-xs px-2 py-1 rounded-full ${getCategoryColor(promise.category)}`}>
+                {getCategoryName(promise.category)}
+              </span>
+            )}
             <span className={`text-xs px-2 py-1 rounded-full ${getRegionColor(promise.region)}`}>
               {getRegionNames(promise.region)}
             </span>
@@ -702,12 +715,18 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
           onClick={e => e.stopPropagation()}
         >
           <div className="p-6">
-            <h2 className="text-2xl font-bold text-[#623D91] mb-4">{promise.title}</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">{promise.title}</h2>
             
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div>
                 <h3 className="text-sm font-semibold text-gray-500 mb-1">카테고리</h3>
-                <p className="text-base">{categories.find(c => c.id === promise.category)?.name || promise.category}</p>
+                <p className="text-base">
+                  {/* 카테고리가 배열인 경우와 문자열인 경우를 모두 처리 */}
+                  {Array.isArray(promise.category) 
+                    ? promise.category.map(cat => categories.find(c => c.id === cat)?.name || cat).join(', ')
+                    : categories.find(c => c.id === promise.category)?.name || promise.category
+                  }
+                </p>
               </div>
               {promise.subCategory && (
                 <div>
@@ -727,16 +746,16 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
             </div>
             
             <div className="mb-6">
-              <h3 className="text-lg font-semibold text-[#623D91] mb-2">공약 내용</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">공약 내용</h3>
               <p className="text-base bg-purple-50 p-4 rounded-lg">{promise.content}</p>
             </div>
             
             <div className="mb-6">
-              <h3 className="text-lg font-semibold text-[#623D91] mb-2">기대효과</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">기대효과</h3>
               <div className="bg-gray-50 p-4 rounded-lg">
                 {promise.effect.split('\n').map((line, index) => (
                   <p key={index} className="text-base mb-2 flex items-start">
-                    <span className="text-[#623D91] mr-2">•</span>
+                    <span className="text-gray-800 mr-2">•</span>
                     <span>{line}</span>
                   </p>
                 ))}
@@ -1198,7 +1217,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
           transition={{ duration: 0.5, delay: 0.4 }}
           className="bg-white/80 backdrop-blur-sm rounded-xl p-3 md:p-4 shadow-md mb-10"
         >
-          <h3 className="text-base md:text-lg font-bold text-[#623D91] mb-3 md:mb-4 text-center">
+          <h3 className="text-xl md:text-2xl font-bold text-[#623D91] mb-3 md:mb-4 text-center" style={{ fontFamily: 'Giants-Bold, sans-serif' }}>
             {filteredPromises.length > 0 
               ? `권현우의 약속 (${filteredPromises.length}개)` 
               : "카테고리나 지역을 선택하시면 공약이 표시됩니다"}
