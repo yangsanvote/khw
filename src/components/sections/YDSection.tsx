@@ -124,7 +124,7 @@ const promises: PromiseType[] = [
     category: 'business',
     region: 'common',
     effect: '지원사업을 모르는 분에게 지원사업 소개를\n지원사업 신청서류 작성이 어려운 분에게는 서류 작업 지원을',
-    content: '자영업자 대상 공공지원사업을 연결시켜 드리겠습니다.'
+    content: '자영업자 대상 공공지원사업을 연결시켜 드리겠습니다. 👉 <a href="#support" class="text-blue-600 hover:text-blue-800 underline">지원사업 바로가기</a>'
   },
   {
     id: '12',
@@ -326,7 +326,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
       return () => clearTimeout(secondCollisionTimer);
     };
 
-    // 첫 번째 애니메이션 영역 관찰
+    // 스크롤 이벤트를 통해 현재 활성 섹션 감지
     const firstObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -334,7 +334,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
           setActiveButton('alternative');
         }
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.2 });
     
     // 두 번째 애니메이션 영역 관찰
     const secondObserver = new IntersectionObserver((entries) => {
@@ -344,7 +344,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
           setActiveButton('issues');
         }
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.2 });
     
     // 지역별 전망 섹션 관찰
     const regionalOutlookObserver = new IntersectionObserver((entries) => {
