@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Building2, Utensils, Lightbulb, Shield, Sparkles, Briefcase } from 'lucide-react';
+import { ArrowRight, Building2, Utensils, Lightbulb, Shield, Sparkles, Briefcase, ChevronDown, ChevronUp } from 'lucide-react';
 
 const supportItems = [
   {
@@ -48,12 +48,40 @@ interface SupportSectionProps {
 }
 
 export default function SupportSection({ isStandalone = false, hideScrollIndicator = false }: SupportSectionProps) {
+  // 다음 섹션으로 스크롤하는 함수
+  const scrollToNextSection = () => {
+    const nextSection = document.getElementById('yd-section');
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // 이전 섹션으로 스크롤하는 함수
+  const scrollToPrevSection = () => {
+    const prevSection = document.getElementById('khw-section');
+    if (prevSection) {
+      prevSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section 
       id="support"
-      className={`${isStandalone ? 'h-full' : 'h-screen snap-start'} relative flex flex-col items-center justify-center bg-gradient-to-br from-green-50 to-green-100 px-4 py-8`}
+      className={`${isStandalone ? 'h-full' : 'min-h-screen'} relative flex flex-col items-center justify-center bg-gradient-to-br from-green-50 to-green-100 px-4 py-8`}
     >
       <div className="w-full max-w-6xl mx-auto -mt-12">
+        {/* 이전 섹션으로 이동하는 버튼 */}
+        <motion.button
+          onClick={scrollToPrevSection}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="absolute top-4 left-4 md:top-8 md:left-8 p-2 rounded-full bg-white/80 shadow-md hover:bg-white transition-colors"
+          aria-label="이전 섹션으로 이동"
+        >
+          <ChevronUp className="w-5 h-5 text-green-600" />
+        </motion.button>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -113,6 +141,39 @@ export default function SupportSection({ isStandalone = false, hideScrollIndicat
             <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
           </a>
         </motion.div>
+
+        {/* 전체 공약 보기 버튼 */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          viewport={{ once: true }}
+          className="text-center mt-8 md:mt-12"
+        >
+          <a 
+            href="#yd-section"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToNextSection();
+            }}
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-full font-bold hover:bg-green-700 transition-colors shadow-md"
+          >
+            <span>전체 공약 보기</span>
+            <ArrowRight className="w-5 h-5" />
+          </a>
+        </motion.div>
+
+        {/* 다음 섹션으로 이동하는 버튼 */}
+        <motion.button
+          onClick={scrollToNextSection}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 p-2 rounded-full bg-white/80 shadow-md hover:bg-white transition-colors"
+          aria-label="다음 섹션으로 이동"
+        >
+          <ChevronDown className="w-5 h-5 text-green-600" />
+        </motion.button>
       </div>
     </section>
   );

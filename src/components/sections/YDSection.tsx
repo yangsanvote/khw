@@ -691,7 +691,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
               {getRegionNames(promise.region)}
             </span>
           </div>
-          <p className="text-sm text-gray-600 line-clamp-2">{promise.content}</p>
+          <p className="text-sm text-gray-600 line-clamp-2" dangerouslySetInnerHTML={{ __html: promise.content }}></p>
         </div>
       </div>
     );
@@ -747,7 +747,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
             
             <div className="mb-6">
               <h3 className="text-lg font-semibold text-gray-800 mb-2">공약 내용</h3>
-              <p className="text-base bg-purple-50 p-4 rounded-lg">{promise.content}</p>
+              <p className="text-base bg-purple-50 p-4 rounded-lg" dangerouslySetInnerHTML={{ __html: promise.content }}></p>
             </div>
             
             <div className="mb-6">
