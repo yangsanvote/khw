@@ -72,7 +72,7 @@ const promises: PromiseType[] = [
   },
   {
     id: '5',
-    title: '권역별 아이돌봄센터 설립',
+    title: '권역별 다함께께돌봄센터 설립',
     category: 'care',
     region: 'common',
     effect: '아동의 돌봄 공백 감소(평일에 자녀가 혼자 있는 시간을 줄입니다.)\n학습 프로그램 운영\n친구, 지역 어른들과 함께 지내 정서 발달',
@@ -88,22 +88,30 @@ const promises: PromiseType[] = [
   },
   {
     id: '7',
-    title: '노인정 환경 개선: 입식 테이블 설치 지원',
+    title: '노인정 환경 개선: 노후된 노인정 환경 개선',
     category: 'care',
     region: 'common',
-    effect: '모든 노인정에 입식테이블 설치\n오래된 노인정의 환경 개선\n노인정 활성화\n어르신 자조와 돌봄 여건 확대',
-    content: '무릎이 아픈 어르신들도 즐겁게 노인정에세 시간을 보내요.'
+    effect: '오래된 노인정의 환경 개선\n노인정 활성화\n어르신 자조와 돌봄 여건 확대',
+    content: '어르신들이 노인정에서 즐겁게 시간을 보내요.'
   },
   {
     id: '8',
-    title: '노인정 인력 지원: 식사 도우미 지원',
+    title: '노인정 입식 테이블 지원',
+    category: 'care',
+    region: 'common',
+    effect: '모든 노인정에 입식테이블 설치\n노인정 활성화',
+    content: '무릎이 아픈 어르신들도 즐겁게 노인정에서 시간을 보내요.'
+  },
+  {
+    id: '9',
+    title: '노인정 식사 도우미 지원',
     category: ['care', 'job'],
     region: 'common',
     effect: '식사 여력이 되지 않는 노인정에 식사 도우미 지원\n돌봄 인력을 지원하여 일자리 창출\n식사를 함께함으로써 시니어 공동체 활성화',
     content: '돌봄과 함께 일자리도 늘리는 일석이조!'
   },
   {
-    id: '9',
+    id: '10',
     title: '자영업자 이자 지원 5%',
     category: 'business',
     region: 'common',
@@ -111,7 +119,7 @@ const promises: PromiseType[] = [
     content: '진주처럼 자영업자 이자 지원을 5%로 늘리겠습니다.'
   },
   {
-    id: '10',
+    id: '11',
     title: '일자리 창출 우수기업 지원',
     category: 'job',
     region: 'common',
@@ -119,16 +127,16 @@ const promises: PromiseType[] = [
     content: '양산시 입찰 시 지역 주민 채용 기업에 가점 부가하겠습니다.'
   },
   {
-    id: '11',
-    title: '자영업자 지원사업 지원',
+    id: '12',
+    title: '자영업자 정책사업 지원',
     category: 'business',
     region: 'common',
     effect: '지원사업을 모르는 분에게 지원사업 소개를\n지원사업 신청서류 작성이 어려운 분에게는 서류 작업 지원을',
     content: '자영업자 대상 공공지원사업을 연결시켜 드리겠습니다. 👉 <a href="#support" class="text-blue-600 hover:text-blue-800 underline">지원사업 바로가기</a>'
   },
   {
-    id: '12',
-    title: '작은도서관 지원 확대',
+    id: '13',
+    title: '작은도서관 종사자 처우 개선, 지원금 확대',
     category: 'living',
     subCategory: '문화',
     region: 'common',
@@ -136,7 +144,7 @@ const promises: PromiseType[] = [
     content: '작은도서관을 내 집앞 문화센터로 만들겠습니다.'
   },
   {
-    id: '13',
+    id: '14',
     title: '119안전센터',
     category: 'living',
     subCategory: '문화',
@@ -145,7 +153,7 @@ const promises: PromiseType[] = [
     content: '석금산, 사송 119안전센터를 조기 건립하겠습니다.'
   },
   {
-    id: '14',
+    id: '15',
     title: '치안센터',
     category: 'living',
     subCategory: '안전',
@@ -154,7 +162,7 @@ const promises: PromiseType[] = [
     content: '석금산, 사송 치안센터를 조기 건립하겠습니다.'
   },
   {
-    id: '15',
+    id: '16',
     title: '대중교통(버스노선)',
     category: 'living',
     subCategory: '안전',
@@ -163,7 +171,7 @@ const promises: PromiseType[] = [
     content: '간선, 지선, 마을버스 체계를 우리동네에 맞게 만들겠습니다.'
   },
   {
-    id: '16',
+    id: '17',
     title: '자원회수시설',
     category: 'living',
     region: 'seokgeum',
@@ -171,7 +179,7 @@ const promises: PromiseType[] = [
     content: '자원회수시설의 미래를 위한 공청회를 열겠습니다.'
   },
   {
-    id: '17',
+    id: '18',
     title: '양주문화체육센터 활성화',
     category: 'living',
     subCategory: '문화',
@@ -180,7 +188,7 @@ const promises: PromiseType[] = [
     content: '양주문화체육센터의 이용도를 제고하겠습니다.'
   },
   {
-    id: '18',
+    id: '19',
     title: '수질정화공원(금빛마을) 황토길 조성',
     category: 'living',
     subCategory: '문화',
@@ -189,7 +197,7 @@ const promises: PromiseType[] = [
     content: '수질정화공원 주위에 황토길을 조성하겠습니다.'
   },
   {
-    id: '19',
+    id: '20',
     title: '석산로터리 신호체계 개선',
     category: 'living',
     region: 'seokgeum',
@@ -197,7 +205,7 @@ const promises: PromiseType[] = [
     content: '석산로터리 신호체계를 개선하겠습니다.'
   },
   {
-    id: '20',
+    id: '21',
     title: '버스정류장 온열시트 확대',
     category: 'living',
     region: 'yangju',
@@ -205,7 +213,7 @@ const promises: PromiseType[] = [
     content: '버스정류장 온열시트를 확대 설치하겠습니다.'
   },
   {
-    id: '21',
+    id: '22',
     title: '주민편익시설 진입 보행로 미끄럼 방지 시공',
     category: 'living',
     subCategory: '문화',
@@ -214,7 +222,7 @@ const promises: PromiseType[] = [
     content: '주민편익시설 진입 보행로에 미끄럼 방지 시공을 하겠습니다.'
   },
   {
-    id: '22',
+    id: '23',
     title: '대중목욕탕이 있는 주민자치센터 건립',
     category: 'living',
     subCategory: '문화',
@@ -223,12 +231,47 @@ const promises: PromiseType[] = [
     content: '사송에 대중목욕탕이 있는 동면 주민자치센터를 설립하겠습니다.'
   },
   {
-    id: '23',
+    id: '24',
     title: '마을관리소 설치 운영',
     category: ['living', 'job'], // 두 개의 카테고리 설정
     region: 'village',
     effect: '생활 민원 처리 : 마을 주민들의 생활 민원을 처리하여 지역 사회의 안정을 도모합니다.\n취약계층 돌보기 : 취약계층을 돌보아 지역 사회의 행복을 증진시킵니다.\n공공 일자리 창출 : 마을 관리소 업무를 맡기면서 일자리를 창출할 수 있습니다.\n지역 경제 활성화 : 생활밀착형 공공서비스를 제공하여 지역 경제를 활성화시킵니다.',
     content: '아파트에는 아파트관리소, 자연마을에는 마을관리소'
+  },
+  {
+    id: '25',
+    title: '다양한 가족, 전 생애 보편 복지',
+    category: 'living',
+    subCategory: '문화',
+    region: 'common',
+    effect: '어떤 형태의 가족이라도, 어떤 생애 주기의 가족이라도 단단하게 돕습니다',
+    content: '1인 가족에서부터, 다세대 가족까지, 다양한 형태의 가족을 모두 포용하는 양산'
+  },
+  {
+    id: '26',
+    title: '무장애 시범도시 양산',
+    category: 'living',
+    region: 'common',
+    effect: '신체적 장애는 물론이고 고령이나 영유아의 이동 불편까지 한번에 해결하는 방법\n이동, 교육, 돌봄, 활동 전 단계를 보조하여 불편 없게',
+    content: '장애가 있어도 불편이 없다면, 장애가 아닌게 아닐까요?'
+  },
+  {
+    id: '27',
+    title: '양산문화재단 설립에 따른 문화프로그램 지원',
+    category: 'living',
+    subCategory: '문화',
+    region: 'common',
+    effect: '양산의 숙원사업이던 양산문화재단 설립 임박\n실질적인 지역 컨텐츠 창작 지원 계획',
+    content: '실속있는 문화예술창작 지원으로 지역의 가치를 높일 수 있게'
+  },
+  {
+    id: '28',
+    title: '걷고싶은 다방천 만들기',
+    category: 'living',
+    subCategory: '문화',
+    region: 'sasong',
+    effect: '다방천 도보 환경 정비\n집에서 강변까지 쉽게 걸어가고\n강변은 안전하고 깨끗하게',
+    content: '걷고싶은 다방천, 걷기좋은 사송'
   }
 ];
 
@@ -1219,7 +1262,7 @@ const YDSection = ({ isStandalone, hideScrollIndicator = false, showHeader = fal
         >
           <h3 className="text-xl md:text-2xl font-bold text-[#623D91] mb-3 md:mb-4 text-center" style={{ fontFamily: 'Giants-Bold, sans-serif' }}>
             {filteredPromises.length > 0 
-              ? `권현우의 약속 (${filteredPromises.length}개)` 
+              ? `권현우의 약속` 
               : "카테고리나 지역을 선택하시면 공약이 표시됩니다"}
           </h3>
           
